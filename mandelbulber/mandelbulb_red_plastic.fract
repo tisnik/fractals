@@ -1,0 +1,32 @@
+# Mandelbulber settings file
+# version 2.19
+# only modified parameters
+[main_parameters]
+ambient_occlusion_enabled true;
+antialiasing_enabled true;
+camera 0.5039225549651036 -1.159450137268168 0.5327118769840852;
+camera_distance_to_target 0.5091096162796021;
+camera_rotation 27.50806633621059 -10.62086581134228 0;
+camera_top -0.08512757928205054 0.1634723636155966 0.9828682930990847;
+flight_last_to_render 0;
+image_proportion 2;
+keyframe_last_to_render 0;
+mat2_fresnel_reflectance true;
+mat2_is_defined true;
+mat2_reflectance 1;
+mat2_reflections_color ff00 1d00 1d00;
+mat2_specular_metallic_roughness 1;
+mat2_surface_color 7300 0c00 0400;
+mat2_surface_color_gradient 0 fd6029 999 698403 1999 fff59b 2999 f5bd22 3999 0b5e87 5000 c68876 5999 a51c64 7000 3b9fee 7999 d4ffd4 9000 aba53c;
+mat2_transparency_index_of_refraction 5;
+mat2_use_colors_from_palette false;
+raytraced_reflections true;
+target 0.2728067439695925 -0.7156333600144311 0.4388782394954012;
+[fractal_1]
+beta_angle_offset 29.538672;
+power 17;
+[keyframes]
+frame;main_camera_x;main_camera_y;main_camera_z;main_target_x;main_target_y;main_target_z;main_camera_top_x;main_camera_top_y;main_camera_top_z;fractal0_beta_angle_offset;fractal0_alpha_angle_offset
+0;0.5039225549651036;-1.159450137268168;0.5327118769840852;0.2728067439695925;-0.7156333600144311;0.4388782394954012;-0.08512757928205054;0.1634723636155966;0.9828682930990847;0;0
+1;0.5039225549651036;-1.159450137268168;0.5327118769840852;0.2728067439695925;-0.7156333600144311;0.4388782394954012;-0.08512757928205054;0.1634723636155966;0.9828682930990847;87.48;0
+interpolation;morphAkima;morphAkima;morphAkima;morphAkimaAngle;morphAkimaAngle
