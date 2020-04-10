@@ -16,6 +16,7 @@ double xpos = 0.0;
 /*double xpos = -0.75;*/
 double ypos = 0.0;
 double scale = 240.0;
+double  uhel = 45.0;
 
 static void init_sdl(void)
 {
@@ -223,6 +224,173 @@ void draw_fractal_julia_mandelbrot(SDL_Surface *surface)
     }
 }
 
+void draw_multifractal_mandel_julia(SDL_Surface *surface)
+{
+    int x, y;
+    Uint8 *pixel = nil;
+    double cx, cy;
+    double xmin, ymin, xmax, ymax;
+    double ccx, ccy;
+
+    calcCorner(xpos, ypos, scale, &xmin, &ymin, &xmax, &ymax);
+    /*
+    ccx = 0.0;
+    ccy = 1.0;
+    */
+    ccx = 0.285;
+    ccy = 0.01;
+    ccx=-1.5;
+    ccy=0.0;
+    cy = ymin;
+    for (y=0; y<240; y++)
+    {
+        cx = xmin;
+        pixel = (Uint8 *)surface->pixels + (y + 128) * surface->pitch + 160*4;
+        for (x=0; x<320; x++)
+        {
+            double zx = 0.0;
+            double zy = 0.0;
+            unsigned int i = 0;
+            while (i < 255) {
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                if (zx2 + zy2 > 4.0) {
+                    break;
+                }
+                /*if (i%2==0) {*/
+                if (i>50 /*&& i<30*/) {
+                    zy = 2.0 * zx * zy + ccy;
+                    zx = zx2 - zy2 + ccx;
+                } else {
+                    zy = 2.0 * zx * zy + cy;
+                    zx = zx2 - zy2 + cx;
+                }
+                i++;
+            }
+            {
+                int r = i*2;
+                int g = i*3;
+                int b = i*5;
+
+                *pixel++ = r;
+                *pixel++ = g;
+                *pixel++ = b;
+                pixel++;
+            }
+            cx += (xmax-xmin)/WIDTH;
+        }
+        cy += (ymax-ymin)/HEIGHT;
+    }
+}
+
+void draw_mandeljulia(SDL_Surface *surface)
+{
+    double  zx,zy,zx2,zy2,cx,cy;
+    double  cosu,sinu,ccxc,ccyc;
+    int     x,y,i;
+    Uint8 *pixel = nil;
+
+    double ccx = 0.0;
+    double ccy = 1.0;
+
+    double xmin, ymin, xmax, ymax;
+    double u;
+
+    calcCorner(xpos, ypos, scale, &xmin, &ymin, &xmax, &ymax);
+
+    u=uhel*3.1415/180.0;
+    cosu=cos(u);
+    sinu=sin(u);
+    ccxc=ccx*cosu;
+    ccyc=ccy*cosu;
+
+    cy = ymin;
+
+    for (y=0;y<240;y++) {
+        cx=xmin;
+        pixel = (Uint8 *)surface->pixels + (y + 128) * surface->pitch + 160*4;
+        for (x=0;x<320;x++) {
+            i=0;
+            zx=cx*cosu;
+            zy=cy*cosu;
+            do {
+                zx2=zx*zx;
+                zy2=zy*zy;
+                zy=2.0*zx*zy+ccyc+cy*sinu;
+                zx=zx2-zy2+ccxc+cx*sinu;
+                i++;
+            } while (i<64 && zx2+zy2<4.0);
+            {
+                int r = i*2;
+                int g = i*3;
+                int b = i*5;
+
+                *pixel++ = r;
+                *pixel++ = g;
+                *pixel++ = b;
+                pixel++;
+            }
+            cx += (xmax-xmin)/WIDTH;
+        }
+        cy += (ymax-ymin)/HEIGHT;
+    }
+}
+
+void draw_multifractal(SDL_Surface *surface)
+{
+    int x, y;
+    Uint8 *pixel = nil;
+    double cx, cy;
+    double xmin, ymin, xmax, ymax;
+    double ccx1, ccy1;
+    double ccx2, ccy2;
+
+    calcCorner(xpos, ypos, scale, &xmin, &ymin, &xmax, &ymax);
+    ccx1 = 0.0;
+    ccy1 = 1.0;
+    ccx2 = -1.5;
+    ccy2 = 0.0;
+    cy = ymin;
+    for (y=0; y<240; y++)
+    {
+        cx = xmin;
+        pixel = (Uint8 *)surface->pixels + (y + 128) * surface->pitch + 160*4;
+        for (x=0; x<320; x++)
+        {
+            double zx = cx;
+            double zy = cy;
+            unsigned int i = 0;
+            while (i < 255) {
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                if (zx2 + zy2 > 4.0) {
+                    break;
+                }
+                if (i>20) {
+                    zy = 2.0 * zx * zy + ccy1;
+                    zx = zx2 - zy2 + ccx1;
+                } else {
+                    zy = 2.0 * zx * zy + ccy2;
+                    zx = zx2 - zy2 + ccx2;
+                }
+                i++;
+            }
+            {
+                int r = i*2;
+                int g = i*3;
+                int b = i*5;
+
+                *pixel++ = r;
+                *pixel++ = g;
+                *pixel++ = b;
+                pixel++;
+            }
+            cx += (xmax-xmin)/WIDTH;
+        }
+        cy += (ymax-ymin)/HEIGHT;
+    }
+}
+
 void draw_fractal(SDL_Surface *surface)
 {
     int x, y;
@@ -293,7 +461,8 @@ void draw_fractal(SDL_Surface *surface)
 void redraw(SDL_Surface *pixmap)
 {
     draw_grid(pixmap);
-    draw_fractal(pixmap);
+    /*draw_multifractal(pixmap);*/
+    draw_mandeljulia(pixmap);
     show_fractal(pixmap);
 }
 
@@ -304,6 +473,7 @@ static void main_event_loop(void)
     int left = 0, right = 0, up = 0, down = 0;
     int zoomin = 0, zoomout = 0;
     int perform_redraw;
+    int angle_1 = 0, angle_2 = 0;
 
     do
     {
@@ -316,6 +486,8 @@ static void main_event_loop(void)
                     done = 1;
                     break;
                 case SDL_KEYDOWN:
+                    /* TODO - control: more speed */
+                    /* TODO - shift: lower speed */
                     switch (event.key.keysym.sym)
                     {
                         case SDLK_ESCAPE:
@@ -339,6 +511,12 @@ static void main_event_loop(void)
                             break;
                         case SDLK_PAGEUP:
                             zoomout = 1;
+                            break;
+                        case SDLK_z:
+                            angle_1 = 1;
+                            break;
+                        case SDLK_x:
+                            angle_2 = 1;
                             break;
                         default:
                             break;
@@ -364,11 +542,17 @@ static void main_event_loop(void)
                             break;
                         case SDLK_PAGEUP:
                             zoomout = 0;
+                            break;
+                        case SDLK_z:
+                            angle_1 = 0;
+                            break;
+                        case SDLK_x:
+                            angle_2 = 0;
+                            break;
                         default:
                             break;
                     }
                 default:
-                    break;
                     break;
             }
         }
@@ -397,6 +581,14 @@ static void main_event_loop(void)
             scale *= 1.1;
             perform_redraw=1;
         }
+        if (angle_1) {
+            uhel--;
+            perform_redraw=1;
+        }
+        if (angle_2) {
+            uhel++;
+            perform_redraw=1;
+        }
         if (perform_redraw) {
             redraw(pixmap);
         }
@@ -414,10 +606,10 @@ int main(int argc, char **argv)
     pixmap = gfx_create_surface(screen->w, screen->h);
 
     draw_grid(pixmap);
-    draw_fractal(pixmap);
+    /*draw_multifractal(pixmap);*/
+    draw_mandeljulia(pixmap);
     show_fractal(pixmap);
     main_event_loop();
     finalize();
     return 0;
 }
-
