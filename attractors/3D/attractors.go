@@ -21,6 +21,7 @@ type Gfx interface {
 type State struct {
 	Window         *sdl.Window
 	PrimarySurface *sdl.Surface
+	inverse        bool
 	S              float64
 	R              float64
 	B              float64
@@ -30,6 +31,7 @@ func NewState() State {
 	return State{
 		Window:         nil,
 		PrimarySurface: nil,
+		inverse:        false,
 		S:              10.0,
 		R:              28.0,
 		B:              2.667,
@@ -73,7 +75,11 @@ func lorenz(x, y, z, s, r, b float64) (float64, float64, float64) {
 }
 
 func (state *State) redraw() {
-	state.PrimarySurface.FillRect(nil, sdl.MapRGB(state.PrimarySurface.Format, 0, 0, 0))
+	if state.inverse {
+		state.PrimarySurface.FillRect(nil, sdl.MapRGB(state.PrimarySurface.Format, 0xff, 0xff, 0xff))
+	} else {
+		state.PrimarySurface.FillRect(nil, sdl.MapRGB(state.PrimarySurface.Format, 0, 0, 0))
+	}
 
 	state.PrimarySurface.Lock()
 
@@ -94,15 +100,27 @@ func (state *State) redraw() {
 
 			xi := int32(200.0 + 8.0*x)
 			yi := int32(200.0 + 8.0*y)
-			addpixel(state.PrimarySurface, xi, yi, r, g, b)
+			if state.inverse {
+				subpixel(state.PrimarySurface, xi, yi, r, g, b)
+			} else {
+				addpixel(state.PrimarySurface, xi, yi, r, g, b)
+			}
 
 			xi = int32(200.0 + 8.0*x)
 			yi = int32(400.0 + 8.0*z)
-			addpixel(state.PrimarySurface, xi, yi, r, g, b)
+			if state.inverse {
+				subpixel(state.PrimarySurface, xi, yi, r, g, b)
+			} else {
+				addpixel(state.PrimarySurface, xi, yi, r, g, b)
+			}
 
 			xi = int32(600.0 + 8.0*y)
 			yi = int32(400.0 + 8.0*z)
-			addpixel(state.PrimarySurface, xi, yi, r, g, b)
+			if state.inverse {
+				subpixel(state.PrimarySurface, xi, yi, r, g, b)
+			} else {
+				addpixel(state.PrimarySurface, xi, yi, r, g, b)
+			}
 		}
 	}
 	state.PrimarySurface.Unlock()
@@ -132,6 +150,9 @@ func (state *State) eventLoop() {
 					done = true
 				case sdl.K_r:
 					redraw = true
+				case sdl.K_i:
+					state.inverse = !state.inverse
+					redraw = true
 				}
 			}
 		}
@@ -152,6 +173,14 @@ func addSaturated(a byte, b byte) byte {
 	return c
 }
 
+func subSaturated(a byte, b byte) byte {
+	var c byte = a - b
+	if c > a { // can only happen due to underflow
+		return 0x00
+	}
+	return c
+}
+
 func addpixel(surface *sdl.Surface, x int32, y int32, r byte, g byte, b byte) {
 	if x >= 0 && x < surface.W && y >= 0 && y < surface.H {
 		switch surface.Format.BitsPerPixel {
@@ -167,6 +196,25 @@ func addpixel(surface *sdl.Surface, x int32, y int32, r byte, g byte, b byte) {
 			pixels[index] = addSaturated(pixels[index], b)
 			pixels[index+1] = addSaturated(pixels[index+1], g)
 			pixels[index+2] = addSaturated(pixels[index+2], r)
+		}
+	}
+}
+
+func subpixel(surface *sdl.Surface, x int32, y int32, r byte, g byte, b byte) {
+	if x >= 0 && x < surface.W && y >= 0 && y < surface.H {
+		switch surface.Format.BitsPerPixel {
+		case 24:
+			index := x*3 + y*surface.Pitch
+			pixels := surface.Pixels()
+			pixels[index] = subSaturated(pixels[index], b)
+			pixels[index+1] = subSaturated(pixels[index+1], g)
+			pixels[index+2] = subSaturated(pixels[index+2], r)
+		case 32:
+			index := x*4 + y*surface.Pitch
+			pixels := surface.Pixels()
+			pixels[index] = subSaturated(pixels[index], b)
+			pixels[index+1] = subSaturated(pixels[index+1], g)
+			pixels[index+2] = subSaturated(pixels[index+2], r)
 		}
 	}
 }
