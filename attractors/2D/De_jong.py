@@ -1,8 +1,28 @@
+"""Výpočet a vykreslení De Jongova podivného atraktoru."""
 
-# coding: utf-8
+# MIT License
+#
+# Copyright (c) 2020 Pavel Tišnovský
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 # De Jong attractor
-# In[42]:
-
 
 # import všech potřebných knihoven - Numpy a Matplotlibu
 import matplotlib.pyplot as plt
@@ -10,17 +30,11 @@ import numpy as np
 from math import sin, cos, radians
 
 
-# In[85]:
-
-
-# funkce pro výpočet dalšího bodu De Jongova atraktoru
 def de_jong(x, y, a, b, c, d):
+    """Funkce pro výpočet dalšího bodu De Jongova atraktoru."""
     x_dot = sin(a * y) - cos(b * x)
     y_dot = sin(c * x) - cos(d * y)
     return x_dot, y_dot
-
-
-# In[95]:
 
 
 # celkový počet vypočtených bodů na atraktoru
@@ -30,14 +44,10 @@ n = 500000
 x = np.zeros((n,))
 y = np.zeros((n,))
 
-
-# In[96]:
-
-
-# počáteční hodnoty
+# počáteční hodnoty pro výpočet
 x[0], y[0] = (0.0, 0.0)
 
-# vlastní výpočet atraktoru
+# vlastní výpočet podivného atraktoru
 for i in range(n-1):
     A = -2.7
     B = -0.09
@@ -50,24 +60,34 @@ for i in range(n-1):
 # vykreslení grafu
 plt.plot(x[1000:], y[1000:], 'o', markersize=0.1)
 
-# zobrazení grafu
+# změna velikosti komponent v grafu
 plt.tight_layout()
+
+# uložení grafu pro jeho další zpracování
+plt.savefig("de_jong_1.png")
+
+# zobrazení grafu
 plt.show()
 
-# vlastní výpočet atraktoru
+
+# vlastní výpočet atraktoru - druhá varianta
 for i in range(n-1):
     A = 1.641
     B = 1.902
     C = 0.316
-    D= 1.525
+    D = 1.525
     x_dot, y_dot = de_jong(x[i], y[i], A, B, C, D)
     x[i+1] = x_dot
     y[i+1] = y_dot
 
 # vykreslení grafu
-plt.plot(x[1000:], y[1000:], 'o', markersize=0.1)
+plt.plot(x[1000:], y[1000:], 'o', markersize=0.1, color='red')
+
+# změna velikosti komponent v grafu
+plt.tight_layout()
+
+# uložení grafu pro jeho další zpracování
+plt.savefig("de_jong_2.png")
 
 # zobrazení grafu
-plt.tight_layout()
 plt.show()
-
