@@ -7,7 +7,7 @@
 # import všech potřebných knihoven - Numpy a Matplotlibu
 import matplotlib.pyplot as plt
 import numpy as np
-from math import sin, cos, radians
+from math import sin, cos
 
 
 # In[85]:
