@@ -62,7 +62,10 @@ func (state *State) finalize() {
 	}
 
 	if state.Window != nil {
-		state.Window.Destroy()
+		err := state.Window.Destroy()
+		if err != nil {
+			log.Println(err)
+		}
 	}
 	sdl.Quit()
 }
@@ -75,13 +78,20 @@ func lorenz(x, y, z, s, r, b float64) (float64, float64, float64) {
 }
 
 func (state *State) redraw() {
+	backgroundColor := uint8(0x00)
 	if state.inverse {
-		state.PrimarySurface.FillRect(nil, sdl.MapRGB(state.PrimarySurface.Format, 0xff, 0xff, 0xff))
-	} else {
-		state.PrimarySurface.FillRect(nil, sdl.MapRGB(state.PrimarySurface.Format, 0, 0, 0))
+		backgroundColor = 0xff
 	}
 
-	state.PrimarySurface.Lock()
+	err := state.PrimarySurface.FillRect(nil, sdl.MapRGB(state.PrimarySurface.Format, backgroundColor, backgroundColor, backgroundColor))
+	if err != nil {
+		log.Println(err)
+	}
+
+	err = state.PrimarySurface.Lock()
+	if err != nil {
+		log.Println(err)
+	}
 
 	dt := 0.001
 	x := 0.0
@@ -125,7 +135,10 @@ func (state *State) redraw() {
 	}
 	state.PrimarySurface.Unlock()
 
-	state.Window.UpdateSurface()
+	err = state.Window.UpdateSurface()
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func (state *State) eventLoop() {
