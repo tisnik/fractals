@@ -24,10 +24,11 @@
 
 # De Jong attractor
 
-# import všech potřebných knihoven - Numpy a Matplotlibu
+# import všech potřebných knihoven - Numpy, Matplotlibu a standardní
+# matematické knihovny
 import matplotlib.pyplot as plt
 import numpy as np
-from math import sin, cos, radians
+from math import sin, cos
 
 
 def de_jong(x, y, a, b, c, d):
@@ -40,6 +41,9 @@ def de_jong(x, y, a, b, c, d):
 # celkový počet vypočtených bodů na atraktoru
 n = 500000
 
+# počet bodů ze začátku výpočtu, které se nevykreslí
+settle_down_points = 1000
+
 # prozatím prázdné pole připravené pro výpočet
 x = np.zeros((n,))
 y = np.zeros((n,))
@@ -47,18 +51,20 @@ y = np.zeros((n,))
 # počáteční hodnoty pro výpočet
 x[0], y[0] = (0.0, 0.0)
 
+# parametry ovlivňující výpočet podivného atraktoru
+A = -2.7
+B = -0.09
+C = -0.86
+D = -2.20
+
 # vlastní výpočet podivného atraktoru
 for i in range(n-1):
-    A = -2.7
-    B = -0.09
-    C = -0.86
-    D = -2.20
     x_dot, y_dot = de_jong(x[i], y[i], A, B, C, D)
     x[i+1] = x_dot
     y[i+1] = y_dot
 
 # vykreslení grafu
-plt.plot(x[1000:], y[1000:], 'o', markersize=0.1)
+plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
 
 # změna velikosti komponent v grafu
 plt.tight_layout()
@@ -69,19 +75,22 @@ plt.savefig("de_jong_1.png")
 # zobrazení grafu
 plt.show()
 
+# ---------------------------------------------------------------------
+
+A = 1.641
+B = 1.902
+C = 0.316
+D = 1.525
 
 # vlastní výpočet atraktoru - druhá varianta
 for i in range(n-1):
-    A = 1.641
-    B = 1.902
-    C = 0.316
-    D = 1.525
     x_dot, y_dot = de_jong(x[i], y[i], A, B, C, D)
     x[i+1] = x_dot
     y[i+1] = y_dot
 
 # vykreslení grafu
-plt.plot(x[1000:], y[1000:], 'o', markersize=0.1, color='red')
+plt.plot(x[settle_down_points:], y[settle_down_points:],
+         'o', markersize=0.1, color='red')
 
 # změna velikosti komponent v grafu
 plt.tight_layout()
