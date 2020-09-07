@@ -24,8 +24,8 @@
 
 # De Jong attractor
 
-# import všech potřebných knihoven - Numpy, Matplotlibu a standardní
-# matematické knihovny
+# Import všech potřebných knihoven - Numpy, Matplotlibu a standardní
+# matematické knihovny, ze které se využijí jen některé vybrané funkce.
 import matplotlib.pyplot as plt
 import numpy as np
 from math import sin, cos
@@ -38,65 +38,68 @@ def de_jong(x, y, a, b, c, d):
     return x_dot, y_dot
 
 
-# celkový počet vypočtených bodů na atraktoru
+# Celkový počet vypočtených bodů na atraktoru.
 n = 500000
 
-# počet bodů ze začátku výpočtu, které se nevykreslí
+# Počet bodů ze začátku výpočtu, které se nevykreslí.
 settle_down_points = 1000
 
-# prozatím prázdné pole připravené pro výpočet
+# Prozatím prázdné pole připravené pro uložení výsledků výpočtu.
 x = np.zeros((n,))
 y = np.zeros((n,))
 
-# počáteční hodnoty pro výpočet
+# Počáteční hodnoty pro výpočet De Jongova atraktoru.
 x[0], y[0] = (0.0, 0.0)
 
-# parametry ovlivňující výpočet podivného atraktoru
+# Parametry ovlivňující výpočet prvního podivného atraktoru.
 A = -2.7
 B = -0.09
 C = -0.86
 D = -2.20
 
-# vlastní výpočet podivného atraktoru
+# Vlastní výpočet podivného atraktoru.
 for i in range(n-1):
     x_dot, y_dot = de_jong(x[i], y[i], A, B, C, D)
     x[i+1] = x_dot
     y[i+1] = y_dot
 
-# vykreslení grafu
+# Vykreslení grafu s atraktorem.
 plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
 
-# změna velikosti komponent v grafu
+# Změna velikosti komponent v grafu.
 plt.tight_layout()
 
-# uložení grafu pro jeho další zpracování
+# Uložení grafu pro jeho další zpracování.
 plt.savefig("de_jong_1.png")
 
-# zobrazení grafu
+# Zobrazení grafu.
 plt.show()
 
 # ---------------------------------------------------------------------
 
+# Parametry druhého atraktoru.
 A = 1.641
 B = 1.902
 C = 0.316
 D = 1.525
 
-# vlastní výpočet atraktoru - druhá varianta
+# Vlastní výpočet atraktoru - druhá varianta.
 for i in range(n-1):
     x_dot, y_dot = de_jong(x[i], y[i], A, B, C, D)
     x[i+1] = x_dot
     y[i+1] = y_dot
 
-# vykreslení grafu
+# Vykreslení grafu.
 plt.plot(x[settle_down_points:], y[settle_down_points:],
          'o', markersize=0.1, color='red')
 
-# změna velikosti komponent v grafu
+# Změna velikosti komponent v grafu.
 plt.tight_layout()
 
-# uložení grafu pro jeho další zpracování
+# Uložení grafu pro jeho další zpracování.
 plt.savefig("de_jong_2.png")
 
-# zobrazení grafu
+# Zobrazení grafu.
 plt.show()
+
+# Konec.
