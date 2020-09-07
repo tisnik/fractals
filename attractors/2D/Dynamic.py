@@ -1,4 +1,4 @@
-"""Výpočet a vykreslení podivného atraktoru nazvaného Fractal Dream."""
+"""Výpočet a vykreslení podivného atraktoru nazvaného Dynamic."""
 
 # MIT License
 #
@@ -24,65 +24,68 @@
 
 # Dynamic system renderer
 
-# import všech potřebných knihoven - Numpy, Matplotlibu a standardní
-# matematické knihovny
+# Import všech potřebných knihoven - Numpy, Matplotlibu a standardní
+# matematické knihovny, ze které se využijí jen některé vybrané funkce.
 import matplotlib.pyplot as plt
 import numpy as np
 from math import sin, cos
 
 
 def dynamic(x, y, a, b):
-    """Funkce pro výpočet dalšího bodu atraktoru."""
+    """Funkce pro výpočet dalšího bodu podivného atraktoru."""
     x_dot = -sin(y + a*sin(b*y))
     y_dot = sin(x + a*sin(b*x))
     return x_dot, y_dot
 
 
-# konstanta pro numerickou integraci
+# Konstanta pro numerickou integraci. Menší hodnoty znamenají přesnější
+# výpočty, ovšem na úkor výpočetního času.
 dt = 0.3
 
-# parametry mřížky s počátečními hodnotami dynamického systému
+# Parametry mřížky s počátečními hodnotami dynamického systému.
 max_x = 50
 step_x = 5
 max_y = 50
 step_y = 5
 
-# počet iterací pro zadané počáteční podmínky
+# Počet iterací pro zadané počáteční podmínky.
 maxiter = 1000
 
-# počet vypočtených bodů na atraktoru
+# Počet vypočtených bodů na podivném atraktoru.
 n = maxiter * max_x//step_x * max_y//step_y
 
-# prozatím prázdné pole připravené pro výpočet
+# Prozatím prázdné pole připravené pro výpočet.
 x = np.zeros((n,))
 y = np.zeros((n,))
 
-# počáteční hodnoty pro výpočet
+# Počáteční hodnoty pro výpočet.
 # x[0], y[0] = (10, 10)
 
-# parametry ovlivňující výpočet podivného atraktoru
+# Parametry ovlivňující výpočet podivného atraktoru.
 A = -2.7
 B = 2.8
 
 i = 0
-# vlastní výpočet atraktoru  pro různé počáteční podmínky
+# Vlastní výpočet podivného atraktoru  pro různé počáteční podmínky.
 for x0 in range(0, max_x, step_x):
     for y0 in range(0, max_y, step_y):
+        # Počáteční hodnoty pro výpočet.
         x[i], y[i] = (x0, y0)
+        # Jedno "vlákno" atraktoru.
         for r in range(1, maxiter):
             x_dot, y_dot = dynamic(x[i], y[i], A, B)
             x[i+1] = x[i] + dt*x_dot
             y[i+1] = y[i] + dt*y_dot
             i += 1
 
-# vykreslení grafu
+# Vykreslení grafu s podivným atraktorem.
 plt.plot(x, y, 'o', markersize=0.1)
 
-# změna velikosti komponent v grafu
+# Změna velikosti komponent v grafu.
 plt.tight_layout()
 
-# uložení grafu pro jeho další zpracování
+# Uložení grafu pro jeho další zpracování.
 plt.savefig("dynamic.png")
 
-# zobrazení grafu
+# Zobrazení grafu.
 plt.show()
