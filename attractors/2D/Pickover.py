@@ -24,8 +24,8 @@
 
 # Pickover attractor
 
-# import všech potřebných knihoven - Numpy, Matplotlibu a standardní
-# matematické knihovny
+# Import všech potřebných knihoven - Numpy, Matplotlibu a standardní
+# matematické knihovny, ze které se využijí jen některé vybrané funkce.
 import matplotlib.pyplot as plt
 import numpy as np
 from math import sin, cos
@@ -38,39 +38,39 @@ def pickover(x, y, a, b, c, d):
     return x_dot, y_dot
 
 
-# celkový počet vypočtených bodů na atraktoru
+# Celkový počet vypočtených bodů na atraktoru.
 n = 100000
 
-# počet bodů ze začátku výpočtu, které se nevykreslí
+# Počet bodů ze začátku výpočtu, které se nevykreslí.
 settle_down_points = 10
 
-# prozatím prázdné pole připravené pro výpočet
+# Prozatím prázdné pole připravené pro uložení výsledků výpočtu.
 x = np.zeros((n,))
 y = np.zeros((n,))
 
-# počáteční hodnoty pro výpočet
+# Počáteční hodnoty pro výpočet.
 x[0], y[0] = (0.1, 0.1)
 
-# parametry ovlivňující výpočet podivného atraktoru
+# Parametry ovlivňující výpočet podivného atraktoru.
 A = -1.7
 B = 1.8
 C = -0.9
 D = -0.4
 
-# vlastní výpočet atraktoru
+# Vlastní výpočet podivného atraktoru.
 for i in range(n-1):
     x_dot, y_dot = pickover(x[i], y[i], A, B, C, D)
     x[i+1] = x_dot
     y[i+1] = y_dot
 
-# vykreslení grafu
+# Vykreslení grafu.
 plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
 
-# změna velikosti komponent v grafu
+# Změna velikosti komponent v grafu.
 plt.tight_layout()
 
-# uložení grafu pro jeho další zpracování
+# Uložení grafu pro jeho další zpracování.
 plt.savefig("pickover_2d.png")
 
-# zobrazení grafu
+# Zobrazení grafu.
 plt.show()
