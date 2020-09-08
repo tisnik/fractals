@@ -24,8 +24,8 @@
 
 # Kam torus attractor
 
-# import všech potřebných knihoven - Numpy, Matplotlibu a standardní
-# matematické knihovny
+# Import všech potřebných knihoven - Numpy, Matplotlibu a standardní
+# matematické knihovny, ze které se využijí jen některé vybrané funkce.
 import matplotlib.pyplot as plt
 import numpy as np
 from math import sin, cos
@@ -39,26 +39,26 @@ def frange(start, stop, step):
         x += step
 
 
-# počáteční hodnoty
+# Počáteční a koncové hodnoty použité při výpočtu.
 orbit_start = 0.0
 orbit_end = 1.5
 orbit_step = 0.03
 points_per_orbit = 2000
 
-# parametry pro výpočet atraktoru
+# Parametry pro výpočet podivného atraktoru.
 a = 1.3
 
 
 def kam_torus(orbit_start, orbit_end, orbit_step, points_per_orbit, a):
     """Výpočet atraktoru."""
-    # celkový počet vypočtených bodů na atraktoru
+    # Celkový počet vypočtených bodů na podivném atraktoru.
     n = 100000
 
-    # prozatím prázdné pole připravené pro výpočet
+    # Prozatím prázdné pole připravené pro výpočet.
     x = np.zeros((n,))
     y = np.zeros((n,))
 
-    # vlastní výpočet atraktoru
+    # Vlastní výpočet podivného atraktoru.
     i = 0
     for orbit in frange(orbit_start, orbit_end, orbit_step):
         x[i] = orbit/3.0
@@ -75,17 +75,17 @@ def kam_torus(orbit_start, orbit_end, orbit_step, points_per_orbit, a):
     return x, y
 
 
-# výpočet
+# Vlastní výpočet podivného atraktoru.
 x, y = kam_torus(orbit_start, orbit_end, orbit_step, points_per_orbit, a)
 
-# vykreslení grafu
+# Vykreslení grafu.
 plt.plot(x, y, 'o', markersize=0.1)
 
-# změna velikosti komponent v grafu
+# Změna velikosti komponent v grafu.
 plt.tight_layout()
 
-# uložení grafu pro jeho další zpracování
+# Uložení grafu pro jeho další zpracování.
 plt.savefig("kam_torus.png")
 
-# zobrazení grafu
+# Zobrazení grafu.
 plt.show()
