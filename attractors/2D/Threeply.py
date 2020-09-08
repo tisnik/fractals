@@ -24,17 +24,19 @@
 
 # Threeply attractor
 
-# import všech potřebných knihoven - Numpy, Matplotlibu a standardní
-# matematické knihovny
+# Import všech potřebných knihoven - Numpy, Matplotlibu a standardní
+# matematické knihovny, ze které se využijí jen některé vybrané funkce.
 import matplotlib.pyplot as plt
 import numpy as np
 from math import sin, cos
+
+# Dále se načtou i některé funkce pro výpočty nad maticemi a vektory.
 from numpy import log as ln
 from numpy import abs, sign, arctan
 
 
 def sqr(x):
-    """Square of x."""
+    """Výpočet druhé mocniny vstupní hodnoty x."""
     return x*x
 
 
@@ -45,38 +47,38 @@ def threeply(x, y, a, b, c):
     return x_dot, y_dot
 
 
-# celkový počet vypočtených bodů na atraktoru
+# Celkový počet vypočtených bodů na atraktoru.
 n = 400000
 
-# počet bodů ze začátku výpočtu, které se nevykreslí
+# Počet bodů ze začátku výpočtu, které se nevykreslí.
 settle_down_points = 1
 
-# prozatím prázdné pole připravené pro výpočet
+# Prozatím prázdné pole připravené pro uložení výsledků výpočtu.
 x = np.zeros((n,))
 y = np.zeros((n,))
 
-# počáteční hodnoty pro výpočet
+# Počáteční hodnoty pro výpočet.
 x[0], y[0] = (0.0, 0.0)
 
-# parametry ovlivňující výpočet podivného atraktoru
+# Parametry ovlivňující výpočet podivného atraktoru.
 A = 3.1
 B = 1.8
 C = -0.9
 
-# vlastní výpočet atraktoru
+# Vlastní výpočet podivného atraktoru.
 for i in range(n-1):
     x_dot, y_dot = threeply(x[i], y[i], A, B, C)
     x[i+1] = x_dot
     y[i+1] = y_dot
 
-# vykreslení grafu
+# Vykreslení grafu.
 plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.05)
 
-# změna velikosti komponent v grafu
+# Změna velikosti komponent v grafu.
 plt.tight_layout()
 
-# uložení grafu pro jeho další zpracování
+# Uložení grafu pro jeho další zpracování.
 plt.savefig("threeply.png")
 
-# zobrazení grafu
+# Zobrazení grafu.
 plt.show()
