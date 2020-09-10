@@ -72,5 +72,11 @@ plt.tight_layout()
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("pickover_2d.png")
 
+# Výsledek by měl vypadat následovně:
+# ![pickover_2d.png](pickover_2d.png)
+# (oproti originálu zmenšeno)
+
 # Zobrazení grafu.
 plt.show()
+
+# Konec.
