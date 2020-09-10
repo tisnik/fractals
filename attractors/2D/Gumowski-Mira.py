@@ -77,6 +77,10 @@ plt.tight_layout()
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("gumowski_mira_1.png")
 
+# Výsledek by měl vypadat následovně:
+# ![gumowski_mira_1.png](gumowski_mira_1.png)
+# (oproti originálu zmenšeno)
+
 # Zobrazení grafu.
 plt.show()
 
@@ -103,5 +107,11 @@ plt.tight_layout()
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("gumowski_mira_2.png")
 
+# Výsledek by měl vypadat následovně:
+# ![gumowski_mira_2.png](gumowski_mira_2.png)
+# (oproti originálu zmenšeno)
+
 # Zobrazení grafu.
 plt.show()
+
+# Konec.
