@@ -72,5 +72,9 @@ plt.tight_layout()
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("fractal_dream.png")
 
+# Výsledek by měl vypadat následovně:
+# ![fractal_dream.png](fractal_dream.png)
+# (oproti originálu zmenšeno)
+
 # Zobrazení grafu.
 plt.show()
