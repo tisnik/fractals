@@ -72,6 +72,10 @@ plt.tight_layout()
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("de_jong_1.png")
 
+# Výsledek by měl vypadat následovně:
+# ![de_jong_1.png](de_jong_1.png)
+# (oproti originálu zmenšeno)
+
 # Zobrazení grafu.
 plt.show()
 
@@ -98,6 +102,10 @@ plt.tight_layout()
 
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("de_jong_2.png")
+
+# Výsledek by měl vypadat následovně:
+# ![de_jong_2.png](de_jong_2.png)
+# (oproti originálu zmenšeno)
 
 # Zobrazení grafu.
 plt.show()
