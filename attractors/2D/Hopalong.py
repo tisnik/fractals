@@ -89,5 +89,11 @@ plt.tight_layout()
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("hopalong.png")
 
+# Výsledek by měl vypadat následovně:
+# ![hopalong.png](hopalong.png)
+# (oproti originálu zmenšeno)
+
 # Zobrazení grafu.
 plt.show()
+
+# Konec.
