@@ -80,5 +80,11 @@ plt.tight_layout()
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("threeply.png")
 
+# Výsledek by měl vypadat následovně:
+# ![threeply.png](threeply.png)
+# (oproti originálu zmenšeno)
+
 # Zobrazení grafu.
 plt.show()
+
+# Konec.
