@@ -87,5 +87,11 @@ plt.tight_layout()
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("kam_torus.png")
 
+# Výsledek by měl vypadat následovně:
+# ![kam_torus.png](kam_torus.png)
+# (oproti originálu zmenšeno)
+
 # Zobrazení grafu.
 plt.show()
+
+# Konec.
