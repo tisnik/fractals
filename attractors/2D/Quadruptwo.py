@@ -80,5 +80,11 @@ plt.tight_layout()
 # Uložení grafu pro jeho další zpracování.
 plt.savefig("quadruptwo.png")
 
+# Výsledek by měl vypadat následovně:
+# ![quadruptwo.png](quadruptwo.png)
+# (oproti originálu zmenšeno)
+
 # Zobrazení grafu.
 plt.show()
+
+# Konec.
