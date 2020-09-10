@@ -69,7 +69,11 @@ plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.05)
 plt.tight_layout()
 
 # Uložení grafu pro jeho další zpracování.
-plt.savefig("svensson1.png")
+plt.savefig("svensson_1.png")
+
+# Výsledek by měl vypadat následovně:
+# ![svensson_1.png](svensson_1.png)
+# (oproti originálu zmenšeno)
 
 # Zobrazení grafu.
 plt.show()
@@ -96,7 +100,13 @@ plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.05,
 plt.tight_layout()
 
 # Uložení grafu pro jeho další zpracování.
-plt.savefig("svensson2.png")
+plt.savefig("svensson_2.png")
+
+# Výsledek by měl vypadat následovně:
+# ![svensson_2.png](svensson_2.png)
+# (oproti originálu zmenšeno)
 
 # Zobrazení grafu.
 plt.show()
+
+# Konec.
