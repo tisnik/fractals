@@ -85,7 +85,51 @@ plt.plot(x, y, 'o', markersize=0.1)
 plt.tight_layout()
 
 # Uložení grafu pro jeho další zpracování.
-plt.savefig("dynamic.png")
+plt.savefig("dynamic_1.png")
+
+# Výsledek by měl vypadat následovně:
+# ![dynamic_1.png](dynamic_1.png)
+# (oproti originálu zmenšeno)
 
 # Zobrazení grafu.
 plt.show()
+
+# Druhý atraktor
+
+# Parametry ovlivňující výpočet podivného atraktoru.
+A = 2.7
+B = -2.8
+step_x = step_x // 2
+step_y = step_y * 2
+maxiter = maxiter // 2
+
+i = 0
+# Vlastní výpočet podivného atraktoru  pro různé počáteční podmínky.
+for x0 in range(0, max_x, step_x):
+    for y0 in range(0, max_y, step_y):
+        # Počáteční hodnoty pro výpočet.
+        x[i], y[i] = (x0, y0)
+        # Jedno "vlákno" atraktoru.
+        for r in range(1, maxiter):
+            x_dot, y_dot = dynamic(x[i], y[i], A, B)
+            x[i+1] = x[i] + dt*x_dot
+            y[i+1] = y[i] + dt*y_dot
+            i += 1
+
+# Vykreslení grafu s podivným atraktorem.
+plt.plot(x, y, 'o', markersize=0.1, color='red')
+
+# Změna velikosti komponent v grafu.
+plt.tight_layout()
+
+# Uložení grafu pro jeho další zpracování.
+plt.savefig("dynamic_2.png")
+
+# Výsledek by měl vypadat následovně:
+# ![dynamic_2.png](dynamic_2.png)
+# (oproti originálu zmenšeno)
+
+# Zobrazení grafu.
+plt.show()
+
+# Konec.
