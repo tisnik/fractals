@@ -87,6 +87,9 @@ B = 1.902
 C = 0.316
 D = 1.525
 
+# Počáteční hodnoty pro výpočet De Jongova atraktoru.
+x[0], y[0] = (0.0, 0.0)
+
 # Vlastní výpočet atraktoru - druhá varianta.
 for i in range(n-1):
     x_dot, y_dot = de_jong(x[i], y[i], A, B, C, D)
