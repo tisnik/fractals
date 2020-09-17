@@ -87,13 +87,47 @@ plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
 plt.tight_layout()
 
 # Uložení grafu pro jeho další zpracování.
-plt.savefig("hopalong.png")
+plt.savefig("hopalong_1.png")
 
 # Výsledek by měl vypadat následovně:
-# ![hopalong.png](hopalong.png)
+# ![hopalong_1.png](hopalong_1.png)
 # (oproti originálu zmenšeno)
 
 # Zobrazení grafu.
 plt.show()
 
+# Druhý atraktor.
+
+# Počáteční hodnoty pro výpočet.
+x[0], y[0] = (0.0, 0.0)
+
+# Parametry ovlivňující výpočet podivného atraktoru.
+A = 7.16878197155893
+B = 8.43659746693447
+C = 2.55983412731439
+
+# Vlastní výpočet podivného atraktoru.
+for i in range(n-1):
+    x_dot, y_dot = hopalong(x[i], y[i], A, B, C)
+    x[i+1] = x_dot
+    y[i+1] = y_dot
+
+# Vykreslení grafu.
+plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1,
+         color='red')
+
+# Změna velikosti komponent v grafu.
+plt.tight_layout()
+
+# Uložení grafu pro jeho další zpracování.
+plt.savefig("hopalong_2.png")
+
+# Výsledek by měl vypadat následovně:
+# ![hopalong_2.png](hopalong_2.png)
+# (oproti originálu zmenšeno)
+
+# Zobrazení grafu.
+plt.show()
+
+# Konec.
 # Konec.
