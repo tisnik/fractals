@@ -589,6 +589,8 @@ static void main_event_loop(void)
         }
         if (perform_redraw) {
             redraw(pixmap);
+        } else {
+            SDL_Delay(10);
         }
     } while (!done);
 }
