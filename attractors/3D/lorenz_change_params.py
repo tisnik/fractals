@@ -47,7 +47,7 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, s, r, b):
 fig = plt.figure()
 ax = fig.gca()
 
-b=2.667
+b = 2.667
 
 for s in np.arange(0, 10, 1.0):
     for r in np.arange(0, 28, 4):
