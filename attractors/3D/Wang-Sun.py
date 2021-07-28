@@ -1,3 +1,4 @@
+"""Výpočet a vykreslení Wan-Sunova podivného atraktoru."""
 
 # coding: utf-8
 
@@ -18,6 +19,7 @@ import numpy as np
 
 # funkce pro výpočet dalšího bodu Wang-Sunova atraktoru
 def wang_sun(x, y, z, alfa, beta, gamma, delta, epsilon, zeta):
+    """Výpočet dalšího bodu Wang-Sunova atraktoru."""
     x_dot = x * alfa + gamma * y * z
     y_dot = x * beta + y * delta - x * z
     z_dot = z * epsilon + zeta * x * y
@@ -103,4 +105,3 @@ plt.tight_layout()
 
 plt.tight_layout()
 plt.show()
-
