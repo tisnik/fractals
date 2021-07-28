@@ -102,7 +102,7 @@ for yi in range(HEIGHT):
 # In[7]:
 
 
-plt.figure(1, figsize=(8,6), dpi=100)
+plt.figure(1, figsize=(8, 6), dpi=100)
 plt.imshow(raster)
 plt.show()
 
