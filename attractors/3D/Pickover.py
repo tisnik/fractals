@@ -39,6 +39,7 @@ from math import sin, cos
 
 
 def pickover(x, y, z, a=2.24, b=0.43, c=-0.65, d=-2.43, e=1.0):
+    """Výpočet dalšího bodu Pickoverova atraktoru."""
     x_dot = sin(a * y) - z * cos(b * x)
     y_dot = z * sin(c * x) - cos(d * y)
     z_dot = e * sin(x)
@@ -72,7 +73,7 @@ ax.plot(x, y, z, 'o', markersize=0.1)
 
 # zobrazení grafu
 plt.tight_layout()
-#plt.show()
+# plt.show()
 
 ch_3d = np.stack((x, y, z))
 lim_xyz = [(np.min(ch_3d[ii]), np.max(ch_3d[ii])) for ii in range(3)]
@@ -111,4 +112,3 @@ plt.tight_layout()
 
 plt.tight_layout()
 plt.show()
-
