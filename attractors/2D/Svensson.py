@@ -30,6 +30,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from math import sin, cos
 
+
 def svensson(x, y, a, b, c, d):
     """Funkce pro výpočet dalšího bodu podivného atraktoru."""
     x_dot = d * sin(x * a) - sin(y * b)
