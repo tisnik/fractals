@@ -55,7 +55,7 @@ x[0], y[0] = (0.1, 0.0)
 A = -0.97
 B =  2.88
 C =  0.77
-D =  0.74
+D = 0.74
 
 # Vlastní výpočet podivného atraktoru.
 for i in range(n-1):
