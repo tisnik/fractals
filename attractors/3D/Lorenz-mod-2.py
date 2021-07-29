@@ -39,6 +39,7 @@ import numpy as np
 
 # funkce pro výpočet dalšího bodu Lorenzova mod2 atraktoru
 def lorenz_mod2(x, y, z, alfa, beta, gamma, delta):
+    """Výpočet dalšího bodu Lorenzove mod2 atraktoru."""
     x_dot = -alfa*x + y*y - z*z + alfa*gamma
     y_dot = x*(y - beta*z) + delta
     z_dot = -z + x*(beta*y + z)
@@ -124,4 +125,3 @@ plt.tight_layout()
 
 plt.tight_layout()
 plt.show()
-
