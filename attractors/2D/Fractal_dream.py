@@ -53,7 +53,7 @@ x[0], y[0] = (0.1, 0.0)
 
 # Parametry ovlivňující výpočet podivného atraktoru.
 A = -0.97
-B =  2.88
+B = 2.88
 C = 0.77
 D = 0.74
 
