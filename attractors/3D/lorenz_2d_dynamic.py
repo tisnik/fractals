@@ -1,3 +1,5 @@
+"""Notebook with the classic Lorenz attractor."""
+
 # Jupyter Notebook
 #
 # Třicátý demonstrační příklad:
