@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Renderer of the classic Julia fractal."""
+
 from PIL import Image
 import palette_blues
 import palette_gold
