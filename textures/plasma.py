@@ -42,8 +42,10 @@ IMAGE_HEIGHT = 256
 
 def random_gauss():
     """
+    Random number generator.
+
     Vygenerovani nahodneho cisla v rozsahu 0..1 s pribliznym
-    Gaussovym rozlozenim
+    Gaussovym rozlozenim.
     """
     N = 50
     sum = 0.0
