@@ -1,3 +1,5 @@
+"""Fresnel fractal generator."""
+
 from turtle import *
 from math import *
 
