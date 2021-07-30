@@ -1,4 +1,7 @@
 # MIT License
+
+"""Simple image resizing tool."""
+
 #
 # Copyright (c) 2020 Pavel Tišnovský
 #
