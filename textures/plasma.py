@@ -41,10 +41,10 @@ IMAGE_HEIGHT = 256
 
 
 def random_gauss():
-    '''
+    """
     Vygenerovani nahodneho cisla v rozsahu 0..1 s pribliznym
     Gaussovym rozlozenim
-    '''
+    """
     N = 50
     sum = 0.0
     for i in range(N):
