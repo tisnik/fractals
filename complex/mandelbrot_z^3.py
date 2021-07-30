@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Renderer of Mandelbrot fractal variant z^3."""
+
 from PIL import Image
 import palette_mandmap
 
