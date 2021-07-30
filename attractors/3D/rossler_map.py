@@ -18,6 +18,7 @@ import numpy as np
 
 # funkce pro výpočet dalšího bodu Rosslerova atraktoru
 def rossler(x, y, z, a=0.2, b=0.2, c=5.7):
+    """Compute next point in Rossler attractor."""
     x_dot = -y - z
     y_dot = x + a*y
     z_dot = b + z*(x-c)
