@@ -1,3 +1,4 @@
+"""Map of Rossler attractor."""
 
 # coding: utf-8
 
