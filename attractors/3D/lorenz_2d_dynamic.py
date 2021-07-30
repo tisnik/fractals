@@ -13,6 +13,7 @@ import math
 
 # funkce pro výpočet dalšího bodu Lorenzova atraktoru
 def lorenz(x, y, z, s=10, r=28, b=2.667):
+    """Calculation of the next point in Lorenz attractor."""
     x_dot = s*(y - x)
     y_dot = r*x - y - x*z
     z_dot = x*y - b*z
