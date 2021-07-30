@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Renderer of the classic Mandelbrot fractal."""
+
 from PIL import Image
 import palette_blues
 
