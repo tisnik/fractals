@@ -1,3 +1,5 @@
+"""Color palette taken from Fractint."""
+
 # taken from Fractint
 # see https://www.fractint.org/
 palette = (
