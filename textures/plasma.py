@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Plasma pattern generator."""
+
 # MIT License
 #
 # Copyright (c) 2020 Pavel Tišnovský
