@@ -14,6 +14,7 @@ IMAGE_HEIGHT = 256
 
 
 def julia(zx0, zy0, cx, cy, maxiter):
+    """Calculate number of iterations for given complex numbers Z and C to escape from set."""
     c = complex(cx, cy)
     z = complex(zx0, zy0)
     for i in range(0, maxiter):
