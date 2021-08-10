@@ -12,6 +12,7 @@ IMAGE_HEIGHT = 256
 
 
 def mandelbrot(cx, cy, maxiter):
+    """Calculate number of iterations for given complex number to escape from set."""
     c = complex(cx, cy)
     z = 0
     for i in range(0, maxiter):
