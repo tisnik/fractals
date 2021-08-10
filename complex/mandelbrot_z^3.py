@@ -23,6 +23,7 @@ def mandelbrot(cx, cy, maxiter):
 
 
 def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
+    """Recalculate the whole fractal and render the set into given image."""
     width, height = image.size       # rozmery obrazku
     stepx = (xmax - xmin)/width
     stepy = (ymax - ymin)/height
