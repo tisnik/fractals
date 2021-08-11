@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Vytvoreni textury s "kruznicovym moare"
+"""Vytvoreni textury s "kruznicovym moare"."""
 
 from PIL import Image
 import palette_blues
