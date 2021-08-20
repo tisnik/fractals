@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Texture rendering based on FM synthesis."""
+
 from PIL import Image
 import palette_blues
 import palette_greens
