@@ -49,6 +49,7 @@ def icon(x, y, lambda_, alpha, beta, gamma, omega, degree):
 
 
 def draw_icon(filename, lambda_, alfa, beta, gamma, omega, degree, color):
+    """Vykreslení atraktoru se zadanými parametry."""
     # Celkový počet vypočtených bodů na atraktoru.
     n = 100000
 
