@@ -57,7 +57,7 @@ def random_gauss():
 
 
 def compute_min_max(bitmap, width, height):
-    """Computes minimum and maximum pixel value."""
+    """Minimum and maximum pixel value computation."""
     # pro prepocet intenzit pixelu
     min = float("inf")
     max = float("-inf")
@@ -94,6 +94,7 @@ def convert_to_image(bitmap, image, width, height, palette):
 # h ... Hurstuv exponent
 # n ... pocet koeficientu spektralni syntezy
 def spectral_synthesis(image, palette, n, h):
+    """Plasma texture computation using spectral synthesis."""
     width, height = image.size      # rozmery obrazku
 
     bitmap = np.zeros([height, width])
