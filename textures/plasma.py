@@ -57,6 +57,7 @@ def random_gauss():
 
 
 def compute_min_max(bitmap, width, height):
+    """Computes minimum and maximum pixel value."""
     # pro prepocet intenzit pixelu
     min = float("inf")
     max = float("-inf")
