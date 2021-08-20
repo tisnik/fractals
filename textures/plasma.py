@@ -73,6 +73,7 @@ def compute_min_max(bitmap, width, height):
 
 
 def convert_to_image(bitmap, image, width, height, palette):
+    """Convert the 2D array into a proper bitmap with high contrast."""
     print("contrast adjustment")
 
     min, max = compute_min_max(bitmap, width, height)
