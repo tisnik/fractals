@@ -34,6 +34,7 @@ import math
 
 # funkce pro výpočet dalšího bodu Lorenzova atraktoru
 def lorenz(x, y, z, s=10, r=28, b=2.667):
+    """Výpočet dalšího bodu Lorenzova atraktoru."""
     x_dot = s*(y - x)
     y_dot = r*x - y - x*z
     z_dot = x*y - b*z
@@ -48,6 +49,7 @@ n = 1000
 
 
 def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0):
+    """Vykreslení Lorenzova atraktoru."""
     # prozatím prázdné pole připravené pro výpočet
     x = np.zeros((n,))
     y = np.zeros((n,))
