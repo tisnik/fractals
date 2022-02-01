@@ -33,8 +33,8 @@ from math import sin, cos
 
 def fractal_dream(x, y, a, b, c, d):
     """Funkce pro výpočet dalšího bodu atraktoru Fractal Dream."""
-    x_dot = sin(b * y) - c*sin(b * x)
-    y_dot = sin(a * x) - d*sin(a * y)
+    x_dot = sin(b * y) - c * sin(b * x)
+    y_dot = sin(a * x) - d * sin(a * y)
     return x_dot, y_dot
 
 
@@ -58,13 +58,13 @@ C = 0.77
 D = 0.74
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = fractal_dream(x[i], y[i], A, B, C, D)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
+plt.plot(x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
