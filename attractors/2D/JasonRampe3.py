@@ -59,13 +59,13 @@ C = -2.8151
 D = 0.2277
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = rason_rampe_3(x[i], y[i], A, B, C, D)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.03)
+plt.plot(x[settle_down_points:], y[settle_down_points:], "o", markersize=0.03)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
