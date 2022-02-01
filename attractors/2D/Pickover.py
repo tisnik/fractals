@@ -58,13 +58,13 @@ C = -0.9
 D = -0.4
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = pickover(x[i], y[i], A, B, C, D)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
+plt.plot(x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
@@ -91,14 +91,15 @@ C = -1.9
 D = -0.4
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = pickover(x[i], y[i], A, B, C, D)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1,
-         color='red')
+plt.plot(
+    x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1, color="red"
+)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
