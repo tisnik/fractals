@@ -33,13 +33,13 @@ from math import sin, cos, sqrt
 
 def Gumowski(x, mu):
     """Gumovského funkce."""
-    g = x*mu + 2*x*x*(1 - mu) / (1 + x*x)
+    g = x * mu + 2 * x * x * (1 - mu) / (1 + x * x)
     return g
 
 
 def gumowski_mira(x, y, a, b, mu):
     """Funkce pro výpočet dalšího bodu podivného atraktoru Gumowski-Mira."""
-    x_dot = a*y*(1 - b*y*y) + y + Gumowski(x, mu)
+    x_dot = a * y * (1 - b * y * y) + y + Gumowski(x, mu)
     y_dot = -x + Gumowski(x_dot, mu)
     return x_dot, y_dot
 
@@ -63,13 +63,13 @@ B = 0.5
 mu = -0.8
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = gumowski_mira(x[i], y[i], A, B, mu)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
+plt.plot(x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
@@ -92,14 +92,15 @@ B = 0.15
 mu = -0.9
 
 # Vlastní výpočet druhého podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = gumowski_mira(x[i], y[i], A, B, mu)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o',
-         markersize=0.1, color='red')
+plt.plot(
+    x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1, color="red"
+)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
