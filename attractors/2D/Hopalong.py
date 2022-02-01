@@ -51,7 +51,7 @@ def sign2(x):
 
 def hopalong(x, y, a, b, c):
     """Funkce pro výpočet dalšího bodu podivného atraktoru Hopalong."""
-    x_dot = y - sign(x)*sqrt(abs(b*x-c))
+    x_dot = y - sign(x) * sqrt(abs(b * x - c))
     y_dot = a - x
     return x_dot, y_dot
 
@@ -75,13 +75,13 @@ B = 1.8
 C = -0.9
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = hopalong(x[i], y[i], A, B, C)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
+plt.plot(x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
@@ -107,14 +107,15 @@ B = 8.43659746693447
 C = 2.55983412731439
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = hopalong(x[i], y[i], A, B, C)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1,
-         color='red')
+plt.plot(
+    x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1, color="red"
+)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
