@@ -61,14 +61,14 @@ def kam_torus(orbit_start, orbit_end, orbit_step, points_per_orbit, a):
     # Vlastní výpočet podivného atraktoru.
     i = 0
     for orbit in frange(orbit_start, orbit_end, orbit_step):
-        x[i] = orbit/3.0
-        y[i] = orbit/3.0
+        x[i] = orbit / 3.0
+        y[i] = orbit / 3.0
         i += 1
         if i >= n:
             return x, y
         for p in range(1, points_per_orbit):
-            x[i] = x[i-1]*cos(a) + (x[i-1]*x[i-1]-y[i-1])*sin(a)
-            y[i] = x[i-1]*sin(a) - (x[i-1]*x[i-1]-y[i-1])*cos(a)
+            x[i] = x[i - 1] * cos(a) + (x[i - 1] * x[i - 1] - y[i - 1]) * sin(a)
+            y[i] = x[i - 1] * sin(a) - (x[i - 1] * x[i - 1] - y[i - 1]) * cos(a)
             i += 1
             if i >= n:
                 return x, y
@@ -79,7 +79,7 @@ def kam_torus(orbit_start, orbit_end, orbit_step, points_per_orbit, a):
 x, y = kam_torus(orbit_start, orbit_end, orbit_step, points_per_orbit, a)
 
 # Vykreslení grafu.
-plt.plot(x, y, 'o', markersize=0.1)
+plt.plot(x, y, "o", markersize=0.1)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
