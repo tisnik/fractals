@@ -33,8 +33,8 @@ from math import sin, cos
 
 def bedhead(x, y, a, b):
     """Funkce pro výpočet dalšího bodu podivného atraktoru."""
-    x_dot = sin(x*y/b)*y+cos(a*x-y)
-    y_dot = x+sin(y)/b
+    x_dot = sin(x * y / b) * y + cos(a * x - y)
+    y_dot = x + sin(y) / b
     return x_dot, y_dot
 
 
@@ -56,13 +56,13 @@ A = 0.06
 B = 0.98
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = bedhead(x[i], y[i], A, B)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu s atraktorem.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
+plt.plot(x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
@@ -87,14 +87,15 @@ B = 0.83
 x[0], y[0] = (1.0, 1.0)
 
 # Vlastní výpočet atraktoru - druhá varianta.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = bedhead(x[i], y[i], A, B)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:],
-         'o', markersize=0.1, color='red')
+plt.plot(
+    x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1, color="red"
+)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
