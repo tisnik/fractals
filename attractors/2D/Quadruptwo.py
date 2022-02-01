@@ -37,12 +37,12 @@ from numpy import abs, sign, arctan
 
 def sqr(x):
     """Výpočet druhé mocniny vstupní hodnoty x."""
-    return x*x
+    return x * x
 
 
 def quadruptwo(x, y, a, b, c):
     """Funkce pro výpočet dalšího bodu podivného atraktoru Quadruptwo."""
-    x_dot = y - sign(x)*sin(ln(abs(b*x-c)))*atan(sqr(ln(abs(c*x-b))))
+    x_dot = y - sign(x) * sin(ln(abs(b * x - c))) * atan(sqr(ln(abs(c * x - b))))
     y_dot = a - x
     return x_dot, y_dot
 
@@ -66,13 +66,13 @@ B = 1.8
 C = -0.9
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = quadruptwo(x[i], y[i], A, B, C)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.05)
+plt.plot(x[settle_down_points:], y[settle_down_points:], "o", markersize=0.05)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
