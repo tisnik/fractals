@@ -33,8 +33,8 @@ from math import sin, cos
 
 def dynamic(x, y, a, b):
     """Funkce pro výpočet dalšího bodu podivného atraktoru."""
-    x_dot = -sin(y + a*sin(b*y))
-    y_dot = sin(x + a*sin(b*x))
+    x_dot = -sin(y + a * sin(b * y))
+    y_dot = sin(x + a * sin(b * x))
     return x_dot, y_dot
 
 
@@ -52,7 +52,7 @@ step_y = 5
 maxiter = 1000
 
 # Počet vypočtených bodů na podivném atraktoru.
-n = maxiter * max_x//step_x * max_y//step_y
+n = maxiter * max_x // step_x * max_y // step_y
 
 # Prozatím prázdné pole připravené pro výpočet.
 x = np.zeros((n,))
@@ -74,12 +74,12 @@ for x0 in range(0, max_x, step_x):
         # Jedno "vlákno" atraktoru.
         for r in range(1, maxiter):
             x_dot, y_dot = dynamic(x[i], y[i], A, B)
-            x[i+1] = x[i] + dt*x_dot
-            y[i+1] = y[i] + dt*y_dot
+            x[i + 1] = x[i] + dt * x_dot
+            y[i + 1] = y[i] + dt * y_dot
             i += 1
 
 # Vykreslení grafu s podivným atraktorem.
-plt.plot(x, y, 'o', markersize=0.1)
+plt.plot(x, y, "o", markersize=0.1)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
@@ -112,12 +112,12 @@ for x0 in range(0, max_x, step_x):
         # Jedno "vlákno" atraktoru.
         for r in range(1, maxiter):
             x_dot, y_dot = dynamic(x[i], y[i], A, B)
-            x[i+1] = x[i] + dt*x_dot
-            y[i+1] = y[i] + dt*y_dot
+            x[i + 1] = x[i] + dt * x_dot
+            y[i + 1] = y[i] + dt * y_dot
             i += 1
 
 # Vykreslení grafu s podivným atraktorem.
-plt.plot(x, y, 'o', markersize=0.1, color='red')
+plt.plot(x, y, "o", markersize=0.1, color="red")
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
