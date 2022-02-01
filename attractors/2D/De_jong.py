@@ -58,13 +58,13 @@ C = -0.86
 D = -2.20
 
 # Vlastní výpočet podivného atraktoru.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = de_jong(x[i], y[i], A, B, C, D)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu s atraktorem.
-plt.plot(x[settle_down_points:], y[settle_down_points:], 'o', markersize=0.1)
+plt.plot(x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
@@ -91,14 +91,15 @@ D = 1.525
 x[0], y[0] = (0.0, 0.0)
 
 # Vlastní výpočet atraktoru - druhá varianta.
-for i in range(n-1):
+for i in range(n - 1):
     x_dot, y_dot = de_jong(x[i], y[i], A, B, C, D)
-    x[i+1] = x_dot
-    y[i+1] = y_dot
+    x[i + 1] = x_dot
+    y[i + 1] = y_dot
 
 # Vykreslení grafu.
-plt.plot(x[settle_down_points:], y[settle_down_points:],
-         'o', markersize=0.1, color='red')
+plt.plot(
+    x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1, color="red"
+)
 
 # Změna velikosti komponent v grafu.
 plt.tight_layout()
