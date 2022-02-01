@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-#define WIDTH 320
-#define HEIGHT 240
+#define WIDTH 640
+#define HEIGHT 480
 
 #define ABS(a) ((a)<0 ? -(a) : (a) )
 #define MAX(a,b) ((a)>(b) ? (a) : (b))
@@ -143,26 +144,63 @@ void line(int x1, int y1, int x2, int y2)
     }
 }
 
-void npr_line(int x1, int y1, int x2, int y2)
+void npr_line(int x1, int y1, int x2, int y2, double maxd)
 {
-    line(x1, y1, x2, y2);
+ //   line(x1, y1, x2, y2);
+    int dist = ABS(x2-x1) + ABS(y2-y1);
+    if (dist < 20)
+    {
+        line(x1, y1, x2, y2);
+    }
+    else
+    {
+        int midx, midy;
+        float nx, ny;
+        float d;
+        float nd;
+
+        midx = (x1 + x2) >> 1;
+        midy = (y1 + y2) >> 1;
+
+        nx = (y1-y2);
+        ny = (x2-x1);
+        nd = sqrtf(nx*nx + ny*ny);
+        nx /= nd;
+        ny /= nd;
+        d = maxd * (((float)rand()/RAND_MAX) - 0.5);
+        midx += nx * d;
+        midy += ny * d;
+        npr_line(x1, y1, midx, midy, maxd/1.8);
+        npr_line(midx, midy, x2, y2, maxd/1.8);
+    }
+}
+
+void draw_demo()
+{
+    int i;
+    for (i = 0; i < 500; i+=25)
+    {
+        srand(6503);
+        npr_line(50, 25 + i, WIDTH - 50, 25 + i, i/2.0);
+    }
+
 }
 
 void draw_square()
 {
-    npr_line(20, 20, 100, 20);
-    npr_line(100, 20, 100, 100);
-    npr_line(20, 100, 100, 100);
-    npr_line(20, 100, 20, 20);
+    npr_line(20, 20, 200, 20, 10);
+    npr_line(200, 20, 200, 200, 10);
+    npr_line(20, 200, 200, 200, 10);
+    npr_line(20, 200, 20, 20, 10);
 }
 
 void draw_diamond()
 {
 #define W 50
-    npr_line(60 - W, 160, 60, 160 - W);
-    npr_line(60, 160 - W, 60 + W, 160);
-    npr_line(60 + W , 160, 60, 160 + W);
-    npr_line(60, 160 + W, 60 - W, 160);
+    npr_line(60 - W, 160, 60, 160 - W, 10);
+    npr_line(60, 160 - W, 60 + W, 160, 10);
+    npr_line(60 + W , 160, 60, 160 + W, 10);
+    npr_line(60, 160 + W, 60 - W, 160, 10);
 #undef W
 }
 
@@ -173,11 +211,11 @@ void draw_star()
     float x1, y1, x2, y2;
     for (i=0; i<360; i+=360/STEP)
     {
-        x1 = 100.0*cos(i*M_PI/180.0);
-        y1 = 100.0*sin(i*M_PI/180.0);
-        x2 = 100.0*cos((i+3*360/STEP)*M_PI/180.0);
-        y2 = 100.0*sin((i+3*360/STEP)*M_PI/180.0);
-        npr_line(200+x1, 120+y1, 200+x2, 120+y2);
+        x1 = 200.0*cos(i*M_PI/180.0);
+        y1 = 200.0*sin(i*M_PI/180.0);
+        x2 = 200.0*cos((i+3*360/STEP)*M_PI/180.0);
+        y2 = 200.0*sin((i+3*360/STEP)*M_PI/180.0);
+        npr_line(400+x1, 220+y1, 400+x2, 220+y2, 10);
     }
 #undef STEP
 }
