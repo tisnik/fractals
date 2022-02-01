@@ -36,7 +36,7 @@ def icon(x, y, lambda_, alpha, beta, gamma, omega, degree):
     p = alpha * zzbar + lambda_
     zreal = x
     zimag = y
-    for i in range(0, degree-2):
+    for i in range(0, degree - 2):
         za = zreal * x - zimag * y
         zb = zimag * x + zreal * y
         zreal = za
@@ -64,18 +64,18 @@ def draw_icon(filename, lambda_, alfa, beta, gamma, omega, degree, color):
     x[0], y[0] = (0.01, 0.01)
 
     # Vlastní výpočet podivného atraktoru.
-    for i in range(n-1):
-        x_dot, y_dot = icon(x[i], y[i],
-                            LAMBDA, ALFA, BETA, GAMMA, OMEGA, DEGREE)
-        x[i+1] = x_dot
-        y[i+1] = y_dot
+    for i in range(n - 1):
+        x_dot, y_dot = icon(x[i], y[i], LAMBDA, ALFA, BETA, GAMMA, OMEGA, DEGREE)
+        x[i + 1] = x_dot
+        y[i + 1] = y_dot
 
     # Změna velikosti komponent v grafu.
     plt.figure(figsize=(8, 8))
 
     # Vykreslení grafu.
-    plt.plot(x[settle_down_points:], y[settle_down_points:], 'o',
-             markersize=0.1, color=color)
+    plt.plot(
+        x[settle_down_points:], y[settle_down_points:], "o", markersize=0.1, color=color
+    )
 
     # Uložení grafu pro jeho další zpracování.
     plt.savefig(filename)
@@ -97,7 +97,7 @@ DEGREE = 5
 # Výsledek by měl vypadat následovně:
 # ![icon_1.png](icon_1.png)
 # (oproti originálu zmenšeno)
-draw_icon("icon_1.png", LAMBDA, ALFA, BETA, GAMMA, OMEGA, DEGREE, 'blue')
+draw_icon("icon_1.png", LAMBDA, ALFA, BETA, GAMMA, OMEGA, DEGREE, "blue")
 
 # Druhý atraktor
 
@@ -111,7 +111,7 @@ DEGREE = 3
 # Výsledek by měl vypadat následovně:
 # ![icon_2.png](icon_2.png)
 # (oproti originálu zmenšeno)
-draw_icon("icon_2.png", LAMBDA, ALFA, BETA, GAMMA, OMEGA, DEGREE, 'red')
+draw_icon("icon_2.png", LAMBDA, ALFA, BETA, GAMMA, OMEGA, DEGREE, "red")
 
 # Třetí atraktor
 
@@ -125,7 +125,7 @@ DEGREE = 5
 # Výsledek by měl vypadat následovně:
 # ![icon_3.png](icon_3.png)
 # (oproti originálu zmenšeno)
-draw_icon("icon_3.png", LAMBDA, ALFA, BETA, GAMMA, OMEGA, DEGREE, 'orange')
+draw_icon("icon_3.png", LAMBDA, ALFA, BETA, GAMMA, OMEGA, DEGREE, "orange")
 
 
 # Konec.
