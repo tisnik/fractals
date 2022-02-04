@@ -16,7 +16,7 @@ while f < 5000:
     f += 0.2
     x += cos(f * f)
     y += sin(f * f)
-    goto(2*x, 2*y)
+    goto(2 * x, 2 * y)
     dot(1)
 
 exitonclick()
