@@ -15,16 +15,16 @@ IMAGE_HEIGHT = 256
 
 
 def fm(image, palette, xmin, ymin, xmax, ymax):
-    width, height = image.size       # rozmery obrazku
-    stepx = (xmax - xmin)/width
-    stepy = (ymax - ymin)/height
+    width, height = image.size  # rozmery obrazku
+    stepx = (xmax - xmin) / width
+    stepy = (ymax - ymin) / height
 
     y1 = ymin
     for y in range(0, height):
         x1 = xmin
         for x in range(0, width):
             x1 += stepx
-            val = 100 + 100.0*sin(x/4 + 2*sin(x/20+y/50))
+            val = 100 + 100.0 * sin(x / 4 + 2 * sin(x / 20 + y / 50))
             i = int(val) & 255
             color = (palette[i][0], palette[i][1], palette[i][2])
             image.putpixel((x, y), color)
