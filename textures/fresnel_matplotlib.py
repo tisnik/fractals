@@ -24,7 +24,7 @@ for i in range(n):
     ya[i] = y
 
 # Vykreslení grafu
-plt.plot(xa, ya, 'b')
+plt.plot(xa, ya, "b")
 
 # Změna velikosti komponent v grafu.
 # plt.tight_layout()
