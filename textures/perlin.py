@@ -80,6 +80,7 @@ def random_array(width, height, amplitude):
 
 
 def perlin_noise(image, palette, noise, octaves):
+    """Vlastni vypocet Perlinova sumu."""
     width, height = image.size  # rozmery obrazku
 
     bitmap = np.zeros([height, width])
