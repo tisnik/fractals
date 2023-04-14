@@ -10,8 +10,8 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-# Funkce provadejici vypocet moare s kruznicovym vzorkem
 def recalc_circle_pattern(image, xmin, ymin, xmax, ymax):
+    """Funkce provadejici vypocet moare s kruznicovym vzorkem."""
     width, height = image.size  # rozmery obrazku
     stepx = (xmax - xmin) / width
     stepy = (ymax - ymin) / height
