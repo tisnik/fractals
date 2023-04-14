@@ -41,4 +41,10 @@ func main() {
 
 	img2 := hdri.ToImage()
 	writeImage(img2, "test2.png")
+
+	hdri.MultiplyRGBA(0.7, 0.7, 0.7, 1.0)
+	hdri.AddRGBA(0.0, 0.0, 10000.0, 0.0)
+
+	img3 := hdri.ToImage()
+	writeImage(img3, "test3.png")
 }
