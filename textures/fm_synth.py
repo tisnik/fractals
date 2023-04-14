@@ -15,6 +15,7 @@ IMAGE_HEIGHT = 256
 
 
 def fm(image, palette, xmin, ymin, xmax, ymax):
+    """Generate texture based on FM synthesis algorithm."""
     width, height = image.size  # rozmery obrazku
     stepx = (xmax - xmin) / width
     stepy = (ymax - ymin) / height
