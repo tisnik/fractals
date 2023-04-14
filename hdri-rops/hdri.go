@@ -65,6 +65,21 @@ func (hdri *HDRI) Multiply(plane string, scale float32) {
 	}
 }
 
+func (hdri *HDRI) AddRGBA(rdelta, gdelta, bdelta, adelta float32) {
+	hdri.Add("red", rdelta)
+	hdri.Add("green", gdelta)
+	hdri.Add("blue", bdelta)
+	hdri.Add("alpha", adelta)
+}
+
+func (hdri *HDRI) Add(plane string, delta float32) {
+	pixels := hdri.Planes[plane].Pixels
+
+	for i := 0; i < hdri.PixelCount; i++ {
+		pixels[i] += delta
+	}
+}
+
 func (hdri *HDRI) MultiplyRGBA(rscale, gscale, bscale, ascale float32) {
 	hdri.Multiply("red", rscale)
 	hdri.Multiply("green", gscale)
