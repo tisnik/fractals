@@ -15,8 +15,8 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-# Funkce provadejici vypocet moare s kruznicovym ci jinym vzorkem
 def recalc_any_pattern(image, palette, xmin, ymin, xmax, ymax, function):
+    """Funkce provadejici vypocet moare s kruznicovym ci jinym vzorkem."""
     width, height = image.size  # rozmery obrazku
     stepx = (xmax - xmin) / width
     stepy = (ymax - ymin) / height
