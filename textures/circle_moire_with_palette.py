@@ -34,18 +34,23 @@ def recalc_circle_pattern(image, palette, xmin, ymin, xmax, ymax):
         y1 += stepy
 
 
-mez = (2 << 5) + 50 * 2.5
-image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    """Vypocet textur s jejich ulozenim do souboru."""
+    mez = (2 << 5) + 50 * 2.5
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-image_pals = (
-    (palette_blues.palette, "blues"),
-    (palette_greens.palette, "greens"),
-    (palette_gold.palette, "gold"),
-    (palette_ice.palette, "ice"),
-    (palette_mandmap.palette, "mandmap"),
-)
+    image_pals = (
+        (palette_blues.palette, "blues"),
+        (palette_greens.palette, "greens"),
+        (palette_gold.palette, "gold"),
+        (palette_ice.palette, "ice"),
+        (palette_mandmap.palette, "mandmap"),
+    )
 
-for image_pal in image_pals:
-    print(image_pal[1])
-    recalc_circle_pattern(image, image_pal[0], -mez, -mez, mez, mez)
-    image.save("patternB_{name}.png".format(name=image_pal[1]))
+    for image_pal in image_pals:
+        print(image_pal[1])
+        recalc_circle_pattern(image, image_pal[0], -mez, -mez, mez, mez)
+        image.save("patternB_{name}.png".format(name=image_pal[1]))
+
+if __name__ == "__main__":
+    main()
