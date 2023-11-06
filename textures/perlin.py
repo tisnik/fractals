@@ -115,19 +115,24 @@ def perlin_noise(image, palette, noise, octaves):
     convert_to_image(bitmap, image, width, height, palette)
 
 
-image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    """Vypocet textur s jejich ulozenim do souboru."""
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-perlin_noise(image, palette_mandmap.palette, 0.7, 6)
-image.save("patternE_perlin_noise1.png")
+    perlin_noise(image, palette_mandmap.palette, 0.7, 6)
+    image.save("patternE_perlin_noise1.png")
 
-perlin_noise(image, palette_mandmap.palette, 0.7, 7)
-image.save("patternE_perlin_noise2.png")
+    perlin_noise(image, palette_mandmap.palette, 0.7, 7)
+    image.save("patternE_perlin_noise2.png")
 
-perlin_noise(image, palette_blues.palette, 0.7, 9)
-image.save("patternE_perlin_noise3.png")
+    perlin_noise(image, palette_blues.palette, 0.7, 9)
+    image.save("patternE_perlin_noise3.png")
 
-perlin_noise(image, palette_gold.palette, 0.7, 11)
-image.save("patternE_perlin_noise4.png")
+    perlin_noise(image, palette_gold.palette, 0.7, 11)
+    image.save("patternE_perlin_noise4.png")
 
-perlin_noise(image, palette_greens.palette, 0.3, 12)
-image.save("patternE_perlin_noise5.png")
+    perlin_noise(image, palette_greens.palette, 0.3, 12)
+    image.save("patternE_perlin_noise5.png")
+
+if __name__ == "__main__":
+    main()
