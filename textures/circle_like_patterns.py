@@ -33,76 +33,81 @@ def recalc_any_pattern(image, palette, xmin, ymin, xmax, ymax, function):
         y1 += stepy
 
 
-image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    """Vypocet textur s jejich ulozenim do souboru."""
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-mez = (2 << 5) + 30 * 2.5
-recalc_any_pattern(
-    image,
-    palette_mandmap.palette,
-    mez / 5,
-    mez / 5,
-    mez,
-    mez,
-    lambda x, y: x * x + y * y,
-)
-image.save("patternC_circle.png")
+    mez = (2 << 5) + 30 * 2.5
+    recalc_any_pattern(
+        image,
+        palette_mandmap.palette,
+        mez / 5,
+        mez / 5,
+        mez,
+        mez,
+        lambda x, y: x * x + y * y,
+    )
+    image.save("patternC_circle.png")
 
-mez = (2 << 5) + 30 * 2.5
-recalc_any_pattern(
-    image,
-    palette_mandmap.palette,
-    mez / 5,
-    mez / 5,
-    mez,
-    mez,
-    lambda x, y: x * x - y * y,
-)
-image.save("patternC_anticircle.png")
+    mez = (2 << 5) + 30 * 2.5
+    recalc_any_pattern(
+        image,
+        palette_mandmap.palette,
+        mez / 5,
+        mez / 5,
+        mez,
+        mez,
+        lambda x, y: x * x - y * y,
+    )
+    image.save("patternC_anticircle.png")
 
-mez = 15.0
-recalc_any_pattern(
-    image,
-    palette_mandmap.palette,
-    mez / 5,
-    mez / 5,
-    mez,
-    mez,
-    lambda x, y: x ** 3 + y ** 3,
-)
-image.save("patternC_x3y3.png")
+    mez = 15.0
+    recalc_any_pattern(
+        image,
+        palette_mandmap.palette,
+        mez / 5,
+        mez / 5,
+        mez,
+        mez,
+        lambda x, y: x ** 3 + y ** 3,
+    )
+    image.save("patternC_x3y3.png")
 
-mez = 15.0
-recalc_any_pattern(
-    image,
-    palette_mandmap.palette,
-    mez / 5,
-    mez / 5,
-    mez,
-    mez,
-    lambda x, y: x ** 4 + y ** 4,
-)
-image.save("patternC_x4y4.png")
+    mez = 15.0
+    recalc_any_pattern(
+        image,
+        palette_mandmap.palette,
+        mez / 5,
+        mez / 5,
+        mez,
+        mez,
+        lambda x, y: x ** 4 + y ** 4,
+    )
+    image.save("patternC_x4y4.png")
 
-mez = 60.0
-recalc_any_pattern(
-    image,
-    palette_mandmap.palette,
-    mez / 5,
-    mez / 5,
-    mez,
-    mez,
-    lambda x, y: x * x + y * y + x * y * 1.5,
-)
-image.save("patternC_var1.png")
+    mez = 60.0
+    recalc_any_pattern(
+        image,
+        palette_mandmap.palette,
+        mez / 5,
+        mez / 5,
+        mez,
+        mez,
+        lambda x, y: x * x + y * y + x * y * 1.5,
+    )
+    image.save("patternC_var1.png")
 
-mez = 15.0
-recalc_any_pattern(
-    image,
-    palette_mandmap.palette,
-    mez / 5,
-    mez / 5,
-    mez,
-    mez,
-    lambda x, y: x * x * y + y * y * x,
-)
-image.save("patternC_var2.png")
+    mez = 15.0
+    recalc_any_pattern(
+        image,
+        palette_mandmap.palette,
+        mez / 5,
+        mez / 5,
+        mez,
+        mez,
+        lambda x, y: x * x * y + y * y * x,
+    )
+    image.save("patternC_var2.png")
+
+if __name__ == "__main__":
+    main()
