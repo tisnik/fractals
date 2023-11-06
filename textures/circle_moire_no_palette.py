@@ -30,9 +30,14 @@ def recalc_circle_pattern(image, xmin, ymin, xmax, ymax):
         y1 += stepy
 
 
-for i in range(0, 50, 10):
-    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
-    mez = (2 << 5) + i * 2.5
-    recalc_circle_pattern(image, -mez, -mez, mez, mez)
-    fileName = "patternA{index:02d}.png".format(index=i)
-    image.save(fileName)
+def main():
+    """Vypocet textur s jejich ulozenim do souboru."""
+    for i in range(0, 50, 10):
+        image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+        mez = (2 << 5) + i * 2.5
+        recalc_circle_pattern(image, -mez, -mez, mez, mez)
+        fileName = "patternA{index:02d}.png".format(index=i)
+        image.save(fileName)
+
+if __name__ == "__main__":
+    main()
