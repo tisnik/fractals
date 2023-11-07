@@ -3,11 +3,6 @@
 """Vytvoreni textury s "kruznicovym moare"."""
 
 from PIL import Image
-import palette_blues
-import palette_greens
-import palette_gold
-import palette_ice
-import palette_mandmap
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
@@ -36,6 +31,12 @@ def recalc_circle_pattern(image, palette, xmin, ymin, xmax, ymax):
 
 def main():
     """Vypocet textur s jejich ulozenim do souboru."""
+    import palette_blues
+    import palette_greens
+    import palette_gold
+    import palette_ice
+    import palette_mandmap
+
     mez = (2 << 5) + 50 * 2.5
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
