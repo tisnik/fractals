@@ -28,7 +28,7 @@
 # matematické knihovny, ze které se využijí jen některé vybrané funkce.
 import matplotlib.pyplot as plt
 import numpy as np
-from math import sin, cos
+from math import sin
 
 
 def dynamic(x, y, a, b):
