@@ -33,7 +33,6 @@ import palette_greens
 import palette_gold
 import palette_ice
 import palette_mandmap
-import numpy as np
 import math
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
@@ -56,6 +55,10 @@ def compute_min_max(bitmap, width, height):
             if min > z:
                 min = z
     return min, max
+
+
+def create_bitmap(width, height):
+    return [[0 for x in range(width)] for y in range(height)]
 
 
 def convert_to_image(bitmap, image, width, height, palette):
@@ -83,7 +86,7 @@ def perlin_noise(image, palette, noise, octaves):
     """Vlastni vypocet Perlinova sumu."""
     width, height = image.size  # rozmery obrazku
 
-    bitmap = np.zeros([height, width])
+    bitmap = create_bitmap(width, height)
 
     # postupne vytvoreni 'octaves' vrstev v obrazku
     for k in range(octaves):
