@@ -4,6 +4,10 @@ import sys
 # Nutno importovat kvůli konstantám QUIT atd.
 from pygame.locals import QUIT, K_ESCAPE, KEYDOWN
 
+import textures.circle_like_patterns
+import textures.circle_moire_no_palette
+import textures.circle_moire_with_palette
+
 # Velikost okna aplikace
 WIDTH = 256
 HEIGHT = 256
