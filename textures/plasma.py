@@ -134,22 +134,27 @@ def spectral_synthesis(image, palette, n, h):
     convert_to_image(bitmap, image, width, height, palette)
 
 
-image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    """Vypocet textur s jejich ulozenim do souboru."""
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-spectral_synthesis(image, palette_greens.palette, 4, 0.5)
-image.save("patternD_plasma1.png")
+    spectral_synthesis(image, palette_greens.palette, 4, 0.5)
+    image.save("patternD_plasma1.png")
 
-spectral_synthesis(image, palette_blues.palette, 10, 0.5)
-image.save("patternD_plasma2.png")
+    spectral_synthesis(image, palette_blues.palette, 10, 0.5)
+    image.save("patternD_plasma2.png")
 
-spectral_synthesis(image, palette_mandmap.palette, 5, 0.1)
-image.save("patternD_plasma3.png")
+    spectral_synthesis(image, palette_mandmap.palette, 5, 0.1)
+    image.save("patternD_plasma3.png")
 
-spectral_synthesis(image, palette_mandmap.palette, 5, 1.0)
-image.save("patternD_plasma4.png")
+    spectral_synthesis(image, palette_mandmap.palette, 5, 1.0)
+    image.save("patternD_plasma4.png")
 
-spectral_synthesis(image, palette_gold.palette, 15, 0.5)
-image.save("patternD_plasma5.png")
+    spectral_synthesis(image, palette_gold.palette, 15, 0.5)
+    image.save("patternD_plasma5.png")
 
-spectral_synthesis(image, palette_ice.palette, 15, 0.8)
-image.save("patternD_plasma6.png")
+    spectral_synthesis(image, palette_ice.palette, 15, 0.8)
+    image.save("patternD_plasma6.png")
+
+if __name__ == "__main__":
+    main()
