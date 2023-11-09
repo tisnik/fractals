@@ -33,13 +33,20 @@ import palette_greens
 import palette_gold
 import palette_ice
 import palette_mandmap
-import numpy as np
 import math
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
 IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
+
+
+def create_bitmap(width, height):
+    return [[0 for x in range(width)] for y in range(height)]
+
+
+def create_matrix(width, height):
+    return create_bitmap(width, height)
 
 
 def random_gauss():
@@ -97,10 +104,10 @@ def spectral_synthesis(image, palette, n, h):
     """Plasma texture computation using spectral synthesis."""
     width, height = image.size  # rozmery obrazku
 
-    bitmap = np.zeros([height, width])
+    bitmap = create_bitmap(width, height)
 
-    A = np.empty([n // 2, n // 2])  # koeficienty Ak
-    B = np.empty([n // 2, n // 2])  # koeficienty Bk
+    A = create_matrix(n // 2, n // 2)  # koeficienty Ak
+    B = create_matrix(n // 2, n // 2)  # koeficienty Bk
     beta = 2.0 * h + 1  # promenna svazana s Hurstovym koeficientem
 
     print("calculate coefficients")
