@@ -21,6 +21,9 @@ import pygame
 # Nutno importovat kvůli konstantám QUIT atd.
 from pygame.locals import QUIT, K_ESCAPE, KEYDOWN
 
+from demo.config import loadConfiguration
+
+configuration = loadConfiguration("demo.ini")
 import textures.circle_like_patterns
 import textures.circle_moire_no_palette
 import textures.circle_moire_with_palette
@@ -34,8 +37,10 @@ pygame.init()
 
 clock = pygame.time.Clock()
 
-# Vytvoření okna pro vykreslování
-display = pygame.display.set_mode([WIDTH, HEIGHT])
+# create demo window
+window_width = int(configuration["screen"]["window_width"])
+window_height = int(configuration["screen"]["window_height"])
+display = pygame.display.set_mode([window_width, window_height])
 
 # Nastavení titulku okna
 pygame.display.set_caption("Textures")
