@@ -74,9 +74,7 @@ def generate_ifs(image, width, height, maxiter, startiter, ifs):
 
     # obdélník opsaný IFS
     xmin = -7.0
-    xmax = 10.0
     ymin = -1.0
-    ymax = 0.0
 
     # libovolné počáteční souřadnice v rovině
     x1 = y1 = 0
