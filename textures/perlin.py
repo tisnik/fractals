@@ -28,11 +28,6 @@
 
 from PIL import Image
 from random import random
-import palette_blues
-import palette_greens
-import palette_gold
-import palette_ice
-import palette_mandmap
 import math
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
@@ -120,6 +115,12 @@ def perlin_noise(image, palette, noise, octaves):
 
 def main():
     """Vypocet textur s jejich ulozenim do souboru."""
+    import palette_blues
+    import palette_greens
+    import palette_gold
+    import palette_ice
+    import palette_mandmap
+
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
     perlin_noise(image, palette_mandmap.palette, 0.7, 6)
