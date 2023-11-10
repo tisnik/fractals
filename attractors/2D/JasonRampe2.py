@@ -29,7 +29,7 @@
 # matematické knihovny, ze které se využijí jen některé vybrané funkce.
 import matplotlib.pyplot as plt
 import numpy as np
-from math import sin, cos
+from math import cos
 
 
 def rason_rampe_2(x, y, a, b, c, d):
