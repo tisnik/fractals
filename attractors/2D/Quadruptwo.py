@@ -32,7 +32,7 @@ from math import sin, atan
 
 # Dále se načtou i některé funkce pro výpočty nad maticemi a vektory.
 from numpy import log as ln
-from numpy import abs, sign, arctan
+from numpy import abs, sign
 
 
 def sqr(x):
