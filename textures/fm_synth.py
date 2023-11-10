@@ -3,11 +3,6 @@
 """Texture rendering based on FM synthesis."""
 
 from PIL import Image
-import palette_blues
-import palette_greens
-import palette_gold
-import palette_ice
-import palette_mandmap
 from math import *
 
 IMAGE_WIDTH = 256
@@ -32,7 +27,18 @@ def fm(image, palette, xmin, ymin, xmax, ymax):
         y1 += stepy
 
 
-image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    import palette_blues
+    import palette_greens
+    import palette_gold
+    import palette_ice
+    import palette_mandmap
 
-fm(image, palette_gold.palette, -1.0, -1.0, 1.0, 1.0)
-image.save("fm_1.png")
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+
+    fm(image, palette_gold.palette, -1.0, -1.0, 1.0, 1.0)
+    image.save("fm_1.png")
+
+
+if __name__ == "__main__":
+    main()
