@@ -31,8 +31,7 @@ import numpy as np
 from math import sin, cos
 
 # Dále se načtou i některé funkce pro výpočty nad maticemi a vektory.
-from numpy import log as ln
-from numpy import abs, sign, arctan
+from numpy import abs, sign
 
 
 def sqr(x):
