@@ -17,13 +17,17 @@
 import sys
 
 import pygame
+import pygame.locals
 
 # Nutno importovat kvůli konstantám QUIT atd.
 from pygame.locals import QUIT, K_ESCAPE, KEYDOWN
 
+from demo.main_menu import MainMenu
+from demo.ghost import Ghost
 from demo.config import loadConfiguration
 
 configuration = loadConfiguration("demo.ini")
+
 import textures.circle_like_patterns
 import textures.circle_moire_no_palette
 import textures.circle_moire_with_palette
@@ -35,6 +39,8 @@ HEIGHT = 256
 # Inicializace knihovny Pygame
 pygame.init()
 
+resources = Resources(configuration)
+
 clock = pygame.time.Clock()
 
 # create demo window
@@ -42,8 +48,21 @@ window_width = int(configuration["screen"]["window_width"])
 window_height = int(configuration["screen"]["window_height"])
 display = pygame.display.set_mode([window_width, window_height])
 
-# Nastavení titulku okna
-pygame.display.set_caption("Textures")
+# set window title
+pygame.display.set_caption("Procedural graphics demos")
+
+display.fill(Colors.BLACK.value)
+
+red_ghost = Ghost(display, resources, "ghost_red")
+
+splash_screen = SplashScreen(display, resources, "splash_screen", 8, red_ghost)
+
+def main() -> None:
+    while True:
+        menuItem = splash_screen.eventLoop()
+        if menuItem == MainMenu.QUIT.value:
+            pygame.quit()
+            sys.exit()
 
 # Konstanty s n-ticemi představujícími základní barvy
 BLACK = (0, 0, 0)
