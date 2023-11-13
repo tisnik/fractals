@@ -19,7 +19,6 @@ import pygame
 
 from demo.screen import Screen
 from demo.colors import Colors
-from demo.direction import Direction
 from demo.resources import Resources
 
 
