@@ -8,7 +8,7 @@
 
 ![Fractal in complex plane](complex/mandelbrot.png)
 
-## [Procedural textures](textures/index.md")
+## [Procedural textures](textures/index.md)
 
-![Procedural texture](textures/patternE_perlin_noise2.png")
+![Procedural texture](textures/patternE_perlin_noise2.png)
 
