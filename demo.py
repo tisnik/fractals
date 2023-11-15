@@ -25,6 +25,7 @@ from pygame.locals import QUIT, K_ESCAPE, KEYDOWN
 from demo.main_menu import MainMenu
 from demo.ghost import Ghost
 from demo.config import loadConfiguration
+from demo.colors import Colors
 
 configuration = loadConfiguration("demo.ini")
 
@@ -64,18 +65,6 @@ def main() -> None:
             pygame.quit()
             sys.exit()
 
-# Konstanty s n-ticemi představujícími základní barvy
-BLACK = (0, 0, 0)
-BLUE = (0, 0, 255)
-CYAN = (0, 255, 255)
-GREEN = (0, 255, 0)
-YELLOW = (255, 255, 0)
-RED = (255, 0, 0)
-MAGENTA = (255, 0, 255)
-WHITE = (255, 255, 255)
-
-# Vyplnění plochy okna černou barvou
-display.fill(BLACK)
 
 # Získání dvourozměrného pole s hodnotami pixelů
 pixelArray = pygame.PixelArray(display)
