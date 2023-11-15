@@ -3,9 +3,6 @@
 """Renderer of the classic Julia fractal."""
 
 from PIL import Image
-import palette_blues
-import palette_gold
-import palette_mandmap
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
@@ -42,13 +39,22 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, cx, cy, maxiter=1000)
         y1 += stepy
 
 
-image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    import palette_blues
+    import palette_gold
+    import palette_mandmap
 
-recalc_fractal(image, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, 0.0, 1.0, 1000)
-image.save("julia1.png")
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-recalc_fractal(image, palette_mandmap.palette, -2.0, -2.0, 2.0, 2.0, -1.0, 0.0, 1000)
-image.save("julia2.png")
+    recalc_fractal(image, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, 0.0, 1.0, 1000)
+    image.save("julia1.png")
 
-recalc_fractal(image, palette_gold.palette, -1.5, -1.5, 1.5, 1.5, 0.285, 0.01, 255)
-image.save("julia3.png")
+    recalc_fractal(image, palette_mandmap.palette, -2.0, -2.0, 2.0, 2.0, -1.0, 0.0, 1000)
+    image.save("julia2.png")
+
+    recalc_fractal(image, palette_gold.palette, -1.5, -1.5, 1.5, 1.5, 0.285, 0.01, 255)
+    image.save("julia3.png")
+
+
+if __name__ == "__main__":
+    main()
