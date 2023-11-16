@@ -123,15 +123,20 @@ def generate_ifs(image, width, height, maxiter, startiter, ifs):
                 image.putpixel((x, y), 0xFFFFFF)
 
 
-# vykreslit všechny IFS
-for name, transformations in IFS_SYSTEMS.items():
-    print(name)
+def main():
+    # vykreslit všechny IFS
+    for name, transformations in IFS_SYSTEMS.items():
+        print(name)
 
-    # inicializace prázdného obrázku
-    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+        # inicializace prázdného obrázku
+        image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-    # vykreslení IFS
-    generate_ifs(image, IMAGE_WIDTH, IMAGE_HEIGHT, 100000, 1000, transformations)
+        # vykreslení IFS
+        generate_ifs(image, IMAGE_WIDTH, IMAGE_HEIGHT, 100000, 1000, transformations)
 
-    # uložení obrázku do souboru
-    image.save(name + ".png")
+        # uložení obrázku do souboru
+        image.save(name + ".png")
+
+
+if __name__ == "__main__":
+    main()
