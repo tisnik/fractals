@@ -1,2 +1,2 @@
-# Fractals in comples plane
+# Fractals in complex plane
 
