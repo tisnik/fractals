@@ -6,7 +6,7 @@
 
 ## [Fractals in complex plane](complex/index.md)
 
-![Fractal in complex plane](complex/mandelbrot.png)
+![Fractal in complex plane](complex/mandelbrot_small.png)
 
 ## [Procedural textures](textures/index.md)
 
