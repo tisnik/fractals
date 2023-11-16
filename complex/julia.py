@@ -6,8 +6,8 @@ from PIL import Image
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
-IMAGE_WIDTH = 256
-IMAGE_HEIGHT = 256
+IMAGE_WIDTH = 512
+IMAGE_HEIGHT = 512
 
 
 def julia(zx0, zy0, cx, cy, maxiter):
