@@ -19,27 +19,26 @@ import sys
 import pygame
 import pygame.locals
 
-# Nutno importovat kvůli konstantám QUIT atd.
-from pygame.locals import QUIT, K_ESCAPE, KEYDOWN
-
 from demo.main_menu import MainMenu
 from demo.ghost import Ghost
 from demo.config import loadConfiguration
 from demo.colors import Colors
+from demo.splash_screen import SplashScreen
+from demo.textures_screen import TexturesScreen
+from demo.textures_menu import TexturesMenu
+from demo.cplx_screen import CplxScreen
+from demo.strange_attractors_screen import StrangeAttractorsScreen
+from demo.ifs_screen import IteratedFunctionsSystemsScreen
+from demo.dynamic_systems_screen import DynamicSystemsScreen
+from demo.about_screen import AboutScreen
+from demo.resources import Resources
+
+import textures.circle_like_patterns
+
 
 configuration = loadConfiguration("demo.ini")
 
-import textures.circle_like_patterns
-import textures.circle_moire_no_palette
-import textures.circle_moire_with_palette
-
-# Velikost okna aplikace
-WIDTH = 256
-HEIGHT = 256
-
-# Inicializace knihovny Pygame
 pygame.init()
-
 resources = Resources(configuration)
 
 clock = pygame.time.Clock()
@@ -66,31 +65,6 @@ def main() -> None:
             sys.exit()
 
 
-# Získání dvourozměrného pole s hodnotami pixelů
-pixelArray = pygame.PixelArray(display)
-
-# Změna barev některých pixelů
-for y in range(HEIGHT):
-    for x in range(WIDTH):
-        pixelArray[x][y] = (x, y, (x + y) % 256)
-
-# Pixely byly změněny, pole je možné odstranit z paměti
-# a současně tak uvolnit surface pro další operace
-del pixelArray
-
-
-# Hlavní smyčka
-while True:
-    # Načtení a zpracování všech událostí z fronty
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == KEYDOWN and event.key == K_ESCAPE:
-            pygame.quit()
-            sys.exit()
-
-    pygame.display.update()
-    clock.tick(20)
+main()
 
 # finito
