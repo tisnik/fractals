@@ -14,11 +14,11 @@ Various snippets of fractal rendering code
 
 ### Fractals in complex plane
 
-![Fractal in complex plane](docs/complex/mandelbrot_small.png)
+[![Fractal in complex plane](docs/complex/mandelbrot_small.png)](complex/index.md)
 
 ### Procedural texture generators
 
-![Procedural texture](docs/textures/patternE_perlin_noise2.png)
+[![Procedural texture](docs/textures/patternE_perlin_noise2.png)](textures/index.md)
 
 ### Interactive fractal viewers
 
