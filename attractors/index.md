@@ -2,7 +2,7 @@
 
 ## [2D strange attractors](2D/index.md)
 
-![2D strange attractors](../docs/2D/hopalong.png)
+![2D strange attractors](https://tisnik.github.io/fractals/attractors/2D/hopalong.png)
 
 1. [Bedhead](2D/Bedhead.py)
 1. [Do Jong's attractor](2D/De_jong.py)
