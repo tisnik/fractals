@@ -3,10 +3,9 @@
 """Vykreslení spirál v Juliových množinách."""
 
 from PIL import Image
-import palette_greens
 
-IMAGE_WIDTH = 800
-IMAGE_HEIGHT = 600
+IMAGE_WIDTH = 512
+IMAGE_HEIGHT = 384
 
 
 def julia(cx, cy, zx, zy, maxiter):
@@ -42,40 +41,47 @@ def recalc_fractal(image, palette, cx, cy, maxiter=1000):
         y1 += stepy
 
 
-image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    import palette_greens
 
-recalc_fractal(
-    image,
-    palette_greens.palette,
-    -0.769824999999999998320,
-    -0.109270000000000000000,
-    255,
-)
-image.save("spiral_1.png")
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-recalc_fractal(
-    image,
-    palette_greens.palette,
-    -0.171119200000000013445,
-    0.657309400000000000000,
-    255,
-)
-image.save("spiral_2.png")
+    recalc_fractal(
+        image,
+        palette_greens.palette,
+        -0.769824999999999998320,
+        -0.109270000000000000000,
+        255,
+    )
+    image.save("spiral_1.png")
 
-recalc_fractal(
-    image,
-    palette_greens.palette,
-    -0.207190825000000012496,
-    0.676656624999999999983,
-    255,
-)
-image.save("spiral_3.png")
+    recalc_fractal(
+        image,
+        palette_greens.palette,
+        -0.171119200000000013445,
+        0.657309400000000000000,
+        255,
+    )
+    image.save("spiral_2.png")
 
-recalc_fractal(
-    image,
-    palette_greens.palette,
-    -0.540623850000000003876,
-    0.523798050000000000019,
-    255,
-)
-image.save("spiral_4.png")
+    recalc_fractal(
+        image,
+        palette_greens.palette,
+        -0.207190825000000012496,
+        0.676656624999999999983,
+        255,
+    )
+    image.save("spiral_3.png")
+
+    recalc_fractal(
+        image,
+        palette_greens.palette,
+        -0.540623850000000003876,
+        0.523798050000000000019,
+        255,
+    )
+    image.save("spiral_4.png")
+
+
+if __name__ == "__main__":
+    main()
