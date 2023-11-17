@@ -10,7 +10,7 @@ Various snippets of fractal rendering code
 
 ### Strange attractors
 
-![Strange attractor](docs/attractors/2D/hopalong.png)
+[![Strange attractor](docs/attractors/2D/hopalong.png)](attractors/index.md)
 
 ### Fractals in complex plane
 
