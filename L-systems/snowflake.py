@@ -18,6 +18,7 @@ pygame.init()
 
 clock = pygame.time.Clock()
 
+# Inicializace okna pro vykreslení fraktálu
 display = pygame.display.set_mode([WIDTH, HEIGHT])
 
 # Nastavení titulku okna
@@ -111,23 +112,30 @@ def draw_snowflake(surface, color):
     draw_l_system(surface, color, control_string, step, angle, start_x, start_y)
 
 
-# Vyplnění plochy okna černou barvou
+# Vyplnění plochy okna černou barvou před začátkem vykreslování
 display.fill(BLACK)
 
+# Vykreslení fraktálu
 draw_snowflake(display, WHITE)
 
-# Hlavní smyčka
-while True:
-    # Načtení a zpracování všech událostí z fronty
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == KEYDOWN and event.key == K_ESCAPE:
-            pygame.quit()
-            sys.exit()
 
-    pygame.display.update()
-    clock.tick(20)
+def main():
+    # Hlavní smyčka
+    while True:
+        # Načtení a zpracování všech událostí z fronty
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN and event.key == K_ESCAPE:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+        clock.tick(20)
+
+
+if __name__ == "__main__":
+    main()
 
 # finito
