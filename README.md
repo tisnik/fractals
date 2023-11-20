@@ -20,6 +20,10 @@ Various snippets of fractal rendering code
 
 [![Procedural texture](docs/textures/patternE_perlin_noise2.png)](textures/index.md)
 
+### Iterated Functions Systsms (IFS)
+
+### L-systems
+
 ### Interactive fractal viewers
 
 ### Other code snippets
