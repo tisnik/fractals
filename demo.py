@@ -57,12 +57,24 @@ red_ghost = Ghost(display, resources, "ghost_red")
 
 splash_screen = SplashScreen(display, resources, "splash_screen", 8, red_ghost)
 
+
+def in_texture_screen(display, resources, red_ghost) -> None:
+    textures_screen = TexturesScreen(display, resources, red_ghost)
+    textures_screen.draw()
+    while True:
+        choice = textures_screen.eventLoop()
+        if choice == TexturesMenu.QUIT.value:
+            return
+
+
 def main() -> None:
     while True:
         menuItem = splash_screen.eventLoop()
         if menuItem == MainMenu.QUIT.value:
             pygame.quit()
             sys.exit()
+        elif menuItem == MainMenu.PROCEDURAL_TEXTURES.value:
+            in_texture_screen(display, resources, red_ghost)
 
 
 main()
