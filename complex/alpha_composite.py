@@ -5,8 +5,8 @@ import palette_mandmap
 import palette_greens
 import palette_blues
 
-IMAGE_WIDTH = 800
-IMAGE_HEIGHT = 600
+IMAGE_WIDTH = 512
+IMAGE_HEIGHT = 384
 
 
 def mandelbrot(cx, cy, maxiter):
@@ -39,28 +39,33 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
         y1 += stepy
 
 
-image1 = Image.new("RGBA", (IMAGE_WIDTH, IMAGE_HEIGHT))
-image2 = Image.new("RGBA", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    image1 = Image.new("RGBA", (IMAGE_WIDTH, IMAGE_HEIGHT))
+    image2 = Image.new("RGBA", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-recalc_fractal(
-    image1,
-    palette_mandmap.palette,
-    -0.769824999999999998320,
-    -0.109270000000000000000,
-    -0.766247499999999998426,
-    -0.106570000000000000000,
-    1000,
-)
+    recalc_fractal(
+        image1,
+        palette_mandmap.palette,
+        -0.769824999999999998320,
+        -0.109270000000000000000,
+        -0.766247499999999998426,
+        -0.106570000000000000000,
+        1000,
+    )
 
-recalc_fractal(
-    image2,
-    palette_mandmap.palette,
-    -0.207190825000000012496,
-    0.676656624999999999983,
-    -0.206107925000000012496,
-    0.677468799999999999983,
-    1000,
-)
+    recalc_fractal(
+        image2,
+        palette_mandmap.palette,
+        -0.207190825000000012496,
+        0.676656624999999999983,
+        -0.206107925000000012496,
+        0.677468799999999999983,
+        1000,
+    )
 
-image3 = Image.alpha_composite(image1, image2)
-image3.save("alpha_composite.png")
+    image3 = Image.alpha_composite(image1, image2)
+    image3.save("alpha_composite.png")
+
+
+if __name__ == "__main__":
+    main()
