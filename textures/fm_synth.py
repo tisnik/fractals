@@ -3,7 +3,7 @@
 """Texture rendering based on FM synthesis."""
 
 from PIL import Image
-from math import *
+from math import sin
 
 IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
