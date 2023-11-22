@@ -5,8 +5,8 @@ import palette_mandmap
 import palette_greens
 import palette_blues
 
-IMAGE_WIDTH = 400
-IMAGE_HEIGHT = 300
+IMAGE_WIDTH = 512
+IMAGE_HEIGHT = 384
 
 
 def mandelbrot(cx, cy, maxiter):
@@ -54,28 +54,33 @@ def addImages(image1, image2):
     return image
 
 
-image1 = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
-image2 = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    image1 = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+    image2 = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-recalc_fractal(
-    image1,
-    palette_blues.palette,
-    -0.769824999999999998320,
-    -0.109270000000000000000,
-    -0.766247499999999998426,
-    -0.106570000000000000000,
-    1000,
-)
+    recalc_fractal(
+        image1,
+        palette_blues.palette,
+        -0.769824999999999998320,
+        -0.109270000000000000000,
+        -0.766247499999999998426,
+        -0.106570000000000000000,
+        1000,
+    )
 
-recalc_fractal(
-    image2,
-    palette_greens.palette,
-    -0.207190825000000012496,
-    0.676656624999999999983,
-    -0.206107925000000012496,
-    0.677468799999999999983,
-    1000,
-)
+    recalc_fractal(
+        image2,
+        palette_greens.palette,
+        -0.207190825000000012496,
+        0.676656624999999999983,
+        -0.206107925000000012496,
+        0.677468799999999999983,
+        1000,
+    )
 
-image3 = addImages(image1, image2)
-image3.save("blend_add.png")
+    image3 = addImages(image1, image2)
+    image3.save("blend_add.png")
+
+
+if __name__ == "__main__":
+    main()
