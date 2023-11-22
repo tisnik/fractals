@@ -28,7 +28,6 @@
 
 from PIL import Image
 from random import random
-import math
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
