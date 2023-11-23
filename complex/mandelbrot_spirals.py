@@ -5,8 +5,8 @@
 from PIL import Image
 import palette_mandmap
 
-IMAGE_WIDTH = 800
-IMAGE_HEIGHT = 600
+IMAGE_WIDTH = 512
+IMAGE_HEIGHT = 384
 
 
 def mandelbrot(cx, cy, maxiter):
