@@ -110,5 +110,6 @@ def main():
     )
     image.save("patternC_var2.png")
 
+
 if __name__ == "__main__":
     main()
