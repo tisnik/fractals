@@ -3,12 +3,11 @@
 """Renderer of the classic Mandelbrot fractal."""
 
 from PIL import Image
-import palette_blues
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
-IMAGE_WIDTH = 256
-IMAGE_HEIGHT = 256
+IMAGE_WIDTH = 512
+IMAGE_HEIGHT = 512
 
 
 def mandelbrot(cx, cy, maxiter):
@@ -40,7 +39,14 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
         y1 += stepy
 
 
-image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    import palette_blues
 
-recalc_fractal(image, palette_blues.palette, -2.0, -1.5, 1.0, 1.5, 1000)
-image.save("mandelbrot.png")
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+
+    recalc_fractal(image, palette_blues.palette, -2.0, -1.5, 1.0, 1.5, 1000)
+    image.save("mandelbrot.png")
+
+
+if __name__ == "__main__":
+    main()
