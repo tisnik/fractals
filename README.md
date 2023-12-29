@@ -22,6 +22,8 @@ Various snippets of fractal rendering code
 
 ### Iterated Functions Systsms (IFS)
 
+[![IFS fractal](docs/IFS/spiral.png)](IFS/index.md)
+
 ### L-systems
 
 ### Interactive fractal viewers
