@@ -1,6 +1,6 @@
 # Procedural textures generators
 
-[![Procedural texture](docs/textures/patternE_perlin_noise2.png)](textures/index.md)
+![Procedural texture](https://tisnik.github.io/fractals/textures/patternE_perlin_noise2.png)
 
 ## Moire patterns
 
