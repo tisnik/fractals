@@ -20,7 +20,7 @@ Various snippets of fractal rendering code
 
 [![Procedural texture](docs/textures/patternE_perlin_noise2.png)](textures/index.md)
 
-### Iterated Functions Systsms (IFS)
+### Iterated Functions Systems (IFS)
 
 [![IFS fractal](docs/IFS/spiral.png)](IFS/index.md)
 
