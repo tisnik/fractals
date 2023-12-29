@@ -29,3 +29,5 @@ Various snippets of fractal rendering code
 ### Interactive fractal viewers
 
 ### Other code snippets
+
+[Example codes used in articles written for Root.cz](root.cz/index.md)
