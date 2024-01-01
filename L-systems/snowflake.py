@@ -66,14 +66,14 @@ def draw_l_system(surface, color, control_string, step, angle_delta, start_x, st
     # projít všemi příkazy z řídicího řetězce
     for command in control_string:
         if command == "F":
-            xn = x + step*math.cos(angle)
-            yn = y + step*math.sin(angle)
+            xn = x + step * math.cos(angle)
+            yn = y + step * math.sin(angle)
             draw.aaline(surface, color, (x, y), (xn, yn))
             x = xn
             y = yn
         elif command == "B":
-            xn = x - step*math.cos(angle)
-            yn = y - step*math.sin(angle)
+            xn = x - step * math.cos(angle)
+            yn = y - step * math.sin(angle)
             draw.aaline(surface, color, (x, y), (xn, yn))
             x = xn
             y = yn
