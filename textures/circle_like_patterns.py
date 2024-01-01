@@ -70,7 +70,7 @@ def main():
         mez / 5,
         mez,
         mez,
-        lambda x, y: x ** 3 + y ** 3,
+        lambda x, y: x**3 + y**3,
     )
     image.save("patternC_x3y3.png")
 
@@ -82,7 +82,7 @@ def main():
         mez / 5,
         mez,
         mez,
-        lambda x, y: x ** 4 + y ** 4,
+        lambda x, y: x**4 + y**4,
     )
     image.save("patternC_x4y4.png")
 
