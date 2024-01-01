@@ -83,7 +83,7 @@ IFS_SYSTEMS = {
 }
 
 
-def generate_ifs(image, width, height, maxiter, startiter, ifs):
+def generate_ifs(image: Image.Image, width: int, height: int, maxiter: int, startiter: int, ifs):
     delitel = 12.0
 
     # obdélník opsaný IFS
@@ -123,7 +123,7 @@ def generate_ifs(image, width, height, maxiter, startiter, ifs):
                 image.putpixel((x, y), 0xFFFFFF)
 
 
-def main():
+def main() -> None:
     # vykreslit všechny IFS
     for name, transformations in IFS_SYSTEMS.items():
         print(name)
