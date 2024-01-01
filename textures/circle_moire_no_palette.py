@@ -39,5 +39,6 @@ def main():
         fileName = "patternA{index:02d}.png".format(index=i)
         image.save(fileName)
 
+
 if __name__ == "__main__":
     main()

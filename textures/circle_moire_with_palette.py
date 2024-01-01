@@ -53,5 +53,6 @@ def main():
         recalc_circle_pattern(image, image_pal[0], -mez, -mez, mez, mez)
         image.save("patternB_{name}.png".format(name=image_pal[1]))
 
+
 if __name__ == "__main__":
     main()
