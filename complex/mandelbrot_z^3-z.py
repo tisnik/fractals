@@ -18,7 +18,7 @@ def mandelbrot(cx, cy, maxiter):
     for i in range(0, maxiter):
         if abs(z) > 2:
             return i
-        z = z ** 3 - z + c
+        z = z**3 - z + c
     return 0
 
 
