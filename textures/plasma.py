@@ -163,5 +163,6 @@ def main():
     spectral_synthesis(image, palette_ice.palette, 15, 0.8)
     image.save("patternD_plasma6.png")
 
+
 if __name__ == "__main__":
     main()
