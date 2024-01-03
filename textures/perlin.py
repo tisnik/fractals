@@ -84,8 +84,8 @@ def perlin_noise(image, palette, noise, octaves):
 
     # postupne vytvoreni 'octaves' vrstev v obrazku
     for k in range(octaves):
-        size = 2 ** k + 1
-        amplitude = noise ** k
+        size = 2**k + 1
+        amplitude = noise**k
 
         # vytvoreni pole nahodnych cisel o dane amplidude
         array = random_array(size, size, amplitude)
@@ -136,6 +136,7 @@ def main():
 
     perlin_noise(image, palette_greens.palette, 0.3, 12)
     image.save("patternE_perlin_noise5.png")
+
 
 if __name__ == "__main__":
     main()
