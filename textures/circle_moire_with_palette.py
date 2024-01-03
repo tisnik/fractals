@@ -3,6 +3,8 @@
 """Vytvoreni textury s "kruznicovym moare"."""
 
 from PIL import Image
+import PIL.Image
+from typing import Tuple
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
@@ -10,7 +12,10 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-def recalc_circle_pattern(image, palette, xmin, ymin, xmax, ymax):
+def recalc_circle_pattern(image: PIL.Image.Image,
+                          palette: Tuple[Tuple[int, int, int], ...],
+                          xmin: float, ymin: float,
+                          xmax: float, ymax: float) -> None:
     """Funkce provadejici vypocet moare s kruznicovym vzorkem."""
     width, height = image.size  # rozmery obrazku
     stepx = (xmax - xmin) / width
@@ -29,7 +34,7 @@ def recalc_circle_pattern(image, palette, xmin, ymin, xmax, ymax):
         y1 += stepy
 
 
-def main():
+def main() -> None:
     """Vypocet textur s jejich ulozenim do souboru."""
     import palette_blues
     import palette_greens
