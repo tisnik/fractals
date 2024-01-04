@@ -31,5 +31,11 @@ class CplxScreen(AbstractMenuScreen):
 
         # pre-render all menu items onto surfaces
         self._menu = (
+            self.renderMenuItem("Classic Mandelbrot fractal"),
+            self.renderMenuItem("Classic Julia fractal"),
+            self.renderMenuItem("Mandelbrot variant: z²"),
+            self.renderMenuItem("Mandelbrot variant: z⁴"),
+            self.renderMenuItem("Mandelbrot variant: z²-z"),
+            self.renderMenuItem("Mandelbrot variant: z³-z"),
             self.renderMenuItem("Return to main screen"),
         )
