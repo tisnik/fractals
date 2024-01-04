@@ -28,6 +28,8 @@
 
 from PIL import Image
 from random import random
+import PIL.Image
+from typing import List, Tuple
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
@@ -35,7 +37,7 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-def compute_min_max(bitmap, width, height):
+def compute_min_max(bitmap: List[List[float]], width: int, height: int) -> Tuple[float, float]:
     # pro prepocet intenzit pixelu
     min = float("inf")
     max = float("-inf")
@@ -51,11 +53,14 @@ def compute_min_max(bitmap, width, height):
     return min, max
 
 
-def create_bitmap(width, height):
+def create_bitmap(width: int, height: int) -> List[List[float]]:
     return [[0 for x in range(width)] for y in range(height)]
 
 
-def convert_to_image(bitmap, image, width, height, palette):
+def convert_to_image(bitmap: List[List[float]],
+                     image: PIL.Image.Image,
+                     width: int, height: int,
+                     palette: Tuple[Tuple[int, int, int], ...]) -> None:
     print("contrast adjustment")
 
     min, max = compute_min_max(bitmap, width, height)
@@ -72,11 +77,11 @@ def convert_to_image(bitmap, image, width, height, palette):
             image.putpixel((x, y), color)
 
 
-def random_array(width, height, amplitude):
+def random_array(width: int, height: int, amplitude: float) -> List[List[float]]:
     return [[random() * amplitude for i in range(width)] for j in range(height)]
 
 
-def perlin_noise(image, palette, noise, octaves):
+def perlin_noise(image: PIL.Image.Image, palette: Tuple[Tuple[int, int, int], ...], noise: float, octaves: int) -> None:
     """Vlastni vypocet Perlinova sumu."""
     width, height = image.size  # rozmery obrazku
 
@@ -112,7 +117,7 @@ def perlin_noise(image, palette, noise, octaves):
     convert_to_image(bitmap, image, width, height, palette)
 
 
-def main():
+def main() -> None:
     """Vypocet textur s jejich ulozenim do souboru."""
     import palette_blues
     import palette_greens
