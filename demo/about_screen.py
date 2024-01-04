@@ -101,8 +101,8 @@ class AboutScreen(Screen):
         y = 675
         step = 25
         self._display.blit(self._python_version, (x, y))
-        self._display.blit(self._pygame_version, (x, y+step))
-        self._display.blit(self._sdl_version, (x, y+step*2))
+        self._display.blit(self._pygame_version, (x, y + step))
+        self._display.blit(self._sdl_version, (x, y + step * 2))
 
     def eventLoop(self) -> None:
         """Event loop for About screen that just waits for keypress or window close operation."""
