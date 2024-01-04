@@ -34,6 +34,8 @@ import palette_gold
 import palette_ice
 import palette_mandmap
 import math
+import PIL.Image
+from typing import List, Tuple
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
@@ -41,15 +43,15 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-def create_bitmap(width, height):
+def create_bitmap(width: int, height: int) -> List[List[float]]:
     return [[0 for x in range(width)] for y in range(height)]
 
 
-def create_matrix(width, height):
+def create_matrix(width: int, height: int) -> List[List[float]]:
     return create_bitmap(width, height)
 
 
-def random_gauss():
+def random_gauss() -> float:
     """
     Random number generator.
 
@@ -63,7 +65,7 @@ def random_gauss():
     return sum / N
 
 
-def compute_min_max(bitmap, width, height):
+def compute_min_max(bitmap: List[List[float]], width: int, height: int) -> Tuple[float, float]:
     """Minimum and maximum pixel value computation."""
     # pro prepocet intenzit pixelu
     min = float("inf")
@@ -80,7 +82,7 @@ def compute_min_max(bitmap, width, height):
     return min, max
 
 
-def convert_to_image(bitmap, image, width, height, palette):
+def convert_to_image(bitmap: List[List[float]], image: PIL.Image.Image, width: int, height: int, palette: Tuple[Tuple[int, int, int], ...]) -> None:
     """Convert the 2D array into a proper bitmap with high contrast."""
     print("contrast adjustment")
 
@@ -100,7 +102,7 @@ def convert_to_image(bitmap, image, width, height, palette):
 
 # h ... Hurstuv exponent
 # n ... pocet koeficientu spektralni syntezy
-def spectral_synthesis(image, palette, n, h):
+def spectral_synthesis(image: PIL.Image.Image, palette: Tuple[Tuple[int, int, int], ...,], n: int, h: float) -> None:
     """Plasma texture computation using spectral synthesis."""
     width, height = image.size  # rozmery obrazku
 
@@ -127,7 +129,7 @@ def spectral_synthesis(image, palette, n, h):
     # vygenerovani plasmy
     for j in range(height):
         for i in range(width):
-            z = 0
+            z = 0.0
             # inverzni Fourierova transformace
             for k in range(n // 2):
                 for l in range(n // 2):
@@ -141,7 +143,7 @@ def spectral_synthesis(image, palette, n, h):
     convert_to_image(bitmap, image, width, height, palette)
 
 
-def main():
+def main() -> None:
     """Vypocet textur s jejich ulozenim do souboru."""
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
