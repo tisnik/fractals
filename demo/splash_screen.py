@@ -50,10 +50,10 @@ class SplashScreen(AbstractMenuScreen):
                                                          SplashScreen.CREDITS_COLOR,
                                                          SplashScreen.BACKGROUND_COLOR)
         # retrieve icons
-        self._barnsley_icon = self._resources.images["barnsley"]
-        self._mandelbrot_icon = self._resources.images["mandelbrot"]
-        self._dynamic_icon = self._resources.images["dynamic"]
-        self._ifs_icon = self._resources.images["ifs"]
+        self._barnsley_icon = self._resources.images["main_barnsley"]
+        self._mandelbrot_icon = self._resources.images["main_mandelbrot"]
+        self._dynamic_icon = self._resources.images["main_dynamic"]
+        self._ifs_icon = self._resources.images["main_ifs"]
 
     def draw(self) -> None:
         """Draw splash screen."""
