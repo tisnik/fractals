@@ -75,6 +75,26 @@ def main() -> None:
             sys.exit()
         elif menuItem == MainMenu.PROCEDURAL_TEXTURES.value:
             in_texture_screen(display, resources, red_ghost)
+        elif menuItem == MainMenu.COMPLEX_FRACTALS.value:
+            cplx_screen = CplxScreen(display, resources, red_ghost)
+            cplx_screen.draw()
+            cplx_screen.eventLoop()
+        elif menuItem == MainMenu.STRANGE_ATTRACTORS.value:
+            cplx_screen = StrangeAttractorsScreen(display, resources, red_ghost)
+            cplx_screen.draw()
+            cplx_screen.eventLoop()
+        elif menuItem == MainMenu.IFS.value:
+            cplx_screen = IteratedFunctionsSystemsScreen(display, resources, red_ghost)
+            cplx_screen.draw()
+            cplx_screen.eventLoop()
+        elif menuItem == MainMenu.DYNAMIC_SYSTEMS.value:
+            cplx_screen = DynamicSystemsScreen(display, resources, red_ghost)
+            cplx_screen.draw()
+            cplx_screen.eventLoop()
+        elif menuItem == MainMenu.ABOUT.value:
+            about_screen = AboutScreen(display, resources)
+            about_screen.draw()
+            about_screen.eventLoop()
 
 
 main()
