@@ -24,8 +24,7 @@ from demo.ghost import Ghost
 class TexturesScreen(AbstractMenuScreen):
     """Textures screen."""
 
-    def __init__(self, display: pygame.Surface, resources: Resources,
-            ghost: Ghost) -> None:
+    def __init__(self, display: pygame.Surface, resources: Resources, ghost: Ghost) -> None:
         """Initialize the screen."""
         super(TexturesScreen, self).__init__(display, resources, ghost, "Procedural textures")
 
@@ -33,5 +32,7 @@ class TexturesScreen(AbstractMenuScreen):
         self._menu = (
             self.renderMenuItem("Circle moiré patterns"),
             self.renderMenuItem("Other moiré patterns"),
+            self.renderMenuItem("Plasma"),
+            self.renderMenuItem("FM-synth"),
             self.renderMenuItem("Return to main screen"),
         )
