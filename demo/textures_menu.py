@@ -22,4 +22,7 @@ class TexturesMenu(Enum):
 
     CIRCLE_MOIRE = 0
     OTHER_MOIRE = 1
-    QUIT = 2
+    PLASMA = 2
+    FM_SYNTH = 3
+
+    QUIT = 4
