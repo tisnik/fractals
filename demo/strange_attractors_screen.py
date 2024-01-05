@@ -30,6 +30,4 @@ class StrangeAttractorsScreen(AbstractMenuScreen):
         super(StrangeAttractorsScreen, self).__init__(display, resources, ghost, "Strange attractors")
 
         # pre-render all menu items onto surfaces
-        self._menu = (
-            self.renderMenuItem("Return to main screen"),
-        )
+        self._menu = (self.renderMenuItem("Return to main screen"),)
