@@ -34,7 +34,6 @@ import palette_gold
 import palette_ice
 import palette_mandmap
 import math
-import PIL.Image
 from typing import List, Tuple
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
@@ -82,7 +81,7 @@ def compute_min_max(bitmap: List[List[float]], width: int, height: int) -> Tuple
     return min, max
 
 
-def convert_to_image(bitmap: List[List[float]], image: PIL.Image.Image, width: int, height: int, palette: Tuple[Tuple[int, int, int], ...]) -> None:
+def convert_to_image(bitmap: List[List[float]], image: Image.Image, width: int, height: int, palette: Tuple[Tuple[int, int, int], ...]) -> None:
     """Convert the 2D array into a proper bitmap with high contrast."""
     print("contrast adjustment")
 
@@ -102,7 +101,7 @@ def convert_to_image(bitmap: List[List[float]], image: PIL.Image.Image, width: i
 
 # h ... Hurstuv exponent
 # n ... pocet koeficientu spektralni syntezy
-def spectral_synthesis(image: PIL.Image.Image, palette: Tuple[Tuple[int, int, int], ...,], n: int, h: float) -> None:
+def spectral_synthesis(image: Image.Image, palette: Tuple[Tuple[int, int, int], ...,], n: int, h: float) -> None:
     """Plasma texture computation using spectral synthesis."""
     width, height = image.size  # rozmery obrazku
 
