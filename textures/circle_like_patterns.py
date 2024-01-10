@@ -3,7 +3,6 @@
 # Vytvoreni textury s "kruznicovym moare" i dalsimi typy moare
 
 from PIL import Image
-import PIL.Image
 from typing import Callable, Tuple
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
@@ -12,7 +11,7 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-def recalc_any_pattern(image: PIL.Image.Image,
+def recalc_any_pattern(image: Image.Image,
                        palette: Tuple[Tuple[int, int, int], ...],
                        xmin: float, ymin: float,
                        xmax: float, ymax: float,
