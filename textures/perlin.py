@@ -28,7 +28,6 @@
 
 from PIL import Image
 from random import random
-import PIL.Image
 from typing import List, Tuple
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
@@ -58,7 +57,7 @@ def create_bitmap(width: int, height: int) -> List[List[float]]:
 
 
 def convert_to_image(bitmap: List[List[float]],
-                     image: PIL.Image.Image,
+                     image: Image.Image,
                      width: int, height: int,
                      palette: Tuple[Tuple[int, int, int], ...]) -> None:
     print("contrast adjustment")
