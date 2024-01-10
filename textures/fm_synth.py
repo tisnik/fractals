@@ -3,7 +3,6 @@
 """Texture rendering based on FM synthesis."""
 
 from PIL import Image
-import PIL.Image
 from math import sin
 from typing import Tuple
 
@@ -11,7 +10,7 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-def fm(image: PIL.Image.Image, palette: Tuple[Tuple[int, int, int], ...],
+def fm(image: Image.Image, palette: Tuple[Tuple[int, int, int], ...],
        xmin: float, ymin: float, xmax: float, ymax: float) -> None:
     """Generate texture based on FM synthesis algorithm."""
     width, height = image.size  # rozmery obrazku
