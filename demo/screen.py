@@ -32,6 +32,10 @@ class Screen(ABC):
     # default clock tick
     CLOCK_TICK = 5
 
+    # colors used on menu screen (background color is read from Screen class
+    TITLE_COLOR = (255, 255, 255)
+    MENU_COLOR = (120, 120, 255)
+
     def __init__(self, display: pygame.Surface, resources: Resources) -> None:
         """Initialize the screen."""
         # primary display for blitting to screen
