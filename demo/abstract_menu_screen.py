@@ -31,10 +31,6 @@ class AbstractMenuScreen(Screen):
 
     CYCLE_DIRECTION_COUNTER_START_VALUE = 3
 
-    # colors used on menu screen (background color is read from Screen class
-    TITLE_COLOR = (255, 255, 255)
-    MENU_COLOR = (120, 120, 255)
-
     def __init__(self, display: pygame.Surface, resources: Resources,
             ghost: Ghost, title_text: str) -> None:
         """Initialize the splash screen."""
