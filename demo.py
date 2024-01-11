@@ -27,13 +27,13 @@ from demo.splash_screen import SplashScreen
 from demo.textures_screen import TexturesScreen
 from demo.textures_menu import TexturesMenu
 from demo.cplx_screen import CplxScreen
+from demo.cplx_menu import CplxMenu
 from demo.strange_attractors_screen import StrangeAttractorsScreen
 from demo.ifs_screen import IteratedFunctionsSystemsScreen
 from demo.dynamic_systems_screen import DynamicSystemsScreen
 from demo.about_screen import AboutScreen
 from demo.resources import Resources
-
-import textures.circle_like_patterns
+from demo.circle_moire_screen import CircleMoireScreen
 
 
 configuration = loadConfiguration("demo.ini")
@@ -63,7 +63,20 @@ def in_texture_screen(display, resources, red_ghost) -> None:
     textures_screen.draw()
     while True:
         choice = textures_screen.eventLoop()
-        if choice == TexturesMenu.QUIT.value:
+        if choice in {TexturesMenu.QUIT.value, MainMenu.QUIT.value}:
+            return
+        elif choice == TexturesMenu.CIRCLE_MOIRE.value:
+            circle_moire_screen = CircleMoireScreen(display, resources, "Circle moire patterns")
+            circle_moire_screen.draw()
+            circle_moire_screen.eventLoop()
+
+
+def in_cplx_screen(display, resources, red_ghost) -> None:
+    cplx_screen = CplxScreen(display, resources, red_ghost)
+    cplx_screen.draw()
+    while True:
+        choice = cplx_screen.eventLoop()
+        if choice == CplxMenu.QUIT.value:
             return
 
 
@@ -76,10 +89,9 @@ def main() -> None:
         elif menuItem == MainMenu.PROCEDURAL_TEXTURES.value:
             in_texture_screen(display, resources, red_ghost)
         elif menuItem == MainMenu.COMPLEX_FRACTALS.value:
-            cplx_screen = CplxScreen(display, resources, red_ghost)
-            cplx_screen.draw()
-            cplx_screen.eventLoop()
+            in_cplx_screen(display, resources, red_ghost)
         elif menuItem == MainMenu.STRANGE_ATTRACTORS.value:
+            # TODO: refactor a bit
             cplx_screen = StrangeAttractorsScreen(display, resources, red_ghost)
             cplx_screen.draw()
             cplx_screen.eventLoop()
