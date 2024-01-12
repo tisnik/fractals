@@ -36,7 +36,7 @@ class Screen(ABC):
     TITLE_COLOR = (255, 255, 255)
     MENU_COLOR = (120, 120, 255)
 
-    def __init__(self, display: pygame.Surface, resources: Resources) -> None:
+    def __init__(self, display: pygame.Surface, resources: Resources, title_text: str) -> None:
         """Initialize the screen."""
         # primary display for blitting to screen
         self._display = display
@@ -47,9 +47,21 @@ class Screen(ABC):
         # clock to be used in event loop
         self._clock = pygame.time.Clock()
 
+        # pre-render demo title
+        self._title = self._resources.bigFont.render(title_text, True,
+                                                     Screen.TITLE_COLOR,
+                                                     Screen.BACKGROUND_COLOR)
+
+    def drawTitle(self) -> None:
+        """Draw the title onto splash screen."""
+        x = self._display.get_width() / 2 - self._title.get_width() / 2
+        y = 0
+        self._display.blit(self._title, (x, y))
+
     def draw(self) -> None:
         """Draw screen."""
         # this method should be overwritten
+        self.drawTitle()
         self._display.fill(Screen.BACKGROUND_COLOR)
 
     def eventLoop(self) -> int:
