@@ -22,6 +22,8 @@ from demo.colors import Colors
 
 import textures.palette_blues as palette_blues
 import textures.circle_moire_with_palette as moire
+from demo.resources import Resources
+from pygame.surface import Surface
 
 
 class CircleMoireScreen(Screen):
@@ -35,27 +37,17 @@ class CircleMoireScreen(Screen):
     IMAGE_HEIGHT = 512
 
 
-    def __init__(self, display, resources, title_text) -> None:
-        super(CircleMoireScreen, self).__init__(display, resources)
+    def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
+        super(CircleMoireScreen, self).__init__(display, resources, title_text)
         self._clock = pygame.time.Clock()
 
-        # pre-render demo title
-        self._title = self._resources.bigFont.render(title_text, True,
-                                                     Screen.TITLE_COLOR,
-                                                     Screen.BACKGROUND_COLOR)
         self._image = self.calcImage()
 
-    def calcImage(self):
+    def calcImage(self) -> Surface:
         threshold = (2 << 5) + 50 * 2.5
         image = Image.new("RGB", (CircleMoireScreen.IMAGE_WIDTH, CircleMoireScreen.IMAGE_HEIGHT))
         moire.recalc_circle_pattern(image, palette_blues.palette, -threshold, -threshold, threshold, threshold)
         return pygame.image.fromstring(image.tobytes(), image.size, image.mode).convert()
-
-    def drawTitle(self) -> None:
-        """Draw the title onto splash screen."""
-        x = self._display.get_width() / 2 - self._title.get_width() / 2
-        y = 0
-        self._display.blit(self._title, (x, y))
 
     def draw(self) -> None:
         """Draw splash screen."""
