@@ -32,14 +32,9 @@ class AboutScreen(Screen):
 
     def __init__(self, display: pygame.Surface, resources: Resources) -> None:
         """Initialize the about screen."""
-        super(AboutScreen, self).__init__(display, resources)
+        super(AboutScreen, self).__init__(display, resources, "About")
 
         # fonts and other required resources are taken from resources object.
-
-        # pre-render demo title
-        self._title = self._resources.bigFont.render("About", True,
-                                                     AboutScreen.TITLE_COLOR,
-                                                     AboutScreen.BACKGROUND_COLOR)
 
         # pre-render other texts
         self._author1 = self._resources.normalFont.render("Pavel", True,
@@ -79,12 +74,6 @@ class AboutScreen(Screen):
         self.drawAuthors()
         self.drawTexts()
         self.drawVersionInfo()
-
-    def drawTitle(self) -> None:
-        """Draw the title onto the about screen."""
-        x = self._display.get_width() / 2 - self._title.get_width() / 2
-        y = 0
-        self._display.blit(self._title, (x, y))
 
     def drawAuthors(self) -> None:
         """Draw authors photos onto the screen."""
