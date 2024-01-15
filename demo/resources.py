@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2023  Pavel Tisnovsky
+#  (C) Copyright 2023, 2024  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -21,6 +21,12 @@ import pygame
 from pygame.font import Font
 from os.path import isfile, join
 
+import textures.palette_blues as palette_blues
+import textures.palette_gold as palette_gold
+import textures.palette_greens as palette_greens
+import textures.palette_ice as palette_ice
+import textures.palette_mandmap as palette_mandmap
+
 
 class Resources:
     """Resources used within the demo."""
@@ -31,6 +37,7 @@ class Resources:
         """Resource initialization."""
         self.loadFonts(configuration)
         self.loadImages(configuration)
+        self.loadPalettes()
 
     def loadFonts(self, configuration: configparser.ConfigParser) -> None:
         """Load all required fonts."""
@@ -47,6 +54,19 @@ class Resources:
         self._images = {}
         for imageName in imageList:
             self._images[imageName[0]] = pygame.image.load(imageName[1])
+
+    def loadPalettes(self):
+        self._palettes = []
+        self._palettes.append(palette_blues.palette)
+        self._palettes.append(palette_gold.palette)
+        self._palettes.append(palette_greens.palette)
+        self._palettes.append(palette_ice.palette)
+        self._palettes.append(palette_mandmap.palette)
+
+    @property
+    def palettes(self):
+        """Color palettes."""
+        return self._palettes
 
     @property
     def bigFont(self) -> Font:
