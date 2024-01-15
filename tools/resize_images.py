@@ -24,6 +24,7 @@
 # SOFTWARE.
 
 from pathlib import Path
+
 from PIL import Image
 
 size = (500, 374)

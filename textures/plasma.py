@@ -26,15 +26,16 @@
 
 # Vytvoreni textury typu "plasma"
 
-from PIL import Image
+import math
 from random import random
+from typing import List, Tuple
+
 import palette_blues
-import palette_greens
 import palette_gold
+import palette_greens
 import palette_ice
 import palette_mandmap
-import math
-from typing import List, Tuple
+from PIL import Image
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
@@ -101,7 +102,7 @@ def convert_to_image(bitmap: List[List[float]], image: Image.Image, width: int, 
 
 # h ... Hurstuv exponent
 # n ... pocet koeficientu spektralni syntezy
-def spectral_synthesis(image: Image.Image, palette: Tuple[Tuple[int, int, int], ...,], n: int, h: float) -> None:
+def spectral_synthesis(image: Image.Image, palette: Tuple[Tuple[int, int, int], ...], n: int, h: float) -> None:
     """Plasma texture computation using spectral synthesis."""
     width, height = image.size  # rozmery obrazku
 
@@ -135,7 +136,7 @@ def spectral_synthesis(image: Image.Image, palette: Tuple[Tuple[int, int, int], 
                     u = (i - n / 2) * 2.0 * math.pi / width
                     v = (j - n / 2) * 2.0 * math.pi / height
                     z += A[k][l] * math.cos(k * u + l * v) + B[k][l] * math.sin(
-                        k * u + l * v
+                        k * u + l * v,
                     )
             bitmap[j][i] = z
 
