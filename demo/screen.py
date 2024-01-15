@@ -1,7 +1,7 @@
 # vim: set fileencoding=utf-8
 
 #
-#  (C) Copyright 2023  Pavel Tisnovsky
+#  (C) Copyright 2023, 2024  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -35,8 +35,10 @@ class Screen(ABC):
     # colors used on menu screen (background color is read from Screen class
     TITLE_COLOR = (255, 255, 255)
     MENU_COLOR = (120, 120, 255)
+    STATUS_COLOR = (120, 120, 255)
 
-    def __init__(self, display: pygame.Surface, resources: Resources, title_text: str) -> None:
+
+    def __init__(self, display: pygame.Surface, resources: Resources, title_text: str, status_text = None) -> None:
         """Initialize the screen."""
         # primary display for blitting to screen
         self._display = display
@@ -52,16 +54,31 @@ class Screen(ABC):
                                                      Screen.TITLE_COLOR,
                                                      Screen.BACKGROUND_COLOR)
 
+        # pre-render status text
+        if status_text is not None:
+            self._status = self._resources.normalFont.render(status_text, True,
+                                                             Screen.STATUS_COLOR,
+                                                             Screen.BACKGROUND_COLOR)
+
+
     def drawTitle(self) -> None:
-        """Draw the title onto splash screen."""
+        """Draw the title onto the screen."""
         x = self._display.get_width() / 2 - self._title.get_width() / 2
         y = 0
         self._display.blit(self._title, (x, y))
+
+    def drawStatus(self) -> None:
+        """Draw the status onto the screen."""
+        if self._status is not None:
+            x = self._display.get_width() / 2 - self._status.get_width() / 2
+            y = self._display.get_height() - self._status.get_height()
+            self._display.blit(self._status, (x, y))
 
     def draw(self) -> None:
         """Draw screen."""
         # this method should be overwritten
         self.drawTitle()
+        self.drawStatus()
         self._display.fill(Screen.BACKGROUND_COLOR)
 
     def eventLoop(self) -> int:
