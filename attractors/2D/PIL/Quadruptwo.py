@@ -1,7 +1,7 @@
 # vim: set fileencoding=utf-8
 
 import sys
-from math import copysign, sin, atan
+from math import atan, copysign, sin
 from math import log as ln
 
 from PIL import Image
