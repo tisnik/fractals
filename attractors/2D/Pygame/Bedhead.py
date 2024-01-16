@@ -11,11 +11,10 @@
 #
 
 
-from math import sin, cos
+from math import cos, sin
 
 from bitmap import create_bitmap, draw_bitmap
-from ui import initialize, event_loop
-
+from ui import event_loop, initialize
 
 # window settings
 WINDOW_WIDTH = 800
