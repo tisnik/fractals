@@ -2,7 +2,7 @@
 
 import sys
 from enum import Enum
-from math import copysign, sin, atan
+from math import atan, copysign, sin
 from math import log as ln
 
 import pygame
