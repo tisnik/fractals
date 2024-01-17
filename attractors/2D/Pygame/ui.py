@@ -12,9 +12,9 @@
 
 
 import sys
+
 import pygame
 import pygame.locals
-
 from colors import Colors
 
 
