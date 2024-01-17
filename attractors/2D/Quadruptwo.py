@@ -26,13 +26,14 @@
 
 # Import všech potřebných knihoven - Numpy, Matplotlibu a standardní
 # matematické knihovny, ze které se využijí jen některé vybrané funkce.
+from math import atan, sin
+
 import matplotlib.pyplot as plt
 import numpy as np
-from math import sin, atan
+from numpy import abs, sign
 
 # Dále se načtou i některé funkce pro výpočty nad maticemi a vektory.
 from numpy import log as ln
-from numpy import abs, sign
 
 
 def sqr(x):
