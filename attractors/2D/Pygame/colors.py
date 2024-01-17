@@ -13,6 +13,7 @@
 
 from enum import Enum
 
+
 class Colors(Enum):
     """Named colors used everywhere on demo screens."""
 
