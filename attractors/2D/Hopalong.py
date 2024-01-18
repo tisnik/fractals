@@ -26,9 +26,10 @@
 
 # Import všech potřebných knihoven - Numpy, Matplotlibu a standardní
 # matematické knihovny, ze které se využijí jen některé vybrané funkce.
+from math import sqrt
+
 import matplotlib.pyplot as plt
 import numpy as np
-from math import sqrt
 
 
 def sign(x):
