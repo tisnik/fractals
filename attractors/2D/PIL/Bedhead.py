@@ -1,7 +1,7 @@
 # vim: set fileencoding=utf-8
 
 import sys
-from math import sin, cos
+from math import cos, sin
 
 from bitmap import create_bitmap, draw_bitmap
 from PIL import Image
