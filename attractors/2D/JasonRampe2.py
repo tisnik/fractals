@@ -27,9 +27,10 @@
 
 # Import všech potřebných knihoven - Numpy, Matplotlibu a standardní
 # matematické knihovny, ze které se využijí jen některé vybrané funkce.
+from math import cos
+
 import matplotlib.pyplot as plt
 import numpy as np
-from math import cos
 
 
 def rason_rampe_2(x, y, a, b, c, d):
