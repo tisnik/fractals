@@ -2,8 +2,9 @@
 
 # Vytvoreni textury s "kruznicovym moare"
 
-from PIL import Image
 from typing import Tuple
+
+from PIL import Image
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
