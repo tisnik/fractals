@@ -2,8 +2,9 @@
 
 # Vytvoreni textury s "kruznicovym moare" i dalsimi typy moare
 
-from PIL import Image
 from typing import Callable, Tuple
+
+from PIL import Image
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
@@ -36,8 +37,8 @@ def recalc_any_pattern(image: Image.Image,
 def main() -> None:
     """Vypocet textur s jejich ulozenim do souboru."""
     import palette_blues
-    import palette_greens
     import palette_gold
+    import palette_greens
     import palette_ice
     import palette_mandmap
 
