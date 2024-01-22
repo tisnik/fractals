@@ -2,9 +2,10 @@
 
 """Texture rendering based on FM synthesis."""
 
-from PIL import Image
 from math import sin
 from typing import Tuple
+
+from PIL import Image
 
 IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
@@ -31,8 +32,8 @@ def fm(image: Image.Image, palette: Tuple[Tuple[int, int, int], ...],
 
 def main() -> None:
     import palette_blues
-    import palette_greens
     import palette_gold
+    import palette_greens
     import palette_ice
     import palette_mandmap
 
