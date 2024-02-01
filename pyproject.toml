@@ -1,7 +1,8 @@
 [tool.ruff]
 # select = ["E", "F", "W", "C", "D"]
-select = ["E", "F", "W", "C"]
-ignore = ["C901"]
+#select = ["E", "F", "W", "C", "I", "COM"]
+select = ["E", "F", "W", "C", "I"]
+ignore = ["C901", "F401"]
 
 line-length = 100
 
