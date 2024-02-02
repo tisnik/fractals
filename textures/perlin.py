@@ -26,9 +26,10 @@
 
 # Perlinuv sum
 
-from PIL import Image
 from random import random
 from typing import List, Tuple
+
+from PIL import Image
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
@@ -119,8 +120,8 @@ def perlin_noise(image: PIL.Image.Image, palette: Tuple[Tuple[int, int, int], ..
 def main() -> None:
     """Vypocet textur s jejich ulozenim do souboru."""
     import palette_blues
-    import palette_greens
     import palette_gold
+    import palette_greens
     import palette_ice
     import palette_mandmap
 
