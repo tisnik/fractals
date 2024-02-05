@@ -1,8 +1,9 @@
 """Fresnel fractal generator."""
 
+from math import cos, sin
+
 import matplotlib.pyplot as plt
 import numpy as np
-from math import sin, cos
 
 # Celkový počet vypočtených bodů
 n = 10000
