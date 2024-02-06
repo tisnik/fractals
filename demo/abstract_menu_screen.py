@@ -70,12 +70,16 @@ class AbstractMenuScreen(Screen):
         self._ghost.draw()
         self.cycleGhostDirection()
 
+    def drawIcons(self) -> None:
+        """Draw icons onto the menu screen."""
+
     def draw(self) -> None:
         """Draw splash screen."""
         self._display.fill(Colors.BLACK.value)
         self.drawTitle()
         self.drawMenu()
         self.drawGhost()
+        self.drawIcons()
 
     def cycleGhostDirection(self) -> None:
         """Periodically change ghost direction to create simple animation."""
