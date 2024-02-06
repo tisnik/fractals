@@ -36,3 +36,16 @@ class TexturesScreen(AbstractMenuScreen):
             self.renderMenuItem("FM-synth"),
             self.renderMenuItem("Return to main screen"),
         )
+
+        # retrieve icons
+        self._circles_icon = self._resources.images["procedural_circles"]
+        self._plasma_icon = self._resources.images["procedural_plasma"]
+        self._greens_icon = self._resources.images["procedural_greens"]
+        self._fm_icon = self._resources.images["procedural_fm"]
+
+    def drawIcons(self) -> None:
+        """Draw icons."""
+        self._display.blit(self._circles_icon, (100, 140))
+        self._display.blit(self._greens_icon, (320, 140))
+        self._display.blit(self._plasma_icon, (540, 140))
+        self._display.blit(self._fm_icon, (760, 140))
