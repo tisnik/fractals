@@ -39,3 +39,16 @@ class CplxScreen(AbstractMenuScreen):
             self.renderMenuItem("Mandelbrot variant: z³-z"),
             self.renderMenuItem("Return to main screen"),
         )
+
+        # retrieve icons
+        self._mandelbrot_icon = self._resources.images["complex_mandelbrot"]
+        self._julia_icon = self._resources.images["complex_julia"]
+        self._barnsley_icon = self._resources.images["complex_barnsley"]
+        self._spiral_icon = self._resources.images["complex_spiral"]
+
+    def drawIcons(self) -> None:
+        """Draw icons."""
+        self._display.blit(self._mandelbrot_icon, (100, 140))
+        self._display.blit(self._julia_icon, (320, 140))
+        self._display.blit(self._barnsley_icon, (540, 140))
+        self._display.blit(self._spiral_icon, (760, 140))
