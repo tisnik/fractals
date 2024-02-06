@@ -20,7 +20,6 @@ from PIL import Image
 from demo.screen import Screen
 from demo.colors import Colors
 
-import textures.circle_moire_with_palette as moire
 from demo.resources import Resources
 from pygame.surface import Surface
 
@@ -32,16 +31,18 @@ class CircleMoireScreen(Screen):
     IMAGE_HEIGHT = 512
 
 
-    def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
-        status = "← previous    → next    C change palette    Esc back"
+    def __init__(self, display: Surface, resources: Resources, title_text: str, renderer) -> None:
+        status = "← zoom out    → zoom in    C change palette    Esc back"
         super(CircleMoireScreen, self).__init__(display, resources, title_text, status)
         self._clock = pygame.time.Clock()
         self._palette_index = 0
-        self._renderer = moire.recalc_circle_pattern
+        self._zoom_index = 0
+        self._renderer = renderer
+        self._zoom = 3.0
         self._image = self.calcImage()
 
     def calcImage(self) -> Surface:
-        threshold = (2 << 5) + 50 * 2.5
+        threshold = (2 << 5) + 50.0 * self._zoom
         image = Image.new("RGB", (CircleMoireScreen.IMAGE_WIDTH, CircleMoireScreen.IMAGE_HEIGHT))
         palette = self._resources.palettes[self._palette_index]
         self._renderer(image, palette, -threshold, -threshold, threshold, threshold)
@@ -67,9 +68,11 @@ class CircleMoireScreen(Screen):
                     if event.key == pygame.locals.K_ESCAPE:
                         return
                     if event.key == pygame.locals.K_LEFT:
-                        pass
+                        self._zoom += 1.0
+                        self._image = self.calcImage()
                     if event.key == pygame.locals.K_RIGHT:
-                        pass
+                        self._zoom -= 1.0
+                        self._image = self.calcImage()
                     if event.key == pygame.locals.K_c:
                         self._palette_index += 1
                         if self._palette_index >= len(self._resources.palettes):
