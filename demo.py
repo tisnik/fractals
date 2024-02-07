@@ -1,7 +1,7 @@
 # vim: set fileencoding=utf-8
 
 #
-#  (C) Copyright 2023  Pavel Tisnovsky
+#  (C) Copyright 2023, 2024  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -34,6 +34,8 @@ from demo.dynamic_systems_screen import DynamicSystemsScreen
 from demo.about_screen import AboutScreen
 from demo.resources import Resources
 from demo.circle_moire_screen import CircleMoireScreen
+from demo.other_moire_screen import OtherMoireScreen
+from textures.circle_moire_with_palette import recalc_circle_pattern
 
 
 configuration = loadConfiguration("demo.ini")
@@ -66,9 +68,13 @@ def in_texture_screen(display, resources, red_ghost) -> None:
         if choice in {TexturesMenu.QUIT.value, MainMenu.QUIT.value}:
             return
         elif choice == TexturesMenu.CIRCLE_MOIRE.value:
-            circle_moire_screen = CircleMoireScreen(display, resources, "Circle moire patterns")
+            circle_moire_screen = CircleMoireScreen(display, resources, "Circle moire patterns", recalc_circle_pattern)
             circle_moire_screen.draw()
             circle_moire_screen.eventLoop()
+        elif choice == TexturesMenu.OTHER_MOIRE.value:
+            other_moire_screen = OtherMoireScreen(display, resources, "Other moire patterns", recalc_any_pattern)
+            other_moire_screen.draw()
+            other_moire_screen.eventLoop()
 
 
 def in_cplx_screen(display, resources, red_ghost) -> None:
