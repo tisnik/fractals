@@ -32,7 +32,7 @@ class CircleMoireScreen(Screen):
 
 
     def __init__(self, display: Surface, resources: Resources, title_text: str, renderer) -> None:
-        status = "← zoom out    → zoom in    C change palette    Esc back"
+        status = "← zoom out   → zoom in   [P]alette   Esc back"
         super(CircleMoireScreen, self).__init__(display, resources, title_text, status)
         self._clock = pygame.time.Clock()
         self._palette_index = 0
@@ -73,7 +73,7 @@ class CircleMoireScreen(Screen):
                     if event.key == pygame.locals.K_RIGHT:
                         self._zoom -= 1.0
                         self._image = self.calcImage()
-                    if event.key == pygame.locals.K_c:
+                    if event.key == pygame.locals.K_p:
                         self._palette_index += 1
                         if self._palette_index >= len(self._resources.palettes):
                             self._palette_index = 0
