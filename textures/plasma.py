@@ -30,11 +30,6 @@ import math
 from random import random
 from typing import List, Tuple
 
-import palette_blues
-import palette_gold
-import palette_greens
-import palette_ice
-import palette_mandmap
 from PIL import Image
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
@@ -145,6 +140,12 @@ def spectral_synthesis(image: Image.Image, palette: Tuple[Tuple[int, int, int], 
 
 def main() -> None:
     """Vypocet textur s jejich ulozenim do souboru."""
+    import palette_blues
+    import palette_greens
+    import palette_gold
+    import palette_ice
+    import palette_mandmap
+
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
     spectral_synthesis(image, palette_greens.palette, 4, 0.5)
