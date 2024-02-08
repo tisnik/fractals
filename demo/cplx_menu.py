@@ -20,11 +20,11 @@ from enum import Enum
 class CplxMenu(Enum):
     """All entries from the complex fractals menu."""
 
-    MANDELBROT = 1
-    JULIA = 2
-    MANDELBROT_Z3 = 3
-    MANDELBROT_Z4 = 4
+    MANDELBROT = 0
+    JULIA = 1
+    MANDELBROT_Z3 = 2
+    MANDELBROT_Z4 = 3
     MANDELBROT_Z2_Z = 4
     MANDELBROT_Z3_Z = 5
 
-    QUIT = 7
+    QUIT = 6
