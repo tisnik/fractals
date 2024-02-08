@@ -22,6 +22,7 @@ from demo.colors import Colors
 
 from demo.resources import Resources
 from pygame.surface import Surface
+from textures.circle_moire_with_palette import recalc_circle_pattern
 
 
 class CircleMoireScreen(Screen):
@@ -31,13 +32,13 @@ class CircleMoireScreen(Screen):
     IMAGE_HEIGHT = 512
 
 
-    def __init__(self, display: Surface, resources: Resources, title_text: str, renderer) -> None:
+    def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
         status = "← zoom out   → zoom in   [P]alette   Esc back"
         super(CircleMoireScreen, self).__init__(display, resources, title_text, status)
         self._clock = pygame.time.Clock()
         self._palette_index = 0
         self._zoom_index = 0
-        self._renderer = renderer
+        self._renderer = recalc_circle_pattern
         self._zoom = 3.0
         self._image = self.calcImage()
 

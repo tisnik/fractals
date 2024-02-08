@@ -35,7 +35,6 @@ from demo.about_screen import AboutScreen
 from demo.resources import Resources
 from demo.circle_moire_screen import CircleMoireScreen
 from demo.other_moire_screen import OtherMoireScreen
-from textures.circle_moire_with_palette import recalc_circle_pattern
 
 
 configuration = loadConfiguration("demo.ini")
@@ -68,7 +67,7 @@ def in_texture_screen(display, resources, red_ghost) -> None:
         if choice in {TexturesMenu.QUIT.value, MainMenu.QUIT.value}:
             return
         elif choice == TexturesMenu.CIRCLE_MOIRE.value:
-            circle_moire_screen = CircleMoireScreen(display, resources, "Circle moire patterns", recalc_circle_pattern)
+            circle_moire_screen = CircleMoireScreen(display, resources, "Circle moire patterns")
             circle_moire_screen.draw()
             circle_moire_screen.eventLoop()
         elif choice == TexturesMenu.OTHER_MOIRE.value:
