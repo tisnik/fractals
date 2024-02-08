@@ -35,6 +35,7 @@ from demo.about_screen import AboutScreen
 from demo.resources import Resources
 from demo.circle_moire_screen import CircleMoireScreen
 from demo.other_moire_screen import OtherMoireScreen
+from demo.plasma_screen import PlasmaScreen
 
 
 configuration = loadConfiguration("demo.ini")
@@ -74,6 +75,10 @@ def in_texture_screen(display, resources, red_ghost) -> None:
             other_moire_screen = OtherMoireScreen(display, resources, "Other moire patterns")
             other_moire_screen.draw()
             other_moire_screen.eventLoop()
+        elif choice == TexturesMenu.PLASMA.value:
+            plasma_screen = PlasmaScreen(display, resources, "Plasma")
+            plasma_screen.draw()
+            plasma_screen.eventLoop()
 
 
 def in_cplx_screen(display, resources, red_ghost) -> None:
