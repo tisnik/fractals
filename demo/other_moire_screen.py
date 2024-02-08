@@ -22,6 +22,7 @@ from demo.colors import Colors
 
 from demo.resources import Resources
 from pygame.surface import Surface
+from textures.circle_like_patterns import recalc_any_pattern
 
 
 class OtherMoireScreen(Screen):
@@ -43,13 +44,13 @@ class OtherMoireScreen(Screen):
         32+75, 32+75, 15, 15, 60, 15
     ]
 
-    def __init__(self, display: Surface, resources: Resources, title_text: str, renderer) -> None:
+    def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
         status = "← zoom out   → zoom in   [F]unction   [P]alette   Esc back"
         super(OtherMoireScreen, self).__init__(display, resources, title_text, status)
         self._clock = pygame.time.Clock()
         self._palette_index = 0
         self._zoom_index = 0
-        self._renderer = renderer
+        self._renderer = recalc_any_pattern
         self._function = 0
         self._zoom = 2.25
         self._image = self.calcImage()

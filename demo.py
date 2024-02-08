@@ -72,7 +72,7 @@ def in_texture_screen(display, resources, red_ghost) -> None:
             circle_moire_screen.draw()
             circle_moire_screen.eventLoop()
         elif choice == TexturesMenu.OTHER_MOIRE.value:
-            other_moire_screen = OtherMoireScreen(display, resources, "Other moire patterns", recalc_any_pattern)
+            other_moire_screen = OtherMoireScreen(display, resources, "Other moire patterns")
             other_moire_screen.draw()
             other_moire_screen.eventLoop()
 
