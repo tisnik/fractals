@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Renderer of the classic Barnsley fractal."""
+"""Renderer of the classic Barnsley M1 fractal."""
 
 from PIL import Image
 
@@ -49,7 +49,7 @@ def main():
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
     recalc_fractal(image, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, 500)
-    image.save("barnsley_m.png")
+    image.save("barnsley_m1.png")
 
 
 if __name__ == "__main__":
