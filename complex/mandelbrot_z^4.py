@@ -3,7 +3,6 @@
 """Renderer of Mandelbrot fractal variant z^4."""
 
 from PIL import Image
-import palette_mandmap
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
@@ -40,7 +39,13 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
         y1 += stepy
 
 
-image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+def main():
+    import palette_mandmap
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-recalc_fractal(image, palette_mandmap.palette, -1.5, -1.5, 1.5, 1.5, 1000)
-image.save("mandelbrot_z^4.png")
+    recalc_fractal(image, palette_mandmap.palette, -1.5, -1.5, 1.5, 1.5, 1000)
+    image.save("mandelbrot_z^4.png")
+
+
+if __name__ == "__main__":
+    main()
