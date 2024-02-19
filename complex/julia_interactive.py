@@ -55,6 +55,7 @@ def event_loop(display, image1, image2, clock, renderer):
     cy_scr = image1.get_width()/2-1 - 42*2
     cx_scr_delta = 0
     cy_scr_delta = 0
+    first_draw = True
 
     while True:
         for event in pygame.event.get():
@@ -103,7 +104,8 @@ def event_loop(display, image1, image2, clock, renderer):
             cy_scr = image1.get_height()-1
 
         # recalculate Julia set if needed
-        if cx_scr_delta != 0 or cy_scr_delta != 0:
+        if cx_scr_delta != 0 or cy_scr_delta != 0 or first_draw:
+            first_draw = False
             scale_x = (XMAX-XMIN) / image1.get_width()
             scale_y = (YMAX-YMIN) / image1.get_height()
 
@@ -189,7 +191,6 @@ def main():
     image2 = pygame.Surface([IMAGE_WIDTH, IMAGE_HEIGHT])
 
     recalc_mandelbrot(image1, palette_blues.palette, XMIN, YMIN, XMAX, YMAX, MAXITER)
-    recalc_julia(image2, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, 0.0, -1.0, MAXITER)
     event_loop(display, image1, image2, clock, recalc_julia)
 
 
