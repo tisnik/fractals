@@ -36,6 +36,7 @@ from demo.resources import Resources
 from demo.circle_moire_screen import CircleMoireScreen
 from demo.other_moire_screen import OtherMoireScreen
 from demo.plasma_screen import PlasmaScreen
+from demo.mandelbrot_screen import MandelbrotScreen
 
 
 configuration = loadConfiguration("demo.ini")
@@ -86,8 +87,12 @@ def in_cplx_screen(display, resources, red_ghost) -> None:
     cplx_screen.draw()
     while True:
         choice = cplx_screen.eventLoop()
-        if choice == CplxMenu.QUIT.value:
+        if choice in {CplxMenu.QUIT.value, MainMenu.QUIT.value}:
             return
+        elif choice == CplxMenu.MANDELBROT.value:
+            mandelbrot_screen = MandelbrotScreen(display, resources, "Mandelbrot fractal")
+            mandelbrot_screen.draw()
+            mandelbrot_screen.eventLoop()
 
 
 def main() -> None:
