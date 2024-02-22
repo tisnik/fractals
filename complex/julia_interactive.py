@@ -41,10 +41,6 @@ def initialize_ui(title, width, height):
     display = pygame.display.set_mode([width, height])
     display.fill(Colors.BLACK.value)
 
-    # create all required Pygame objects
-    surface = pygame.Surface([width, height])
-    surface.fill(Colors.BLACK.value)
-
     clock = pygame.time.Clock()
 
     return display, clock
