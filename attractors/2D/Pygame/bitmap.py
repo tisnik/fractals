@@ -14,7 +14,9 @@
 from typing import List, Tuple
 
 
-def compute_min_max(bitmap: List[List[float]], width: int, height: int) -> Tuple[float, float]:
+def compute_min_max(
+    bitmap: List[List[float]], width: int, height: int
+) -> Tuple[float, float]:
     # pro prepocet intenzit pixelu
     min = float("inf")
     max = float("-inf")
@@ -34,9 +36,7 @@ def create_bitmap(width: int, height: int) -> List[List[float]]:
     return [[0 for x in range(width)] for y in range(height)]
 
 
-def draw_bitmap(bitmap: List[List[float]],
-                surface,
-                max_factor: float) -> None:
+def draw_bitmap(bitmap: List[List[float]], surface, max_factor: float) -> None:
     print("contrast adjustment")
     width, height = surface.get_size()
 
@@ -53,4 +53,4 @@ def draw_bitmap(bitmap: List[List[float]],
             if f > 255.0:
                 f = 255
             i = int(f) & 255
-            surface.set_at((x, y), i + (i<<8) + (i<<16))
+            surface.set_at((x, y), i + (i << 8) + (i << 16))
