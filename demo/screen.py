@@ -37,8 +37,13 @@ class Screen(ABC):
     MENU_COLOR = (120, 120, 255)
     STATUS_COLOR = (120, 120, 255)
 
-
-    def __init__(self, display: pygame.Surface, resources: Resources, title_text: str, status_text = None) -> None:
+    def __init__(
+        self,
+        display: pygame.Surface,
+        resources: Resources,
+        title_text: str,
+        status_text=None,
+    ) -> None:
         """Initialize the screen."""
         # primary display for blitting to screen
         self._display = display
@@ -50,16 +55,15 @@ class Screen(ABC):
         self._clock = pygame.time.Clock()
 
         # pre-render demo title
-        self._title = self._resources.bigFont.render(title_text, True,
-                                                     Screen.TITLE_COLOR,
-                                                     Screen.BACKGROUND_COLOR)
+        self._title = self._resources.bigFont.render(
+            title_text, True, Screen.TITLE_COLOR, Screen.BACKGROUND_COLOR
+        )
 
         # pre-render status text
         if status_text is not None:
-            self._status = self._resources.normalFont.render(status_text, True,
-                                                             Screen.STATUS_COLOR,
-                                                             Screen.BACKGROUND_COLOR)
-
+            self._status = self._resources.normalFont.render(
+                status_text, True, Screen.STATUS_COLOR, Screen.BACKGROUND_COLOR
+            )
 
     def drawTitle(self) -> None:
         """Draw the title onto the screen."""
