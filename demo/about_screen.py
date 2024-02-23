@@ -37,35 +37,38 @@ class AboutScreen(Screen):
         # fonts and other required resources are taken from resources object.
 
         # pre-render other texts
-        self._author1 = self._resources.normalFont.render("Pavel", True,
-                                                          AboutScreen.AUTHOR_COLOR,
-                                                          AboutScreen.BACKGROUND_COLOR)
+        self._author1 = self._resources.normalFont.render(
+            "Pavel", True, AboutScreen.AUTHOR_COLOR, AboutScreen.BACKGROUND_COLOR
+        )
 
-        self._work1 = self._resources.normalFont.render("code", True,
-                                                        AboutScreen.WORK_COLOR,
-                                                        AboutScreen.BACKGROUND_COLOR)
+        self._work1 = self._resources.normalFont.render(
+            "code", True, AboutScreen.WORK_COLOR, AboutScreen.BACKGROUND_COLOR
+        )
 
         # version info texts
         pygame_version = f"Pygame version: {pygame.version.ver}"
-        self._pygame_version = self._resources.smallFont.render(pygame_version,
-                                                                True,
-                                                                AboutScreen.WORK_COLOR,
-                                                                AboutScreen.BACKGROUND_COLOR)
+        self._pygame_version = self._resources.smallFont.render(
+            pygame_version, True, AboutScreen.WORK_COLOR, AboutScreen.BACKGROUND_COLOR
+        )
 
         sdlVer = f"{pygame.version.SDL.major}.{pygame.version.SDL.minor}.{pygame.version.SDL.patch}"
-        self._sdl_version = self._resources.smallFont.render("SDL version: " + sdlVer, True,
-                                                             AboutScreen.WORK_COLOR,
-                                                             AboutScreen.BACKGROUND_COLOR)
+        self._sdl_version = self._resources.smallFont.render(
+            "SDL version: " + sdlVer,
+            True,
+            AboutScreen.WORK_COLOR,
+            AboutScreen.BACKGROUND_COLOR,
+        )
         pv = sys.version_info
         pythonVersion = f"{pv.major}.{pv.minor}.{pv.micro} {pv.releaselevel}"
-        self._python_version = self._resources.smallFont.render("Python version: " + pythonVersion,
-                                                            True,
-                                                            AboutScreen.WORK_COLOR,
-                                                            AboutScreen.BACKGROUND_COLOR)
+        self._python_version = self._resources.smallFont.render(
+            "Python version: " + pythonVersion,
+            True,
+            AboutScreen.WORK_COLOR,
+            AboutScreen.BACKGROUND_COLOR,
+        )
 
         self._clock = pygame.time.Clock()
         self._photo1 = self._resources.images["authors1"]
-
 
     def draw(self) -> None:
         """Draw about screen."""
