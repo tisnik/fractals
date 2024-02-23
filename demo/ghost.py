@@ -26,19 +26,20 @@ from demo.sprite import Sprite
 class Ghost(Sprite):
     """Ghost class that represents any ghost in the demo."""
 
-    def __init__(self, surface: pygame.Surface, resources: Resources,
-            filename_prefix: str) -> None:
+    def __init__(
+        self, surface: pygame.Surface, resources: Resources, filename_prefix: str
+    ) -> None:
         """Ghost object initialization, including resource loading."""
         super(Ghost, self).__init__(surface)
 
         self._scared = False
         self._scared_tick = 0
 
-        self._sprites :Dict[Any, Any] = {}
-        self._sprites[Direction.LEFT] = resources.images[filename_prefix+"_left"]
-        self._sprites[Direction.RIGHT] = resources.images[filename_prefix+"_right"]
-        self._sprites[Direction.UP] = resources.images[filename_prefix+"_up"]
-        self._sprites[Direction.DOWN] = resources.images[filename_prefix+"_down"]
+        self._sprites: Dict[Any, Any] = {}
+        self._sprites[Direction.LEFT] = resources.images[filename_prefix + "_left"]
+        self._sprites[Direction.RIGHT] = resources.images[filename_prefix + "_right"]
+        self._sprites[Direction.UP] = resources.images[filename_prefix + "_up"]
+        self._sprites[Direction.DOWN] = resources.images[filename_prefix + "_down"]
 
     def setScared(self, scared: bool) -> None:
         """Set 'scared ghost' mode."""
