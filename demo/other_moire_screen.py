@@ -26,7 +26,6 @@ from textures.circle_like_patterns import recalc_any_pattern
 
 
 class OtherMoireScreen(Screen):
-
     # rendered image size
     IMAGE_WIDTH = 512
     IMAGE_HEIGHT = 512
@@ -40,9 +39,7 @@ class OtherMoireScreen(Screen):
         lambda x, y: x * x * y + y * y * x,
     ]
 
-    RELATIVE_ZOOMS = [
-        32+75, 32+75, 15, 15, 60, 15
-    ]
+    RELATIVE_ZOOMS = [32 + 75, 32 + 75, 15, 15, 60, 15]
 
     def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
         status = "← zoom out   → zoom in   [F]unction   [P]alette   Esc back"
@@ -56,12 +53,25 @@ class OtherMoireScreen(Screen):
         self._image = self.calcImage()
 
     def calcImage(self) -> Surface:
-        threshold = self._zoom * OtherMoireScreen.RELATIVE_ZOOMS[self._function] #(2 << 5) + 50.0 * self._zoom
-        image = Image.new("RGB", (OtherMoireScreen.IMAGE_WIDTH, OtherMoireScreen.IMAGE_HEIGHT))
+        threshold = (
+            self._zoom * OtherMoireScreen.RELATIVE_ZOOMS[self._function]
+        )  # (2 << 5) + 50.0 * self._zoom
+        image = Image.new(
+            "RGB", (OtherMoireScreen.IMAGE_WIDTH, OtherMoireScreen.IMAGE_HEIGHT)
+        )
         palette = self._resources.palettes[self._palette_index]
-        self._renderer(image, palette, -threshold, -threshold, threshold, threshold,
-                OtherMoireScreen.FUNCTIONS[self._function])
-        return pygame.image.fromstring(image.tobytes(), image.size, image.mode).convert()
+        self._renderer(
+            image,
+            palette,
+            -threshold,
+            -threshold,
+            threshold,
+            threshold,
+            OtherMoireScreen.FUNCTIONS[self._function],
+        )
+        return pygame.image.fromstring(
+            image.tobytes(), image.size, image.mode
+        ).convert()
 
     def draw(self) -> None:
         """Draw screen."""
