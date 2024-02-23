@@ -24,9 +24,13 @@ from demo.ghost import Ghost
 class TexturesScreen(AbstractMenuScreen):
     """Textures screen."""
 
-    def __init__(self, display: pygame.Surface, resources: Resources, ghost: Ghost) -> None:
+    def __init__(
+        self, display: pygame.Surface, resources: Resources, ghost: Ghost
+    ) -> None:
         """Initialize the screen."""
-        super(TexturesScreen, self).__init__(display, resources, ghost, "Procedural textures")
+        super(TexturesScreen, self).__init__(
+            display, resources, ghost, "Procedural textures"
+        )
 
         # pre-render all menu items onto surfaces
         self._menu = (
