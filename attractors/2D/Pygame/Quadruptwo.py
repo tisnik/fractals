@@ -47,14 +47,16 @@ def redraw_system(surface):
     scale = 9.0
 
     for i in range(max_points):
-        xi = WINDOW_WIDTH//2 + int(scale*x)
-        yi = WINDOW_HEIGHT//2 + int(scale*y)
+        xi = WINDOW_WIDTH // 2 + int(scale * x)
+        yi = WINDOW_HEIGHT // 2 + int(scale * y)
         # try to draw pixel
-        if xi >=0 and yi >=0 and xi < WINDOW_WIDTH and yi < WINDOW_HEIGHT:
-            surface.set_at((xi, yi), i*10)
+        if xi >= 0 and yi >= 0 and xi < WINDOW_WIDTH and yi < WINDOW_HEIGHT:
+            surface.set_at((xi, yi), i * 10)
 
         # next point calculation
-        x_dot = y - copysign(1, x) * sin(ln(abs(b * x - c))) * atan(sqr(ln(abs(c * x - b))))
+        x_dot = y - copysign(1, x) * sin(ln(abs(b * x - c))) * atan(
+            sqr(ln(abs(c * x - b)))
+        )
         y_dot = a - x
         x, y = x_dot, y_dot
 
