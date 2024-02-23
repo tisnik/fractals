@@ -26,11 +26,9 @@ from textures.plasma import spectral_synthesis
 
 
 class PlasmaScreen(Screen):
-
     # rendered image size
     IMAGE_WIDTH = 512
     IMAGE_HEIGHT = 512
-
 
     def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
         status = "← zoom out   → zoom in   [P]alette   Esc back"
@@ -43,7 +41,9 @@ class PlasmaScreen(Screen):
         image = Image.new("RGB", (PlasmaScreen.IMAGE_WIDTH, PlasmaScreen.IMAGE_HEIGHT))
         palette = self._resources.palettes[self._palette_index]
         spectral_synthesis(image, palette, 4, 0.5)
-        return pygame.image.fromstring(image.tobytes(), image.size, image.mode).convert()
+        return pygame.image.fromstring(
+            image.tobytes(), image.size, image.mode
+        ).convert()
 
     def draw(self) -> None:
         """Draw screen."""
