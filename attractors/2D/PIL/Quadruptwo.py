@@ -32,14 +32,16 @@ def redraw_system(image: Image.Image):
     width, height = image.size
 
     for i in range(max_points):
-        xi = width//2 + int(scale*x)
-        yi = height//2 + int(scale*y)
+        xi = width // 2 + int(scale * x)
+        yi = height // 2 + int(scale * y)
         # try to draw pixel
-        if xi >=0 and yi >=0 and xi < width and yi < height:
-            image.putpixel((xi, yi), i*10)
+        if xi >= 0 and yi >= 0 and xi < width and yi < height:
+            image.putpixel((xi, yi), i * 10)
 
         # next point calculation
-        x_dot = y - copysign(1, x) * sin(ln(abs(b * x - c))) * atan(sqr(ln(abs(c * x - b))))
+        x_dot = y - copysign(1, x) * sin(ln(abs(b * x - c))) * atan(
+            sqr(ln(abs(c * x - b)))
+        )
         y_dot = a - x
         x, y = x_dot, y_dot
 
