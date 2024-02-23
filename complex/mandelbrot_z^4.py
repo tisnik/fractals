@@ -41,6 +41,7 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
 
 def main():
     import palette_mandmap
+
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
     recalc_fractal(image, palette_mandmap.palette, -1.5, -1.5, 1.5, 1.5, 1000)
