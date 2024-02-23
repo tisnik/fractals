@@ -89,13 +89,18 @@ class Resources:
         return self._images
 
 
-def get_list_of_images(configuration: configparser.ConfigParser) -> List[Tuple[str, str]]:
+def get_list_of_images(
+    configuration: configparser.ConfigParser,
+) -> List[Tuple[str, str]]:
     """Retrieve list of all image files from specified directory."""
     path = configuration["paths"]["images"]
-    return [(short_filename(fileName), join(path, fileName))
-            for fileName in os.listdir(path) if isfile(join(path, fileName))]
+    return [
+        (short_filename(fileName), join(path, fileName))
+        for fileName in os.listdir(path)
+        if isfile(join(path, fileName))
+    ]
 
 
 def short_filename(filename: str) -> str:
     """Take just filename without extension."""
-    return filename[0:filename.index(".")]
+    return filename[0 : filename.index(".")]
