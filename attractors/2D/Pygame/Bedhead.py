@@ -47,18 +47,18 @@ def redraw_system(surface):
     for i in range(max_points):
         x_dot, y_dot = bedhead(x, y, A, B)
 
-        xi = width//2 + int(scale*x_dot)
-        yi = height//2 + int(scale*y_dot)
+        xi = width // 2 + int(scale * x_dot)
+        yi = height // 2 + int(scale * y_dot)
 
         # try to draw pixel
         if i > settle_down_points:
-            if xi >=0 and yi >=0 and xi < width and yi < height:
+            if xi >= 0 and yi >= 0 and xi < width and yi < height:
                 bitmap[yi][xi] += 1
 
         # next point calculation
         x, y = x_dot, y_dot
 
-    draw_bitmap(bitmap, surface, 1/1000.0)
+    draw_bitmap(bitmap, surface, 1 / 1000.0)
 
 
 def main():
