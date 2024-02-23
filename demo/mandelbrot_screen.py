@@ -26,11 +26,9 @@ from complex.mandelbrot import recalc_fractal
 
 
 class MandelbrotScreen(Screen):
-
     # rendered image size
     IMAGE_WIDTH = 512
     IMAGE_HEIGHT = 512
-
 
     def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
         status = "← zoom out   → zoom in   [P]alette   Esc back"
@@ -40,10 +38,14 @@ class MandelbrotScreen(Screen):
         self._image = self.calcImage()
 
     def calcImage(self) -> Surface:
-        image = Image.new("RGB", (MandelbrotScreen.IMAGE_WIDTH, MandelbrotScreen.IMAGE_HEIGHT))
+        image = Image.new(
+            "RGB", (MandelbrotScreen.IMAGE_WIDTH, MandelbrotScreen.IMAGE_HEIGHT)
+        )
         palette = self._resources.palettes[self._palette_index]
         recalc_fractal(image, palette, -2.0, -1.5, 1.0, 1.5, 500)
-        return pygame.image.fromstring(image.tobytes(), image.size, image.mode).convert()
+        return pygame.image.fromstring(
+            image.tobytes(), image.size, image.mode
+        ).convert()
 
     def draw(self) -> None:
         """Draw screen."""
