@@ -17,7 +17,7 @@ def barnsley_m(cx, cy, maxiter):
     for i in range(0, maxiter):
         if abs(z) > 2:
             return i
-        if z.real*c.imag+c.real*z.imag >= 0:
+        if z.real * c.imag + c.real * z.imag >= 0:
             z = (z - 1) * c
         else:
             z = (z + 1) * c
