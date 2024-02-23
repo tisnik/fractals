@@ -24,12 +24,13 @@ from demo.ghost import Ghost
 class DynamicSystemsScreen(AbstractMenuScreen):
     """Dynamic systems screen."""
 
-    def __init__(self, display: pygame.Surface, resources: Resources,
-            ghost: Ghost) -> None:
+    def __init__(
+        self, display: pygame.Surface, resources: Resources, ghost: Ghost
+    ) -> None:
         """Initialize the screen."""
-        super(DynamicSystemsScreen, self).__init__(display, resources, ghost, "Dynamic Systems")
+        super(DynamicSystemsScreen, self).__init__(
+            display, resources, ghost, "Dynamic Systems"
+        )
 
         # pre-render all menu items onto surfaces
-        self._menu = (
-            self.renderMenuItem("Return to main screen"),
-        )
+        self._menu = (self.renderMenuItem("Return to main screen"),)
