@@ -47,8 +47,8 @@ def initialize_ui(title, width, height):
 
 
 def event_loop(display, image1, image2, clock, renderer):
-    cx_scr = image1.get_width()/2-1 - 42*2
-    cy_scr = image1.get_width()/2-1 - 42*2
+    cx_scr = image1.get_width() / 2 - 1 - 42 * 2
+    cy_scr = image1.get_width() / 2 - 1 - 42 * 2
     cx_scr_delta = 0
     cy_scr_delta = 0
     first_draw = True
@@ -92,31 +92,37 @@ def event_loop(display, image1, image2, clock, renderer):
         # check for limits
         if cx_scr < 0:
             cx_scr = 0
-        if cx_scr > image1.get_width()-1:
-            cx_scr = image1.get_width()-1
+        if cx_scr > image1.get_width() - 1:
+            cx_scr = image1.get_width() - 1
         if cy_scr < 0:
             cy_scr = 0
-        if cy_scr > image1.get_height()-1:
-            cy_scr = image1.get_height()-1
+        if cy_scr > image1.get_height() - 1:
+            cy_scr = image1.get_height() - 1
 
         # recalculate Julia set if needed
         if cx_scr_delta != 0 or cy_scr_delta != 0 or first_draw:
             first_draw = False
-            scale_x = (XMAX-XMIN) / image1.get_width()
-            scale_y = (YMAX-YMIN) / image1.get_height()
+            scale_x = (XMAX - XMIN) / image1.get_width()
+            scale_y = (YMAX - YMIN) / image1.get_height()
 
             cx = cx_scr * scale_x + XMIN
             cy = cy_scr * scale_x + YMIN
 
-            renderer(image2, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, cx, cy, MAXITER)
+            renderer(
+                image2, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, cx, cy, MAXITER
+            )
 
         # display Mandelbrot set and Julia se
         display.blit(image1, (0, 0))
-        display.blit(image2, (10+image1.get_width(), 0))
+        display.blit(image2, (10 + image1.get_width(), 0))
 
         # display C coordinates
-        pygame.draw.line(display, Colors.WHITE.value, (cx_scr, 0), (cx_scr, image1.get_height()-1))
-        pygame.draw.line(display, Colors.WHITE.value, (0, cy_scr), (image1.get_width()-1, cy_scr))
+        pygame.draw.line(
+            display, Colors.WHITE.value, (cx_scr, 0), (cx_scr, image1.get_height() - 1)
+        )
+        pygame.draw.line(
+            display, Colors.WHITE.value, (0, cy_scr), (image1.get_width() - 1, cy_scr)
+        )
 
         # and update the whole display
         pygame.display.update()
@@ -136,7 +142,6 @@ def barnsley_m1(cx, cy, maxiter):
             z = (z + 1) * c
 
     return 0
-
 
 
 def recalc_barnsley_m1(image, palette, xmin, ymin, xmax, ymax, maxiter=100):
