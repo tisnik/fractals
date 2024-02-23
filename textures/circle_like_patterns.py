@@ -12,11 +12,15 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-def recalc_any_pattern(image: Image.Image,
-                       palette: Tuple[Tuple[int, int, int], ...],
-                       xmin: float, ymin: float,
-                       xmax: float, ymax: float,
-                       function: Callable[[float, float], float]) -> None:
+def recalc_any_pattern(
+    image: Image.Image,
+    palette: Tuple[Tuple[int, int, int], ...],
+    xmin: float,
+    ymin: float,
+    xmax: float,
+    ymax: float,
+    function: Callable[[float, float], float],
+) -> None:
     """Funkce provadejici vypocet moare s kruznicovym ci jinym vzorkem."""
     width, height = image.size  # rozmery obrazku
     stepx = (xmax - xmin) / width
