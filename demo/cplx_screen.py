@@ -24,10 +24,13 @@ from demo.ghost import Ghost
 class CplxScreen(AbstractMenuScreen):
     """Fractals in complex plane screen."""
 
-    def __init__(self, display: pygame.Surface, resources: Resources,
-            ghost: Ghost) -> None:
+    def __init__(
+        self, display: pygame.Surface, resources: Resources, ghost: Ghost
+    ) -> None:
         """Initialize the screen."""
-        super(CplxScreen, self).__init__(display, resources, ghost, "Fractals in complex plane")
+        super(CplxScreen, self).__init__(
+            display, resources, ghost, "Fractals in complex plane"
+        )
 
         # pre-render all menu items onto surfaces
         self._menu = (
