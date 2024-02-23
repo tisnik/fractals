@@ -12,10 +12,14 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-def recalc_circle_pattern(image: Image.Image,
-                          palette: Tuple[Tuple[int, int, int], ...],
-                          xmin: float, ymin: float,
-                          xmax: float, ymax: float) -> None:
+def recalc_circle_pattern(
+    image: Image.Image,
+    palette: Tuple[Tuple[int, int, int], ...],
+    xmin: float,
+    ymin: float,
+    xmax: float,
+    ymax: float,
+) -> None:
     """Funkce provadejici vypocet moare s kruznicovym vzorkem."""
     width, height = image.size  # rozmery obrazku
     stepx = (xmax - xmin) / width
