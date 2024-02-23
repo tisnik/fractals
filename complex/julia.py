@@ -49,7 +49,9 @@ def main():
     recalc_fractal(image, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, 0.0, 1.0, 1000)
     image.save("julia1.png")
 
-    recalc_fractal(image, palette_mandmap.palette, -2.0, -2.0, 2.0, 2.0, -1.0, 0.0, 1000)
+    recalc_fractal(
+        image, palette_mandmap.palette, -2.0, -2.0, 2.0, 2.0, -1.0, 0.0, 1000
+    )
     image.save("julia2.png")
 
     recalc_fractal(image, palette_gold.palette, -1.5, -1.5, 1.5, 1.5, 0.285, 0.01, 255)
