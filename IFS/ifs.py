@@ -84,7 +84,9 @@ IFS_SYSTEMS = {
 }
 
 
-def generate_ifs(image: Image.Image, width: int, height: int, maxiter: int, startiter: int, ifs):
+def generate_ifs(
+    image: Image.Image, width: int, height: int, maxiter: int, startiter: int, ifs
+):
     delitel = 12.0
 
     # obdélník opsaný IFS
