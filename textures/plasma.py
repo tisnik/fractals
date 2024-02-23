@@ -60,7 +60,9 @@ def random_gauss() -> float:
     return sum / N
 
 
-def compute_min_max(bitmap: List[List[float]], width: int, height: int) -> Tuple[float, float]:
+def compute_min_max(
+    bitmap: List[List[float]], width: int, height: int
+) -> Tuple[float, float]:
     """Minimum and maximum pixel value computation."""
     # pro prepocet intenzit pixelu
     min = float("inf")
@@ -77,7 +79,13 @@ def compute_min_max(bitmap: List[List[float]], width: int, height: int) -> Tuple
     return min, max
 
 
-def convert_to_image(bitmap: List[List[float]], image: Image.Image, width: int, height: int, palette: Tuple[Tuple[int, int, int], ...]) -> None:
+def convert_to_image(
+    bitmap: List[List[float]],
+    image: Image.Image,
+    width: int,
+    height: int,
+    palette: Tuple[Tuple[int, int, int], ...],
+) -> None:
     """Convert the 2D array into a proper bitmap with high contrast."""
     print("contrast adjustment")
 
@@ -97,7 +105,9 @@ def convert_to_image(bitmap: List[List[float]], image: Image.Image, width: int, 
 
 # h ... Hurstuv exponent
 # n ... pocet koeficientu spektralni syntezy
-def spectral_synthesis(image: Image.Image, palette: Tuple[Tuple[int, int, int], ...], n: int, h: float) -> None:
+def spectral_synthesis(
+    image: Image.Image, palette: Tuple[Tuple[int, int, int], ...], n: int, h: float
+) -> None:
     """Plasma texture computation using spectral synthesis."""
     width, height = image.size  # rozmery obrazku
 
