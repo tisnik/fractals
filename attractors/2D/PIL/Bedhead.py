@@ -33,12 +33,12 @@ def redraw_system(image: Image.Image, A, B, scale, x_offset, y_offset, max_facto
     for i in range(max_points):
         x_dot, y_dot = bedhead(x, y, A, B)
 
-        xi = width//2 + int(scale*x_dot) + x_offset
-        yi = height//2 + int(scale*y_dot) + y_offset
+        xi = width // 2 + int(scale * x_dot) + x_offset
+        yi = height // 2 + int(scale * y_dot) + y_offset
 
         # try to draw pixel
         if i > settle_down_points:
-            if xi >=0 and yi >=0 and xi < width and yi < height:
+            if xi >= 0 and yi >= 0 and xi < width and yi < height:
                 bitmap[yi][xi] += 1
 
         # next point calculation
@@ -52,17 +52,17 @@ def main() -> None:
 
     A = 0.06
     B = 0.98
-    redraw_system(image, A, B, 80, 50, 10, 1/1000.0)
+    redraw_system(image, A, B, 80, 50, 10, 1 / 1000.0)
     invert(image).save("bedhead_1.png")
 
     A = -0.67
     B = 0.83
-    redraw_system(image, A, B, 220, -100, -350, 1/100.0)
+    redraw_system(image, A, B, 220, -100, -350, 1 / 100.0)
     invert(image).save("bedhead_2.png")
 
     A = -0.67
     B = 0.68
-    redraw_system(image, A, B, 70, 0, 50, 1/50.0)
+    redraw_system(image, A, B, 70, 0, 50, 1 / 50.0)
     invert(image).save("bedhead_3.png")
 
 
