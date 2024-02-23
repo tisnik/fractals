@@ -24,12 +24,13 @@ from demo.ghost import Ghost
 class IteratedFunctionsSystemsScreen(AbstractMenuScreen):
     """Iterated function systems screen."""
 
-    def __init__(self, display: pygame.Surface, resources: Resources,
-            ghost: Ghost) -> None:
+    def __init__(
+        self, display: pygame.Surface, resources: Resources, ghost: Ghost
+    ) -> None:
         """Initialize the screen."""
-        super(IteratedFunctionsSystemsScreen, self).__init__(display, resources, ghost, "Iterated Functions Systems")
+        super(IteratedFunctionsSystemsScreen, self).__init__(
+            display, resources, ghost, "Iterated Functions Systems"
+        )
 
         # pre-render all menu items onto surfaces
-        self._menu = (
-            self.renderMenuItem("Return to main screen"),
-        )
+        self._menu = (self.renderMenuItem("Return to main screen"),)
