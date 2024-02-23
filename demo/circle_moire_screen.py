@@ -26,11 +26,9 @@ from textures.circle_moire_with_palette import recalc_circle_pattern
 
 
 class CircleMoireScreen(Screen):
-
     # rendered image size
     IMAGE_WIDTH = 512
     IMAGE_HEIGHT = 512
-
 
     def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
         status = "← zoom out   → zoom in   [P]alette   Esc back"
@@ -44,10 +42,14 @@ class CircleMoireScreen(Screen):
 
     def calcImage(self) -> Surface:
         threshold = (2 << 5) + 50.0 * self._zoom
-        image = Image.new("RGB", (CircleMoireScreen.IMAGE_WIDTH, CircleMoireScreen.IMAGE_HEIGHT))
+        image = Image.new(
+            "RGB", (CircleMoireScreen.IMAGE_WIDTH, CircleMoireScreen.IMAGE_HEIGHT)
+        )
         palette = self._resources.palettes[self._palette_index]
         self._renderer(image, palette, -threshold, -threshold, threshold, threshold)
-        return pygame.image.fromstring(image.tobytes(), image.size, image.mode).convert()
+        return pygame.image.fromstring(
+            image.tobytes(), image.size, image.mode
+        ).convert()
 
     def draw(self) -> None:
         """Draw screen."""
