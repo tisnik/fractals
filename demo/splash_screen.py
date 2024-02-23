@@ -28,10 +28,18 @@ class SplashScreen(AbstractMenuScreen):
     # colors used on splash screen (background color is read from Screen class
     CREDITS_COLOR = (140, 140, 140)
 
-    def __init__(self, display: pygame.Surface, resources: Resources,
-            filename_prefix: str, frames_count: int, ghost: Ghost) -> None:
+    def __init__(
+        self,
+        display: pygame.Surface,
+        resources: Resources,
+        filename_prefix: str,
+        frames_count: int,
+        ghost: Ghost,
+    ) -> None:
         """Initialize the splash screen."""
-        super(SplashScreen, self).__init__(display, resources, ghost, "Procedural graphics demos")
+        super(SplashScreen, self).__init__(
+            display, resources, ghost, "Procedural graphics demos"
+        )
 
         # pre-render all menu items onto surfaces
         self._menu = (
@@ -45,10 +53,9 @@ class SplashScreen(AbstractMenuScreen):
         )
 
         credits = "2023 Pavel Tišnovský"
-        self._credits = self._resources.smallFont.render(credits,
-                                                         True,
-                                                         SplashScreen.CREDITS_COLOR,
-                                                         SplashScreen.BACKGROUND_COLOR)
+        self._credits = self._resources.smallFont.render(
+            credits, True, SplashScreen.CREDITS_COLOR, SplashScreen.BACKGROUND_COLOR
+        )
         # retrieve icons
         self._barnsley_icon = self._resources.images["main_barnsley"]
         self._mandelbrot_icon = self._resources.images["main_mandelbrot"]
