@@ -31,12 +31,19 @@ class AbstractMenuScreen(Screen):
 
     CYCLE_DIRECTION_COUNTER_START_VALUE = 3
 
-    def __init__(self, display: pygame.Surface, resources: Resources,
-            ghost: Ghost, title_text: str) -> None:
+    def __init__(
+        self,
+        display: pygame.Surface,
+        resources: Resources,
+        ghost: Ghost,
+        title_text: str,
+    ) -> None:
         """Initialize the splash screen."""
         super(AbstractMenuScreen, self).__init__(display, resources, title_text)
         self._ghost = ghost
-        self._cycleDirectionCounter = AbstractMenuScreen.CYCLE_DIRECTION_COUNTER_START_VALUE
+        self._cycleDirectionCounter = (
+            AbstractMenuScreen.CYCLE_DIRECTION_COUNTER_START_VALUE
+        )
 
         self._frame = 0
 
@@ -45,14 +52,16 @@ class AbstractMenuScreen(Screen):
         # actually selected menu item
         self._selected_menu_item = 0
 
-        self._menu : Tuple[pygame.Surface, ...]= ()
-
+        self._menu: Tuple[pygame.Surface, ...] = ()
 
     def renderMenuItem(self, text: str) -> pygame.Surface:
         """Render one menu item to be displayed on splash screen."""
-        return self._resources.normalFont.render(text, True,
-                                                 AbstractMenuScreen.MENU_COLOR,
-                                                 AbstractMenuScreen.BACKGROUND_COLOR)
+        return self._resources.normalFont.render(
+            text,
+            True,
+            AbstractMenuScreen.MENU_COLOR,
+            AbstractMenuScreen.BACKGROUND_COLOR,
+        )
 
     def drawMenu(self) -> None:
         """Draw the main menu."""
@@ -86,7 +95,9 @@ class AbstractMenuScreen(Screen):
         self._cycleDirectionCounter -= 1
         if self._cycleDirectionCounter == 0:
             self._ghost.cycleDirection()
-            self._cycleDirectionCounter = AbstractMenuScreen.CYCLE_DIRECTION_COUNTER_START_VALUE
+            self._cycleDirectionCounter = (
+                AbstractMenuScreen.CYCLE_DIRECTION_COUNTER_START_VALUE
+            )
 
     def moveGhostUp(self) -> None:
         """Move ghost up to previous menu item."""
