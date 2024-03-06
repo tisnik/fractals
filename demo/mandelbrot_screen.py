@@ -15,6 +15,7 @@
 """Mandelbrot screen."""
 
 import pygame
+import sys
 from PIL import Image
 
 from demo.screen import Screen
