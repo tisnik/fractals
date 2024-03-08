@@ -50,3 +50,42 @@ void render_test_palette_image(unsigned int width, unsigned int height,
     }
 }
 
+void render_mandelbrot(unsigned int width, unsigned int height,
+                       const unsigned char *palette, unsigned char *pixels) {
+    int x, y;
+    double cx, cy;
+    double xmin = -2.0, ymin = -1.5, xmax = 1.0, ymax = 1.5;
+    unsigned char *p = pixels;
+
+    cy = ymin;
+    for (y = 0; y < height; y++) {
+        cx = xmin;
+        for (x = 0; x < width; x++) {
+            double zx = 0.0;
+            double zy = 0.0;
+            unsigned int i = 0;
+            while (i < 150) {
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                if (zx2 + zy2 > 4.0) {
+                    break;
+                }
+                zy = 2.0 * zx * zy + cy;
+                zx = zx2 - zy2 + cx;
+                i++;
+            }
+            {
+                unsigned char *pal =
+                    (unsigned char *)palette + (unsigned char)(i * 3);
+
+                *p++ = *pal++;
+                *p++ = *pal++;
+                *p++ = *pal;
+                p++;
+            }
+            cx += (xmax - xmin) / width;
+        }
+        cy += (ymax - ymin) / height;
+    }
+}
+
