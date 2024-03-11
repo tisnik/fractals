@@ -1,7 +1,7 @@
 # vim: set fileencoding=utf-8
 
 #
-#  (C) Copyright 2023  Pavel Tisnovsky
+#  (C) Copyright 2023, 2024  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -25,5 +25,6 @@ class MainMenu(Enum):
     STRANGE_ATTRACTORS = 2
     IFS = 3
     DYNAMIC_SYSTEMS = 4
-    ABOUT = 5
-    QUIT = 6
+    SETUP = 5
+    ABOUT = 6
+    QUIT = 7

@@ -1,7 +1,7 @@
 # vim: set fileencoding=utf-8
 
 #
-#  (C) Copyright 2023  Pavel Tisnovsky
+#  (C) Copyright 2023, 2024  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -48,11 +48,12 @@ class SplashScreen(AbstractMenuScreen):
             self.renderMenuItem("Strange attractors"),
             self.renderMenuItem("Iterated function systems"),
             self.renderMenuItem("Dynamic systems"),
+            self.renderMenuItem("Setup"),
             self.renderMenuItem("About"),
             self.renderMenuItem("Quit"),
         )
 
-        credits = "2023 Pavel Tišnovský"
+        credits = "2023, 2024 Pavel Tišnovský"
         self._credits = self._resources.smallFont.render(
             credits, True, SplashScreen.CREDITS_COLOR, SplashScreen.BACKGROUND_COLOR
         )
