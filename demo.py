@@ -31,6 +31,7 @@ from demo.cplx_menu import CplxMenu
 from demo.strange_attractors_screen import StrangeAttractorsScreen
 from demo.ifs_screen import IteratedFunctionsSystemsScreen
 from demo.dynamic_systems_screen import DynamicSystemsScreen
+from demo.setup_screen import SetupScreen
 from demo.about_screen import AboutScreen
 from demo.resources import Resources
 from demo.circle_moire_screen import CircleMoireScreen
@@ -128,6 +129,10 @@ def main() -> None:
             about_screen = AboutScreen(display, resources)
             about_screen.draw()
             about_screen.eventLoop()
+        elif menuItem == MainMenu.SETUP.value:
+            setup_screen = SetupScreen(display, resources, red_ghost)
+            setup_screen.draw()
+            setup_screen.eventLoop()
 
 
 main()
