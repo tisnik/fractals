@@ -228,6 +228,53 @@ void render_barnsley_j1(unsigned int width, unsigned int height,
     }
 }
 
+void render_barnsley_m2(unsigned int width, unsigned int height,
+                        const unsigned char *palette, unsigned char *pixels) {
+    int x, y;
+    double cx, cy;
+    double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
+    unsigned char *p = pixels;
+
+    cy = ymin;
+    for (y = 0; y < height; y++) {
+        cx = xmin;
+        for (x = 0; x < width; x++) {
+            double zx = 0.0;
+            double zy = 0.0;
+            unsigned int i = 0;
+            while (i < 150) {
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                double zxn, zyn;
+                if (zx2 + zy2 > 4.0) {
+                    break;
+                }
+                if (zx * cy + zy * cx >= 0) {
+                    zxn = zx * cx - zy * cy - cx;
+                    zyn = zx * cy + zy * cx - cy;
+                } else {
+                    zxn = zx * cx - zy * cy + cx;
+                    zyn = zx * cy + zy * cx + cy;
+                }
+                zx = zxn;
+                zy = zyn;
+                i++;
+            }
+            {
+                unsigned char *pal =
+                    (unsigned char *)palette + (unsigned char)(i * 3);
+
+                *p++ = *pal++;
+                *p++ = *pal++;
+                *p++ = *pal;
+                p++;
+            }
+            cx += (xmax - xmin) / width;
+        }
+        cy += (ymax - ymin) / height;
+    }
+}
+
 void render_circle_pattern(unsigned int width, unsigned int height,
                            const unsigned char *palette,
                            unsigned char *pixels) {
