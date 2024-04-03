@@ -14,16 +14,16 @@
 
 """Mandelbrot screen."""
 
-import pygame
 import sys
+
+import pygame
 from PIL import Image
-
-from demo.screen import Screen
-from demo.colors import Colors
-
-from demo.resources import Resources
 from pygame.surface import Surface
+
 from complex.mandelbrot import recalc_fractal
+from demo.colors import Colors
+from demo.resources import Resources
+from demo.screen import Screen
 
 
 class MandelbrotScreen(Screen):
