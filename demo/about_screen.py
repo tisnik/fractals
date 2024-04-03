@@ -15,11 +15,12 @@
 """About screen displayed in the demo and selected from the main menu."""
 
 import sys
+
 import pygame
 
-from demo.screen import Screen
 from demo.colors import Colors
 from demo.resources import Resources
+from demo.screen import Screen
 
 
 class AboutScreen(Screen):
