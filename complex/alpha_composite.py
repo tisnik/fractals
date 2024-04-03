@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from PIL import Image
-import palette_mandmap
-import palette_greens
 import palette_blues
+import palette_greens
+import palette_mandmap
+from PIL import Image
 
 IMAGE_WIDTH = 512
 IMAGE_HEIGHT = 384
