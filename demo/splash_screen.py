@@ -18,8 +18,8 @@ import pygame
 
 from demo.abstract_menu_screen import AbstractMenuScreen
 from demo.colors import Colors
-from demo.resources import Resources
 from demo.ghost import Ghost
+from demo.resources import Resources
 
 
 class SplashScreen(AbstractMenuScreen):
