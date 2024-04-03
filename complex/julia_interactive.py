@@ -13,10 +13,10 @@
 
 import sys
 
+import palette_blues
 import pygame
 import pygame.locals
 from colors import Colors
-import palette_blues
 
 TITLE = "Interactive Julia renderer"
 SCREEN_WIDTH = 600
