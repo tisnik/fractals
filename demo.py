@@ -19,26 +19,25 @@ import sys
 import pygame
 import pygame.locals
 
-from demo.main_menu import MainMenu
-from demo.ghost import Ghost
-from demo.config import loadConfiguration
-from demo.colors import Colors
-from demo.splash_screen import SplashScreen
-from demo.textures_screen import TexturesScreen
-from demo.textures_menu import TexturesMenu
-from demo.cplx_screen import CplxScreen
-from demo.cplx_menu import CplxMenu
-from demo.strange_attractors_screen import StrangeAttractorsScreen
-from demo.ifs_screen import IteratedFunctionsSystemsScreen
-from demo.dynamic_systems_screen import DynamicSystemsScreen
-from demo.setup_screen import SetupScreen
 from demo.about_screen import AboutScreen
-from demo.resources import Resources
 from demo.circle_moire_screen import CircleMoireScreen
+from demo.colors import Colors
+from demo.config import loadConfiguration
+from demo.cplx_menu import CplxMenu
+from demo.cplx_screen import CplxScreen
+from demo.dynamic_systems_screen import DynamicSystemsScreen
+from demo.ghost import Ghost
+from demo.ifs_screen import IteratedFunctionsSystemsScreen
+from demo.main_menu import MainMenu
+from demo.mandelbrot_screen import MandelbrotScreen
 from demo.other_moire_screen import OtherMoireScreen
 from demo.plasma_screen import PlasmaScreen
-from demo.mandelbrot_screen import MandelbrotScreen
-
+from demo.resources import Resources
+from demo.setup_screen import SetupScreen
+from demo.splash_screen import SplashScreen
+from demo.strange_attractors_screen import StrangeAttractorsScreen
+from demo.textures_menu import TexturesMenu
+from demo.textures_screen import TexturesScreen
 
 configuration = loadConfiguration("demo.ini")
 
