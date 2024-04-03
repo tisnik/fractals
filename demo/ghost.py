@@ -14,12 +14,12 @@
 
 """Ghost class that represents any ghost in the demo."""
 
-from typing import Dict, Any
+from typing import Any, Dict
 
 import pygame
 
-from demo.resources import Resources
 from demo.direction import Direction
+from demo.resources import Resources
 from demo.sprite import Sprite
 
 
