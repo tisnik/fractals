@@ -14,10 +14,11 @@
 
 """Superclass for all screens in the demo."""
 
+import sys
 from abc import ABC
+
 import pygame
 import pygame.locals
-import sys
 
 from demo.colors import Colors
 from demo.resources import Resources
