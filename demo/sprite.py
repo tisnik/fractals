@@ -14,10 +14,11 @@
 
 """Super class for all movable objects on the scene."""
 
+from abc import ABC
 from typing import Tuple
 
 import pygame
-from abc import ABC
+
 from demo.direction import Direction
 
 
