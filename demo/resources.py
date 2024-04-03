@@ -12,14 +12,13 @@
 
 """Resources used within the demo."""
 
-import os
 import configparser
-
+import os
+from os.path import isfile, join
 from typing import Dict, List, Tuple
 
 import pygame
 from pygame.font import Font
-from os.path import isfile, join
 
 import textures.palette_blues as palette_blues
 import textures.palette_gold as palette_gold
