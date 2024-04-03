@@ -151,8 +151,8 @@ def spectral_synthesis(
 def main() -> None:
     """Vypocet textur s jejich ulozenim do souboru."""
     import palette_blues
-    import palette_greens
     import palette_gold
+    import palette_greens
     import palette_ice
     import palette_mandmap
 
