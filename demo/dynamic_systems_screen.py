@@ -14,12 +14,13 @@
 
 """Dynamic system screen."""
 
-import pygame
 import sys
 
+import pygame
+
 from demo.abstract_menu_screen import AbstractMenuScreen
-from demo.resources import Resources
 from demo.ghost import Ghost
+from demo.resources import Resources
 
 
 class DynamicSystemsScreen(AbstractMenuScreen):
