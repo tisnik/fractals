@@ -25,9 +25,9 @@ def fm(
     stepy = (ymax - ymin) / height
 
     y1 = ymin
-    for y in range(0, height):
+    for y in range(height):
         x1 = xmin
-        for x in range(0, width):
+        for x in range(width):
             x1 += stepx
             val = 100 + 100.0 * sin(x / 4 + 2 * sin(x / 20 + y / 50))
             i = int(val) & 255
