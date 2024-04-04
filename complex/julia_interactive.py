@@ -133,7 +133,7 @@ def mandelbrot(cx, cy, maxiter):
     """Calculate number of iterations for given complex number to escape from set."""
     c = complex(cx, cy)
     z = 0
-    for i in range(0, maxiter):
+    for i in range(maxiter):
         if abs(z) > 2:
             return i
         z = z * z + c
@@ -147,9 +147,9 @@ def recalc_mandelbrot(image, palette, xmin, ymin, xmax, ymax, maxiter=100):
     stepy = (ymax - ymin) / height
 
     y1 = ymin
-    for y in range(0, height):
+    for y in range(height):
         x1 = xmin
-        for x in range(0, width):
+        for x in range(width):
             i = mandelbrot(x1, y1, maxiter)
             i = 3 * i % 256
             color = palette[i][2] + (palette[i][1] << 8) + (palette[i][0] << 16)
@@ -162,7 +162,7 @@ def julia(zx0, zy0, cx, cy, maxiter):
     """Calculate number of iterations for given complex numbers Z and C to escape from set."""
     c = complex(cx, cy)
     z = complex(zx0, zy0)
-    for i in range(0, maxiter):
+    for i in range(maxiter):
         if abs(z) > 2:
             return i
         z = z * z + c
@@ -176,9 +176,9 @@ def recalc_julia(image, palette, xmin, ymin, xmax, ymax, cx, cy, maxiter=1000):
     stepy = (ymax - ymin) / height
 
     y1 = ymin
-    for y in range(0, height):
+    for y in range(height):
         x1 = xmin
-        for x in range(0, width):
+        for x in range(width):
             i = julia(x1, y1, cx, cy, maxiter)
             i = 3 * i % 256
             color = palette[i][2] + (palette[i][1] << 8) + (palette[i][0] << 16)
