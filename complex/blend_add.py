@@ -13,7 +13,7 @@ def mandelbrot(cx, cy, maxiter):
     """Výpočet, kolik iterací je nutné pro opuštění jednotkového kruhu."""
     c = complex(cx, cy)
     z = 0
-    for i in range(0, maxiter):
+    for i in range(maxiter):
         if abs(z) > 2:
             return i
         z = z * z + c
@@ -27,9 +27,9 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
     stepy = (ymax - ymin) / height
 
     y1 = ymin
-    for y in range(0, height):
+    for y in range(height):
         x1 = xmin
-        for x in range(0, width):
+        for x in range(width):
             i = mandelbrot(x1, y1, maxiter)
             i = 3 * i % 256
             color = (palette[i][0], palette[i][1], palette[i][2])
@@ -41,8 +41,8 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
 def addImages(image1, image2):
     width, height = image1.size
     image = Image.new("RGB", (width, height))
-    for y in range(0, height):
-        for x in range(0, width):
+    for y in range(height):
+        for x in range(width):
             color1 = image1.getpixel((x, y))
             color2 = image2.getpixel((x, y))
             color = (
