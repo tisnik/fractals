@@ -39,7 +39,6 @@ class Sprite(ABC):
 
     def draw(self) -> None:
         """Elementary draw method to be overwritten in derived classes."""
-        pass
 
     def setDirection(self, direction: Direction) -> None:
         """Set sprite direction (if applicable)."""
