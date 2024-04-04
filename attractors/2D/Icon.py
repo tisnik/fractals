@@ -36,7 +36,7 @@ def icon(x, y, lambda_, alpha, beta, gamma, omega, degree):
     p = alpha * zzbar + lambda_
     zreal = x
     zimag = y
-    for i in range(0, degree - 2):
+    for i in range(degree - 2):
         za = zreal * x - zimag * y
         zb = zimag * x + zreal * y
         zreal = za
