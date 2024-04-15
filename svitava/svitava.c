@@ -513,7 +513,6 @@ void ppm_write_ascii_to_stream(unsigned int width, unsigned int height, unsigned
     /* pixel array */
     for (y=height-1; y>=0; y--) {
         for (x=0; x<width; x++) {
-            unsigned char r, g, b;
             r = *p++;
             g = *p++;
             b = *p++;
@@ -548,4 +547,5 @@ int main(void) {
     unsigned char *pixels = (unsigned char*) malloc(WIDTH*HEIGHT*4);
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb_1.ppm");
+    return 0;
 }
