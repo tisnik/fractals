@@ -7,7 +7,7 @@ import pygame.locals
 from palette_mandmap import palette
 from enum import Enum
 
-TITLE = "Svitava GUI"
+TITLE = "Svitava GUI: classic Mandelbrot + Julia  [T] to change fractal type"
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 300
 IMAGE_WIDTH = 256
@@ -28,6 +28,8 @@ XMIN = -2.0
 XMAX = 2.0
 YMIN = -2.0
 YMAX = 2.0
+
+fractal_types = ()
 
 
 class Colors(Enum):
@@ -57,6 +59,23 @@ def initialize_ui(title, width, height):
     return display, clock
 
 
+def render_m_set(image_width, image_height, palette, renderer, buffer):
+    renderer.render_barnsley_m1(
+        c_int(image_width), c_int(image_height), palette, buffer
+    )
+
+
+def render_j_set(image_width, image_height, palette, renderer, buffer, cx, cy):
+    renderer.render_barnsley_j1(
+        c_int(image_width),
+        c_int(image_height),
+        palette,
+        buffer,
+        c_double(cx),
+        c_double(cy),
+    )
+
+
 def event_loop(display, image1, image2, clock, pal, renderer, buffer):
     cx_scr = image1.get_width() / 2 - 1 + 32
     cy_scr = image1.get_width() / 2 - 1 - 42 * 2
@@ -76,6 +95,8 @@ def event_loop(display, image1, image2, clock, pal, renderer, buffer):
                 if event.key == pygame.locals.K_RETURN:
                     pygame.quit()
                     sys.exit()
+                if event.key == pygame.locals.K_t:
+                    print("Change type")
                 if event.key == pygame.locals.K_LEFT:
                     cx_scr_delta = -1
                 if event.key == pygame.locals.K_RIGHT:
@@ -119,14 +140,7 @@ def event_loop(display, image1, image2, clock, pal, renderer, buffer):
             cx = cx_scr * scale_x + XMIN
             cy = cy_scr * scale_y + YMIN
 
-            renderer.render_magnet_j2(
-                c_int(IMAGE_WIDTH),
-                c_int(IMAGE_HEIGHT),
-                pal,
-                buffer,
-                c_double(cx),
-                c_double(cy),
-            )
+            render_j_set(IMAGE_WIDTH, IMAGE_HEIGHT, pal, renderer, buffer, cx, cy)
             image2 = image_from_buffer(buffer, IMAGE_WIDTH, IMAGE_HEIGHT, "RGBX")
 
         # display Mandelbrot set and Julia se
@@ -176,7 +190,7 @@ def main():
 
     buffer = create_string_buffer(4 * IMAGE_WIDTH * IMAGE_HEIGHT)
 
-    svitava.render_magnet_m2(c_int(IMAGE_WIDTH), c_int(IMAGE_HEIGHT), pal, buffer)
+    render_m_set(IMAGE_WIDTH, IMAGE_HEIGHT, pal, svitava, buffer)
     image1 = image_from_buffer(buffer, IMAGE_WIDTH, IMAGE_HEIGHT, "RGBX")
 
     image2 = pygame.Surface([IMAGE_WIDTH, IMAGE_HEIGHT])
