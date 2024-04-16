@@ -541,6 +541,55 @@ int ppm_write_ascii(unsigned int width, unsigned int height, unsigned char *pixe
     return 0;
 }
 
+void render_magnet_j1(unsigned int width, unsigned int height,
+                     const unsigned char *palette, unsigned char *pixels,
+                     double cx, double cy) {
+    int x, y;
+    double zx0, zy0;
+    double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
+    unsigned char *p = pixels;
+
+    zy0 = ymin;
+    for (y = 0; y < height; y++) {
+        zx0 = xmin;
+        for (x = 0; x < width; x++) {
+            double zx = zx0;
+            double zy = zy0;
+            unsigned int i = 0;
+            while (i < 150) {
+                double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
+                zx2=zx*zx;
+                zy2=zy*zy;
+                if (zx2+zy2>100) break;
+                if (((zx-1.0)*(zx-1.0)+zy*zy)<0.001) break;
+                tzx=zx2-zy2+cx-1;
+                tzy=2.0*zx*zy+cy;
+                bzx=2.0*zx+cx-2;
+                bzy=2.0*zy+cy;
+                div=bzx*bzx+bzy*bzy;
+#define MIN_VALUE 1.0-100
+                if (div<MIN_VALUE) break;
+                zxn=(tzx*bzx+tzy*bzy)/div;
+                zyn=(tzy*bzx-tzx*bzy)/div;
+                zx=(zxn+zyn)*(zxn-zyn);
+                zy=2.0*zxn*zyn;
+                i++;
+            }
+            {
+                unsigned char *pal =
+                    (unsigned char *)palette + (unsigned char)(i * 3);
+
+                *p++ = *pal++;
+                *p++ = *pal++;
+                *p++ = *pal;
+                p++;
+            }
+            zx0 += (xmax - xmin) / width;
+        }
+        zy0 += (ymax - ymin) / height;
+    }
+}
+
 int main(void) {
 #define WIDTH 256
 #define HEIGHT 256
