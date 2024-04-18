@@ -665,6 +665,83 @@ void render_magnet_m2(unsigned int width, unsigned int height,
         cy += (ymax - ymin) / height;
     }
 }
+
+void render_magnet_j2(unsigned int width, unsigned int height,
+                     const unsigned char *palette, unsigned char *pixels,
+                     double cx, double cy) {
+    int x, y;
+    double cx0, cy0;
+    double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
+    unsigned char *p = pixels;
+
+    cy0=ymin;
+    for (y = 0; y < height; y++) {
+        cx0=xmin;
+        for (x = 0; x < width; x++) {
+            double zx = cx0;
+            double zy = cy0;
+            double cm1x=cx-1.0;
+            double cm1y=cy;
+            double cm2x=cx-2.0;
+            double cm2y=cy;
+            double cm1cm2x=cm1x*cm2x-cm1y*cm2y;
+            double cm1cm2y=cm1x*cm2y+cm1y*cm2x;
+            unsigned int i = 0;
+
+            cm1x+=cm1x+cm1x;
+            cm1y+=cm1y+cm1y;
+            cm2x+=cm2x+cm2x;
+            cm2y+=cm2y+cm2y;
+
+            while (i < 150) {
+                double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
+                zx2=zx*zx;
+                zy2=zy*zy;
+                tzx=zx*(zx2-3.0*zy2+cm1x)-zy*cm1y+cm1cm2x;
+                tzy=zy*(3.0*zx2-zy2+cm1x)+zx*cm1y+cm1cm2y;
+                bzx=zx2-zy2;
+                bzx=3.0*bzx+zx*cm2x-zy*cm2y+cm1cm2x+1.0;
+                bzy=2.0*zx*zy;
+                bzy=3.0*bzy+zx*cm2y+zy*cm2x+cm1cm2y;
+                div=bzx*bzx+bzy*bzy;
+#define MIN_VALUE 1.0-100
+                if (div<MIN_VALUE) break;
+                zxn=(tzx*bzx+tzy*bzy)/div;
+                zyn=(tzy*bzx-tzx*bzy)/div;
+                zx=(zxn+zyn)*(zxn-zyn);
+                zy=2.0*zxn*zyn;
+                if (zx2+zy2>100*100) break;
+                if (((zx-1.0)*(zx-1.0)+zy*zy)<0.001) break;
+                if (zx2+zy2>100) break;
+                if (((zx-1.0)*(zx-1.0)+zy*zy)<0.001) break;
+                tzx=zx2-zy2+cx-1;
+                tzy=2.0*zx*zy+cy;
+                bzx=2.0*zx+cx-2;
+                bzy=2.0*zy+cy;
+                div=bzx*bzx+bzy*bzy;
+#define MIN_VALUE 1.0-100
+                if (div<MIN_VALUE) break;
+                zxn=(tzx*bzx+tzy*bzy)/div;
+                zyn=(tzy*bzx-tzx*bzy)/div;
+                zx=(zxn+zyn)*(zxn-zyn);
+                zy=2.0*zxn*zyn;
+                i++;
+            }
+            {
+                unsigned char *pal =
+                    (unsigned char *)palette + (unsigned char)(i * 3);
+
+                *p++ = *pal++;
+                *p++ = *pal++;
+                *p++ = *pal;
+                p++;
+            }
+            cx0 += (xmax - xmin) / width;
+        }
+        cy0 += (ymax - ymin) / height;
+    }
+}
+
 int main(void) {
 #define WIDTH 256
 #define HEIGHT 256
