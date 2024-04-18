@@ -14,22 +14,25 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 # Mandelbrot fractal parameters
-XMIN = -2.0
-XMAX = 1.0
-YMIN = -1.5
-YMAX = 1.5
+M_XMIN = -2.0
+M_XMAX = 1.0
+M_YMIN = -1.5
+M_YMAX = 1.5
 MAXITER = 100
 
 XSTART = 30
 YSTART = 20
 
 # Barnsley M1 and J1
-XMIN = -2.0
-XMAX = 2.0
-YMIN = -2.0
-YMAX = 2.0
+B_XMIN = -2.0
+B_XMAX = 2.0
+B_YMIN = -2.0
+B_YMAX = 2.0
 
-fractal_types = ()
+fractal_type = "Mandelbrot"
+fractal_limits = {
+        "Mandelbrot": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
+}
 
 
 class Colors(Enum):
@@ -59,14 +62,16 @@ def initialize_ui(title, width, height):
     return display, clock
 
 
-def render_m_set(image_width, image_height, palette, renderer, buffer):
-    renderer.render_barnsley_m1(
+def render_m_set(fractal_renderers, fractal_type, image_width, image_height, palette, buffer):
+    renderer = fractal_renderers[fractal_type][0]
+    renderer(
         c_int(image_width), c_int(image_height), palette, buffer
     )
 
 
-def render_j_set(image_width, image_height, palette, renderer, buffer, cx, cy):
-    renderer.render_barnsley_j1(
+def render_j_set(fractal_renderers, fractal_type, image_width, image_height, palette, buffer, cx, cy):
+    renderer = fractal_renderers[fractal_type][1]
+    renderer(
         c_int(image_width),
         c_int(image_height),
         palette,
@@ -76,7 +81,7 @@ def render_j_set(image_width, image_height, palette, renderer, buffer, cx, cy):
     )
 
 
-def event_loop(display, image1, image2, clock, pal, renderer, buffer):
+def event_loop(display, image1, image2, clock, pal, fractal_renderers, buffer):
     cx_scr = image1.get_width() / 2 - 1 + 32
     cy_scr = image1.get_width() / 2 - 1 - 42 * 2
     cx_scr_delta = 0
@@ -131,16 +136,17 @@ def event_loop(display, image1, image2, clock, pal, renderer, buffer):
         if cy_scr > image1.get_height() - 1:
             cy_scr = image1.get_height() - 1
 
+        xmin, xmax, ymin, ymax = fractal_limits[fractal_type]
         # recalculate Julia set if needed
         if cx_scr_delta != 0 or cy_scr_delta != 0 or first_draw:
             first_draw = False
-            scale_x = (XMAX - XMIN) / image1.get_width()
-            scale_y = (YMAX - YMIN) / image1.get_height()
+            scale_x = (xmax - xmin) / image1.get_width()
+            scale_y = (ymax - ymin) / image1.get_height()
 
-            cx = cx_scr * scale_x + XMIN
-            cy = cy_scr * scale_y + YMIN
+            cx = cx_scr * scale_x + xmin
+            cy = cy_scr * scale_y + ymin
 
-            render_j_set(IMAGE_WIDTH, IMAGE_HEIGHT, pal, renderer, buffer, cx, cy)
+            render_j_set(fractal_renderers, fractal_type, IMAGE_WIDTH, IMAGE_HEIGHT, pal, buffer, cx, cy)
             image2 = image_from_buffer(buffer, IMAGE_WIDTH, IMAGE_HEIGHT, "RGBX")
 
         # display Mandelbrot set and Julia se
@@ -181,21 +187,30 @@ def image_from_buffer(buffer, width, height, fmt):
     return pygame.image.frombytes(bytes(buffer), (width, height), fmt)
 
 
+def fill_in_fractal_renderers(renderer):
+    fractal_renderers = {
+            "Mandelbrot": (renderer.render_mandelbrot, renderer.render_julia),
+            "Barnsley1": (renderer.render_barnsley_m1, renderer.render_barnsley_j1),
+    }
+    return fractal_renderers
+    
+
 def main():
     pal = palette_to_buffer(palette)
 
     display, clock = initialize_ui(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
 
     svitava = CDLL("./svitava.so")
+    fractal_renderers = fill_in_fractal_renderers(svitava)
 
     buffer = create_string_buffer(4 * IMAGE_WIDTH * IMAGE_HEIGHT)
 
-    render_m_set(IMAGE_WIDTH, IMAGE_HEIGHT, pal, svitava, buffer)
+    render_m_set(fractal_renderers, fractal_type, IMAGE_WIDTH, IMAGE_HEIGHT, pal, buffer)
     image1 = image_from_buffer(buffer, IMAGE_WIDTH, IMAGE_HEIGHT, "RGBX")
 
     image2 = pygame.Surface([IMAGE_WIDTH, IMAGE_HEIGHT])
 
-    event_loop(display, image1, image2, clock, pal, svitava, buffer)
+    event_loop(display, image1, image2, clock, pal, fractal_renderers, buffer)
 
 
 if __name__ == "__main__":
