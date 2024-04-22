@@ -10,7 +10,7 @@ IMAGE_WIDTH = 512
 IMAGE_HEIGHT = 512
 
 
-def barnsley_m(cx, cy, maxiter):
+def barnsley_m2(cx, cy, maxiter):
     """Calculate number of iterations for given complex number to escape from set."""
     c = complex(cx, cy)
     z = 0
@@ -35,7 +35,7 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
     for y in range(height):
         x1 = xmin
         for x in range(width):
-            i = barnsley_m(x1, y1, maxiter)
+            i = barnsley_m2(x1, y1, maxiter)
             i = 3 * i % 256
             color = (palette[i][0], palette[i][1], palette[i][2])
             image.putpixel((x, y), color)
