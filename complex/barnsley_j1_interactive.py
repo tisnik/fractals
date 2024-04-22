@@ -26,9 +26,9 @@ IMAGE_HEIGHT = 256
 
 # Mandelbrot fractal parameters
 XMIN = -2.0
-XMAX = 1.0
-YMIN = -1.5
-YMAX = 1.5
+XMAX = 2.0
+YMIN = -2.0
+YMAX = 2.0
 MAXITER = 100
 
 
