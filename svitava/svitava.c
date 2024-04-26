@@ -20,7 +20,6 @@ testlib.c build as executable:
 #include <stdio.h>
 #include <stdlib.h>
 
-
 void render_test_rgb_image(unsigned int width, unsigned int height,
                            unsigned char *pixels, unsigned char green) {
     unsigned int i, j;
@@ -422,7 +421,7 @@ void render_barnsley_j3(unsigned int width, unsigned int height,
 }
 
 void render_magnet_m1(unsigned int width, unsigned int height,
-                     const unsigned char *palette, unsigned char *pixels) {
+                      const unsigned char *palette, unsigned char *pixels) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -437,21 +436,24 @@ void render_magnet_m1(unsigned int width, unsigned int height,
             unsigned int i = 0;
             while (i < 150) {
                 double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
-                zx2=zx*zx;
-                zy2=zy*zy;
-                if (zx2+zy2>100) break;
-                if (((zx-1.0)*(zx-1.0)+zy*zy)<0.001) break;
-                tzx=zx2-zy2+cx-1;
-                tzy=2.0*zx*zy+cy;
-                bzx=2.0*zx+cx-2;
-                bzy=2.0*zy+cy;
-                div=bzx*bzx+bzy*bzy;
-#define MIN_VALUE 1.0-100
-                if (div<MIN_VALUE) break;
-                zxn=(tzx*bzx+tzy*bzy)/div;
-                zyn=(tzy*bzx-tzx*bzy)/div;
-                zx=(zxn+zyn)*(zxn-zyn);
-                zy=2.0*zxn*zyn;
+                zx2 = zx * zx;
+                zy2 = zy * zy;
+                if (zx2 + zy2 > 100)
+                    break;
+                if (((zx - 1.0) * (zx - 1.0) + zy * zy) < 0.001)
+                    break;
+                tzx = zx2 - zy2 + cx - 1;
+                tzy = 2.0 * zx * zy + cy;
+                bzx = 2.0 * zx + cx - 2;
+                bzy = 2.0 * zy + cy;
+                div = bzx * bzx + bzy * bzy;
+#define MIN_VALUE 1.0 - 100
+                if (div < MIN_VALUE)
+                    break;
+                zxn = (tzx * bzx + tzy * bzy) / div;
+                zyn = (tzy * bzx - tzx * bzy) / div;
+                zx = (zxn + zyn) * (zxn - zyn);
+                zy = 2.0 * zxn * zyn;
                 i++;
             }
             {
@@ -469,7 +471,6 @@ void render_magnet_m1(unsigned int width, unsigned int height,
     }
 }
 
-
 void render_circle_pattern(unsigned int width, unsigned int height,
                            const unsigned char *palette,
                            unsigned char *pixels) {
@@ -483,26 +484,26 @@ void render_circle_pattern(unsigned int width, unsigned int height,
     int i, j;
     double x1, y1;
 
-    y1=ymin;
+    y1 = ymin;
     for (j = 0; j < height; j++) {
-        x1=xmin;
+        x1 = xmin;
         for (i = 0; i < width; i++) {
-            double x2=x1*x1;
-            double y2=y1*y1;
+            double x2 = x1 * x1;
+            double y2 = y1 * y1;
             int i = (int)(x2 + y2) % 256;
             int color = i * 3;
             *p++ = palette[color];
             *p++ = palette[color + 1];
             *p++ = palette[color + 2];
             p++;
-            x1+=(xmax-xmin)/width;
+            x1 += (xmax - xmin) / width;
         }
-        y1+=(ymax-ymin)/height;
+        y1 += (ymax - ymin) / height;
     }
 }
 
-void ppm_write_ascii_to_stream(unsigned int width, unsigned int height, unsigned char *pixels, FILE *fout)
-{
+void ppm_write_ascii_to_stream(unsigned int width, unsigned int height,
+                               unsigned char *pixels, FILE *fout) {
     int x, y;
     unsigned char r, g, b;
     unsigned char *p = pixels;
@@ -511,8 +512,8 @@ void ppm_write_ascii_to_stream(unsigned int width, unsigned int height, unsigned
     fprintf(fout, "P3 %d %d 255\n", width, height);
 
     /* pixel array */
-    for (y=height-1; y>=0; y--) {
-        for (x=0; x<width; x++) {
+    for (y = height - 1; y >= 0; y--) {
+        for (x = 0; x < width; x++) {
             r = *p++;
             g = *p++;
             b = *p++;
@@ -522,28 +523,26 @@ void ppm_write_ascii_to_stream(unsigned int width, unsigned int height, unsigned
     }
 }
 
-int ppm_write_ascii(unsigned int width, unsigned int height, unsigned char *pixels, const char *file_name)
-{
+int ppm_write_ascii(unsigned int width, unsigned int height,
+                    unsigned char *pixels, const char *file_name) {
     FILE *fout;
 
     fout = fopen(file_name, "wb");
-    if (!fout)
-    {
+    if (!fout) {
         return -1;
     }
 
     ppm_write_ascii_to_stream(width, height, pixels, fout);
 
-    if (fclose(fout) == EOF)
-    {
+    if (fclose(fout) == EOF) {
         return -1;
     }
     return 0;
 }
 
 void render_magnet_j1(unsigned int width, unsigned int height,
-                     const unsigned char *palette, unsigned char *pixels,
-                     double cx, double cy) {
+                      const unsigned char *palette, unsigned char *pixels,
+                      double cx, double cy) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -558,21 +557,24 @@ void render_magnet_j1(unsigned int width, unsigned int height,
             unsigned int i = 0;
             while (i < 150) {
                 double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
-                zx2=zx*zx;
-                zy2=zy*zy;
-                if (zx2+zy2>100) break;
-                if (((zx-1.0)*(zx-1.0)+zy*zy)<0.001) break;
-                tzx=zx2-zy2+cx-1;
-                tzy=2.0*zx*zy+cy;
-                bzx=2.0*zx+cx-2;
-                bzy=2.0*zy+cy;
-                div=bzx*bzx+bzy*bzy;
-#define MIN_VALUE 1.0-100
-                if (div<MIN_VALUE) break;
-                zxn=(tzx*bzx+tzy*bzy)/div;
-                zyn=(tzy*bzx-tzx*bzy)/div;
-                zx=(zxn+zyn)*(zxn-zyn);
-                zy=2.0*zxn*zyn;
+                zx2 = zx * zx;
+                zy2 = zy * zy;
+                if (zx2 + zy2 > 100)
+                    break;
+                if (((zx - 1.0) * (zx - 1.0) + zy * zy) < 0.001)
+                    break;
+                tzx = zx2 - zy2 + cx - 1;
+                tzy = 2.0 * zx * zy + cy;
+                bzx = 2.0 * zx + cx - 2;
+                bzy = 2.0 * zy + cy;
+                div = bzx * bzx + bzy * bzy;
+#define MIN_VALUE 1.0 - 100
+                if (div < MIN_VALUE)
+                    break;
+                zxn = (tzx * bzx + tzy * bzy) / div;
+                zyn = (tzy * bzx - tzx * bzy) / div;
+                zx = (zxn + zyn) * (zxn - zyn);
+                zy = 2.0 * zxn * zyn;
                 i++;
             }
             {
@@ -590,9 +592,8 @@ void render_magnet_j1(unsigned int width, unsigned int height,
     }
 }
 
-
 void render_magnet_m2(unsigned int width, unsigned int height,
-                     const unsigned char *palette, unsigned char *pixels) {
+                      const unsigned char *palette, unsigned char *pixels) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -604,51 +605,57 @@ void render_magnet_m2(unsigned int width, unsigned int height,
         for (x = 0; x < width; x++) {
             double zx = 0.0;
             double zy = 0.0;
-            double cm1x=cx-1.0;
-            double cm1y=cy;
-            double cm2x=cx-2.0;
-            double cm2y=cy;
-            double cm1cm2x=cm1x*cm2x-cm1y*cm2y;
-            double cm1cm2y=cm1x*cm2y+cm1y*cm2x;
+            double cm1x = cx - 1.0;
+            double cm1y = cy;
+            double cm2x = cx - 2.0;
+            double cm2y = cy;
+            double cm1cm2x = cm1x * cm2x - cm1y * cm2y;
+            double cm1cm2y = cm1x * cm2y + cm1y * cm2x;
             unsigned int i = 0;
 
-            cm1x+=cm1x+cm1x;
-            cm1y+=cm1y+cm1y;
-            cm2x+=cm2x+cm2x;
-            cm2y+=cm2y+cm2y;
+            cm1x += cm1x + cm1x;
+            cm1y += cm1y + cm1y;
+            cm2x += cm2x + cm2x;
+            cm2y += cm2y + cm2y;
 
             while (i < 150) {
                 double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
-                zx2=zx*zx;
-                zy2=zy*zy;
-                tzx=zx*(zx2-3.0*zy2+cm1x)-zy*cm1y+cm1cm2x;
-                tzy=zy*(3.0*zx2-zy2+cm1x)+zx*cm1y+cm1cm2y;
-                bzx=zx2-zy2;
-                bzx=3.0*bzx+zx*cm2x-zy*cm2y+cm1cm2x+1.0;
-                bzy=2.0*zx*zy;
-                bzy=3.0*bzy+zx*cm2y+zy*cm2x+cm1cm2y;
-                div=bzx*bzx+bzy*bzy;
-#define MIN_VALUE 1.0-100
-                if (div<MIN_VALUE) break;
-                zxn=(tzx*bzx+tzy*bzy)/div;
-                zyn=(tzy*bzx-tzx*bzy)/div;
-                zx=(zxn+zyn)*(zxn-zyn);
-                zy=2.0*zxn*zyn;
-                if (zx2+zy2>100*100) break;
-                if (((zx-1.0)*(zx-1.0)+zy*zy)<0.001) break;
-                if (zx2+zy2>100) break;
-                if (((zx-1.0)*(zx-1.0)+zy*zy)<0.001) break;
-                tzx=zx2-zy2+cx-1;
-                tzy=2.0*zx*zy+cy;
-                bzx=2.0*zx+cx-2;
-                bzy=2.0*zy+cy;
-                div=bzx*bzx+bzy*bzy;
-#define MIN_VALUE 1.0-100
-                if (div<MIN_VALUE) break;
-                zxn=(tzx*bzx+tzy*bzy)/div;
-                zyn=(tzy*bzx-tzx*bzy)/div;
-                zx=(zxn+zyn)*(zxn-zyn);
-                zy=2.0*zxn*zyn;
+                zx2 = zx * zx;
+                zy2 = zy * zy;
+                tzx = zx * (zx2 - 3.0 * zy2 + cm1x) - zy * cm1y + cm1cm2x;
+                tzy = zy * (3.0 * zx2 - zy2 + cm1x) + zx * cm1y + cm1cm2y;
+                bzx = zx2 - zy2;
+                bzx = 3.0 * bzx + zx * cm2x - zy * cm2y + cm1cm2x + 1.0;
+                bzy = 2.0 * zx * zy;
+                bzy = 3.0 * bzy + zx * cm2y + zy * cm2x + cm1cm2y;
+                div = bzx * bzx + bzy * bzy;
+#define MIN_VALUE 1.0 - 100
+                if (div < MIN_VALUE)
+                    break;
+                zxn = (tzx * bzx + tzy * bzy) / div;
+                zyn = (tzy * bzx - tzx * bzy) / div;
+                zx = (zxn + zyn) * (zxn - zyn);
+                zy = 2.0 * zxn * zyn;
+                if (zx2 + zy2 > 100 * 100)
+                    break;
+                if (((zx - 1.0) * (zx - 1.0) + zy * zy) < 0.001)
+                    break;
+                if (zx2 + zy2 > 100)
+                    break;
+                if (((zx - 1.0) * (zx - 1.0) + zy * zy) < 0.001)
+                    break;
+                tzx = zx2 - zy2 + cx - 1;
+                tzy = 2.0 * zx * zy + cy;
+                bzx = 2.0 * zx + cx - 2;
+                bzy = 2.0 * zy + cy;
+                div = bzx * bzx + bzy * bzy;
+#define MIN_VALUE 1.0 - 100
+                if (div < MIN_VALUE)
+                    break;
+                zxn = (tzx * bzx + tzy * bzy) / div;
+                zyn = (tzy * bzx - tzx * bzy) / div;
+                zx = (zxn + zyn) * (zxn - zyn);
+                zy = 2.0 * zxn * zyn;
                 i++;
             }
             {
@@ -667,64 +674,70 @@ void render_magnet_m2(unsigned int width, unsigned int height,
 }
 
 void render_magnet_j2(unsigned int width, unsigned int height,
-                     const unsigned char *palette, unsigned char *pixels,
-                     double cx, double cy) {
+                      const unsigned char *palette, unsigned char *pixels,
+                      double cx, double cy) {
     int x, y;
     double cx0, cy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = pixels;
 
-    cy0=ymin;
+    cy0 = ymin;
     for (y = 0; y < height; y++) {
-        cx0=xmin;
+        cx0 = xmin;
         for (x = 0; x < width; x++) {
             double zx = cx0;
             double zy = cy0;
-            double cm1x=cx-1.0;
-            double cm1y=cy;
-            double cm2x=cx-2.0;
-            double cm2y=cy;
-            double cm1cm2x=cm1x*cm2x-cm1y*cm2y;
-            double cm1cm2y=cm1x*cm2y+cm1y*cm2x;
+            double cm1x = cx - 1.0;
+            double cm1y = cy;
+            double cm2x = cx - 2.0;
+            double cm2y = cy;
+            double cm1cm2x = cm1x * cm2x - cm1y * cm2y;
+            double cm1cm2y = cm1x * cm2y + cm1y * cm2x;
             unsigned int i = 0;
 
-            cm1x+=cm1x+cm1x;
-            cm1y+=cm1y+cm1y;
-            cm2x+=cm2x+cm2x;
-            cm2y+=cm2y+cm2y;
+            cm1x += cm1x + cm1x;
+            cm1y += cm1y + cm1y;
+            cm2x += cm2x + cm2x;
+            cm2y += cm2y + cm2y;
 
             while (i < 150) {
                 double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
-                zx2=zx*zx;
-                zy2=zy*zy;
-                tzx=zx*(zx2-3.0*zy2+cm1x)-zy*cm1y+cm1cm2x;
-                tzy=zy*(3.0*zx2-zy2+cm1x)+zx*cm1y+cm1cm2y;
-                bzx=zx2-zy2;
-                bzx=3.0*bzx+zx*cm2x-zy*cm2y+cm1cm2x+1.0;
-                bzy=2.0*zx*zy;
-                bzy=3.0*bzy+zx*cm2y+zy*cm2x+cm1cm2y;
-                div=bzx*bzx+bzy*bzy;
-#define MIN_VALUE 1.0-100
-                if (div<MIN_VALUE) break;
-                zxn=(tzx*bzx+tzy*bzy)/div;
-                zyn=(tzy*bzx-tzx*bzy)/div;
-                zx=(zxn+zyn)*(zxn-zyn);
-                zy=2.0*zxn*zyn;
-                if (zx2+zy2>100*100) break;
-                if (((zx-1.0)*(zx-1.0)+zy*zy)<0.001) break;
-                if (zx2+zy2>100) break;
-                if (((zx-1.0)*(zx-1.0)+zy*zy)<0.001) break;
-                tzx=zx2-zy2+cx-1;
-                tzy=2.0*zx*zy+cy;
-                bzx=2.0*zx+cx-2;
-                bzy=2.0*zy+cy;
-                div=bzx*bzx+bzy*bzy;
-#define MIN_VALUE 1.0-100
-                if (div<MIN_VALUE) break;
-                zxn=(tzx*bzx+tzy*bzy)/div;
-                zyn=(tzy*bzx-tzx*bzy)/div;
-                zx=(zxn+zyn)*(zxn-zyn);
-                zy=2.0*zxn*zyn;
+                zx2 = zx * zx;
+                zy2 = zy * zy;
+                tzx = zx * (zx2 - 3.0 * zy2 + cm1x) - zy * cm1y + cm1cm2x;
+                tzy = zy * (3.0 * zx2 - zy2 + cm1x) + zx * cm1y + cm1cm2y;
+                bzx = zx2 - zy2;
+                bzx = 3.0 * bzx + zx * cm2x - zy * cm2y + cm1cm2x + 1.0;
+                bzy = 2.0 * zx * zy;
+                bzy = 3.0 * bzy + zx * cm2y + zy * cm2x + cm1cm2y;
+                div = bzx * bzx + bzy * bzy;
+#define MIN_VALUE 1.0 - 100
+                if (div < MIN_VALUE)
+                    break;
+                zxn = (tzx * bzx + tzy * bzy) / div;
+                zyn = (tzy * bzx - tzx * bzy) / div;
+                zx = (zxn + zyn) * (zxn - zyn);
+                zy = 2.0 * zxn * zyn;
+                if (zx2 + zy2 > 100 * 100)
+                    break;
+                if (((zx - 1.0) * (zx - 1.0) + zy * zy) < 0.001)
+                    break;
+                if (zx2 + zy2 > 100)
+                    break;
+                if (((zx - 1.0) * (zx - 1.0) + zy * zy) < 0.001)
+                    break;
+                tzx = zx2 - zy2 + cx - 1;
+                tzy = 2.0 * zx * zy + cy;
+                bzx = 2.0 * zx + cx - 2;
+                bzy = 2.0 * zy + cy;
+                div = bzx * bzx + bzy * bzy;
+#define MIN_VALUE 1.0 - 100
+                if (div < MIN_VALUE)
+                    break;
+                zxn = (tzx * bzx + tzy * bzy) / div;
+                zyn = (tzy * bzx - tzx * bzy) / div;
+                zx = (zxn + zyn) * (zxn - zyn);
+                zy = 2.0 * zxn * zyn;
                 i++;
             }
             {
@@ -745,7 +758,7 @@ void render_magnet_j2(unsigned int width, unsigned int height,
 int main(void) {
 #define WIDTH 256
 #define HEIGHT 256
-    unsigned char *pixels = (unsigned char*) malloc(WIDTH*HEIGHT*4);
+    unsigned char *pixels = (unsigned char *)malloc(WIDTH * HEIGHT * 4);
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb_1.ppm");
     return 0;
