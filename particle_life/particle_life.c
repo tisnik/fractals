@@ -340,6 +340,12 @@ static void main_event_loop(State * state, SDL_Surface * pixmap, Model * model) 
                 case 's':
                     slowDown(model);
                     break;
+                case 'i':
+                    initRules(model);
+                    break;
+                case 'c':
+                    createParticlesOfAllColors(model);
+                    break;
                 case SDLK_ESCAPE:
                 case SDLK_q:
                     done = 1;
@@ -363,6 +369,13 @@ static void main_event_loop(State * state, SDL_Surface * pixmap, Model * model) 
     } while (!done);
 }
 
+void createParticlesOfAllColors(Model *model) {
+    createParticles(MAX_RED, model->atoms.particles, RED);
+    createParticles(MAX_GREEN, model->atoms.particles + MAX_RED, GREEN);
+    createParticles(MAX_BLUE, model->atoms.particles + MAX_RED + MAX_GREEN, BLUE);
+    createParticles(MAX_YELLOW, model->atoms.particles + MAX_RED + MAX_GREEN + MAX_BLUE, YELLOW);
+}
+
 Model init_model(void) {
     Color redColor = { 255, 80, 80 };
     Color greenColor = { 80, 255, 80 };
@@ -380,10 +393,7 @@ Model init_model(void) {
     model.atoms.particles = (Particle *) malloc(MAX_PARTICLES * sizeof(Particle));
     model.atoms.max = MAX_PARTICLES;
 
-    createParticles(MAX_RED, model.atoms.particles, RED);
-    createParticles(MAX_GREEN, model.atoms.particles + MAX_RED, GREEN);
-    createParticles(MAX_BLUE, model.atoms.particles + MAX_RED + MAX_GREEN, BLUE);
-    createParticles(MAX_YELLOW, model.atoms.particles + MAX_RED + MAX_GREEN + MAX_BLUE, YELLOW);
+    createParticlesOfAllColors(&model);
 
     return model;
 }
