@@ -18,10 +18,10 @@
 #define BORDER 50
 
 /* number of particles of different colors/attributes */
-#define MAX_RED    5000
-#define MAX_GREEN  500
-#define MAX_BLUE   50
-#define MAX_YELLOW 10
+#define MAX_RED    3000
+#define MAX_GREEN  400
+#define MAX_BLUE   400
+#define MAX_YELLOW 1000
 
 /* total number of particles */
 #define MAX_PARTICLES (MAX_RED+MAX_GREEN+MAX_BLUE+MAX_YELLOW)
@@ -39,6 +39,9 @@
 
 /* enable scene smoothing */
 int smooth_enabled = 0;
+
+/* enable gravity */
+int gravity_enabled = 0;
 
 typedef struct GraphicsState {
     SDL_Window *window;
@@ -292,6 +295,10 @@ void applyRules(Model * model)
                         float f = g / sqrt(d);
                         fx += f * dx;
                         fy += f * dy;
+                    } else if (gravity_enabled) {
+                        float f = 0.0001;
+                        fx -= f * dx;
+                        fy -= f * dy;
                     }
                 }
             }
@@ -358,6 +365,9 @@ static void main_event_loop(GraphicsState * graphicsState, SDL_Surface * pixmap,
                     break;
                 case 's':
                     smooth_enabled = !smooth_enabled;
+                    break;
+                case 'g':
+                    gravity_enabled = !gravity_enabled;
                     break;
                 case SDLK_ESCAPE:
                 case SDLK_q:
