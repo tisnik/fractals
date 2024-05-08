@@ -26,7 +26,7 @@
 /* total number of particles */
 #define MAX_PARTICLES (MAX_RED+MAX_GREEN+MAX_BLUE+MAX_YELLOW)
 
-#define MAX_DISTANCE 2000
+#define MAX_DISTANCE 50
 
 #define DAMPING_FACTOR 0.5
 
@@ -34,18 +34,21 @@
 
 #define SCALE_FACTOR 1
 
-/* enable scene smoothing */
-#define _SMOOTH
+/* integration constant */
+#define DT 1.0
 
-typedef struct State {
+/* enable scene smoothing */
+int smooth_enabled = 0;
+
+typedef struct GraphicsState {
     SDL_Window *window;
     SDL_Surface *screen_surface;
-} State;
+} GraphicsState;
 
-static void init_sdl(State * state, const int width, const int height)
+static void init_sdl(GraphicsState * graphicsState, const char *title, const int width, const int height)
 {
-    state->window = NULL;
-    state->screen_surface = NULL;
+    graphicsState->window = NULL;
+    graphicsState->screen_surface = NULL;
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "Error initializing SDL: %s\n", SDL_GetError());
@@ -54,12 +57,12 @@ static void init_sdl(State * state, const int width, const int height)
         puts("SDL_Init ok");
     }
 
-    state->window =
+    graphicsState->window =
         SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED,
                          SDL_WINDOWPOS_UNDEFINED, width, height,
                          SDL_WINDOW_SHOWN);
 
-    if (!state->window) {
+    if (!graphicsState->window) {
         puts("Error creating window");
         puts(SDL_GetError());
         exit(1);
@@ -67,9 +70,9 @@ static void init_sdl(State * state, const int width, const int height)
         puts("SDL_CreateWindow ok");
     }
 
-    state->screen_surface = SDL_GetWindowSurface(state->window);
+    graphicsState->screen_surface = SDL_GetWindowSurface(graphicsState->window);
 
-    if (!state->screen_surface) {
+    if (!graphicsState->screen_surface) {
         fprintf(stderr, "Error setting video mode: %s\n", SDL_GetError());
         exit(1);
     } else {
@@ -77,18 +80,18 @@ static void init_sdl(State * state, const int width, const int height)
     }
 }
 
-static void finalize(State * state, SDL_Surface * pixmap)
+static void finalize(GraphicsState * graphicsState, SDL_Surface * pixmap)
 {
     SDL_FreeSurface(pixmap);
-    SDL_FreeSurface(state->screen_surface);
-    SDL_DestroyWindow(state->window);
+    SDL_FreeSurface(graphicsState->screen_surface);
+    SDL_DestroyWindow(graphicsState->window);
     SDL_Quit();
 }
 
-static void show_pixmap(State * state, SDL_Surface * surface)
+static void show_pixmap(GraphicsState * graphicsState, SDL_Surface * surface)
 {
-    SDL_BlitSurface(surface, NULL, state->screen_surface, NULL);
-    SDL_UpdateWindowSurface(state->window);
+    SDL_BlitSurface(surface, NULL, graphicsState->screen_surface, NULL);
+    SDL_UpdateWindowSurface(graphicsState->window);
 }
 
 static SDL_Surface *create_pixmap(const int width, const int height)
@@ -230,13 +233,20 @@ void createParticles(int max, Particle * particles, int type)
     for (i = 0; i < max; i++) {
         particles[i].x = randomX();
         particles[i].y = randomY();
-        particles[i].vx = 0.0;
-        particles[i].vy = 0.0;
+        particles[i].vx = (float)rand() / RAND_MAX - 0.5;
+        particles[i].vy = (float)rand() / RAND_MAX - 0.5;
         particles[i].type = type;
     }
 }
 
-void redraw(State * state, SDL_Surface * pixmap, Model * model)
+void createParticlesOfAllColors(Model *model) {
+    createParticles(MAX_RED, model->atoms.particles, RED);
+    createParticles(MAX_GREEN, model->atoms.particles + MAX_RED, GREEN);
+    createParticles(MAX_BLUE, model->atoms.particles + MAX_RED + MAX_GREEN, BLUE);
+    createParticles(MAX_YELLOW, model->atoms.particles + MAX_RED + MAX_GREEN + MAX_BLUE, YELLOW);
+}
+
+void redraw(GraphicsState * graphicsState, SDL_Surface * pixmap, Model * model)
 {
     int i;
 
@@ -253,10 +263,10 @@ void redraw(State * state, SDL_Surface * pixmap, Model * model)
         putpixel(pixmap, particle.x, particle.y + 1, color.r, color.g, color.b);
     }
 
-#ifdef SMOOTH
-    smooth_scene(pixmap);
-#endif
-    show_pixmap(state, pixmap);
+    if (smooth_enabled) {
+        smooth_scene(pixmap);
+    }
+    show_pixmap(graphicsState, pixmap);
 }
 
 void applyRules(Model * model)
@@ -277,7 +287,8 @@ void applyRules(Model * model)
                 float dy = a->y - b->y;
                 if (dx != 0.0 || dy != 0.0) {
                     float d = dx * dx + dy * dy;
-                    if (d < MAX_DISTANCE) {
+                    if (d < MAX_DISTANCE*MAX_DISTANCE) {
+                        /* repel force */
                         float f = g / sqrt(d);
                         fx += f * dx;
                         fy += f * dy;
@@ -287,8 +298,8 @@ void applyRules(Model * model)
         }
 
         /* apply force to selected particle */
-        a->vx = (a->vx + fx) * DAMPING_FACTOR;
-        a->vy = (a->vy + fy) * DAMPING_FACTOR;
+        a->vx = (a->vx + fx * DT) * DAMPING_FACTOR;
+        a->vy = (a->vy + fy * DT) * DAMPING_FACTOR;
 
         /* move particle */
         a->x += a->vx;
@@ -324,12 +335,11 @@ void slowDown(Model * model)
     }
 }
 
-static void main_event_loop(State * state, SDL_Surface * pixmap, Model * model) {
+static void main_event_loop(GraphicsState * graphicsState, SDL_Surface * pixmap, Model * model) {
     SDL_Event event;
     int done = 0;
 
     do {
-        /*SDL_WaitEvent(&event); */
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
             case SDL_QUIT:
@@ -337,7 +347,7 @@ static void main_event_loop(State * state, SDL_Surface * pixmap, Model * model) 
                 break;
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
-                case 's':
+                case 'd':
                     slowDown(model);
                     break;
                 case 'i':
@@ -345,6 +355,9 @@ static void main_event_loop(State * state, SDL_Surface * pixmap, Model * model) 
                     break;
                 case 'c':
                     createParticlesOfAllColors(model);
+                    break;
+                case 's':
+                    smooth_enabled = !smooth_enabled;
                     break;
                 case SDLK_ESCAPE:
                 case SDLK_q:
@@ -364,16 +377,9 @@ static void main_event_loop(State * state, SDL_Surface * pixmap, Model * model) 
             }
         }
         applyRules(model);
-        redraw(state, pixmap, model);
+        redraw(graphicsState, pixmap, model);
         SDL_Delay(10);
     } while (!done);
-}
-
-void createParticlesOfAllColors(Model *model) {
-    createParticles(MAX_RED, model->atoms.particles, RED);
-    createParticles(MAX_GREEN, model->atoms.particles + MAX_RED, GREEN);
-    createParticles(MAX_BLUE, model->atoms.particles + MAX_RED + MAX_GREEN, BLUE);
-    createParticles(MAX_YELLOW, model->atoms.particles + MAX_RED + MAX_GREEN + MAX_BLUE, YELLOW);
 }
 
 Model init_model(void) {
@@ -400,19 +406,19 @@ Model init_model(void) {
 
 int main(int argc, char **argv)
 {
-    State state;
+    GraphicsState graphicsState;
     Model model;
     SDL_Surface *pixmap;
 
-    init_sdl(&state, WIDTH, HEIGHT);
+    init_sdl(&graphicsState, TITLE, WIDTH, HEIGHT);
 
     pixmap = create_pixmap(WIDTH, HEIGHT);
 
     model = init_model();
 
-    main_event_loop(&state, pixmap, &model);
+    main_event_loop(&graphicsState, pixmap, &model);
 
-    finalize(&state, pixmap);
+    finalize(&graphicsState, pixmap);
 
     return 0;
 }
