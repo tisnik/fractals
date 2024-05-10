@@ -1,11 +1,10 @@
 import sys
-from ctypes import CDLL, c_int, c_double, create_string_buffer
+from ctypes import CDLL, c_double, c_int, create_string_buffer
+from enum import Enum
 
 import pygame
 import pygame.locals
-
 from palette_mandmap import palette
-from enum import Enum
 
 TITLE = "Svitava GUI: {name} + Julia variant  [T] to change fractal type"
 SCREEN_WIDTH = 600
@@ -218,7 +217,7 @@ def fill_in_fractal_renderers(renderer):
             "Barnsley M3": (renderer.render_barnsley_m3, renderer.render_barnsley_j3),
     }
     return fractal_renderers
-    
+
 
 def main():
     pal = palette_to_buffer(palette)
