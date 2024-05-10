@@ -2,8 +2,8 @@
 
 import sys
 from enum import Enum
-from random import random
 from math import sqrt
+from random import random
 
 import pygame
 import pygame.locals
