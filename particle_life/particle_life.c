@@ -1,7 +1,7 @@
+#include <SDL2/SDL.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <SDL2/SDL.h>
 
 /* graphics options */
 #define WIDTH 640
@@ -9,10 +9,10 @@
 #define TITLE "Life simulator"
 
 /* constants used by model */
-#define RED    0
-#define GREEN  1
+#define RED 0
+#define GREEN 1
 #define YELLOW 2
-#define BLUE   3
+#define BLUE 3
 
 /* model options */
 #define BORDER 50
@@ -24,7 +24,7 @@
 #define MAX_YELLOW 1000
 
 /* total number of particles */
-#define MAX_PARTICLES (MAX_RED+MAX_GREEN+MAX_BLUE+MAX_YELLOW)
+#define MAX_PARTICLES (MAX_RED + MAX_GREEN + MAX_BLUE + MAX_YELLOW)
 
 #define MAX_DISTANCE 50
 
@@ -97,12 +97,10 @@ static void show_pixmap(GraphicsState * graphicsState, SDL_Surface * surface)
     SDL_UpdateWindowSurface(graphicsState->window);
 }
 
-static SDL_Surface *create_pixmap(const int width, const int height)
-{
+static SDL_Surface *create_pixmap(const int width, const int height) {
     SDL_Surface *pixmap;
-    pixmap =
-        SDL_CreateRGBSurface(SDL_SWSURFACE, WIDTH, HEIGHT, 32, 0x00ff0000,
-                             0x0000ff00, 0x000000ff, 0x00000000);
+    pixmap = SDL_CreateRGBSurface(SDL_SWSURFACE, WIDTH, HEIGHT, 32, 0x00ff0000,
+                                  0x0000ff00, 0x000000ff, 0x00000000);
     if (!pixmap) {
         puts("Can not create pixmap");
         exit(1);
@@ -112,13 +110,11 @@ static SDL_Surface *create_pixmap(const int width, const int height)
     return pixmap;
 }
 
-void putpixel(SDL_Surface * surface,
-              int x, int y,
-              unsigned char r, unsigned char g, unsigned char b)
-{
+void putpixel(SDL_Surface *surface, int x, int y, unsigned char r,
+              unsigned char g, unsigned char b) {
     if (x >= 0 && x < surface->w && y >= 0 && y < surface->h) {
         if (surface->format->BitsPerPixel == 24) {
-            Uint8 *pixel = (Uint8 *) surface->pixels;
+            Uint8 *pixel = (Uint8 *)surface->pixels;
             pixel += x * 3;
             pixel += y * surface->pitch;
             *pixel++ = b;
@@ -127,7 +123,7 @@ void putpixel(SDL_Surface * surface,
             return;
         }
         if (surface->format->BitsPerPixel == 32) {
-            Uint8 *pixel = (Uint8 *) surface->pixels;
+            Uint8 *pixel = (Uint8 *)surface->pixels;
             pixel += x * 4;
             pixel += y * surface->pitch;
             *pixel++ = b;
@@ -138,8 +134,7 @@ void putpixel(SDL_Surface * surface,
     }
 }
 
-void smooth_scene(SDL_Surface * pixmap)
-{
+void smooth_scene(SDL_Surface *pixmap) {
     SDL_Surface *tmp =
         SDL_ConvertSurface(pixmap, pixmap->format, SDL_SWSURFACE);
     Uint8 *src;
@@ -148,8 +143,9 @@ void smooth_scene(SDL_Surface * pixmap)
     int srcc_offset;
 
     SDL_FillRect(pixmap, NULL, 0x00);
-    dst = (Uint8 *) pixmap->pixels + 1 * pixmap->pitch + 1 * pixmap->format->BytesPerPixel;
-    src = (Uint8 *) tmp->pixels;
+    dst = (Uint8 *)pixmap->pixels + 1 * pixmap->pitch +
+          1 * pixmap->format->BytesPerPixel;
+    src = (Uint8 *)tmp->pixels;
 
     srcc_offset = tmp->pitch - 3 * tmp->format->BytesPerPixel;
 
@@ -209,29 +205,25 @@ typedef struct {
     Atoms atoms;
 } Model;
 
-void initRules(Model * model)
-{
+void initRules(Model *model) {
     int i, j;
 
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            model->rules[i][j] = 2.0 * (float) rand() / RAND_MAX - 1.0;
+            model->rules[i][j] = 2.0 * (float)rand() / RAND_MAX - 1.0;
         }
     }
 }
 
-float randomX()
-{
-    return (WIDTH - BORDER * 2) * (float) rand() / RAND_MAX + BORDER;
+float randomX() {
+    return (WIDTH - BORDER * 2) * (float)rand() / RAND_MAX + BORDER;
 }
 
-float randomY()
-{
-    return (HEIGHT - BORDER * 2) * (float) rand() / RAND_MAX + BORDER;
+float randomY() {
+    return (HEIGHT - BORDER * 2) * (float)rand() / RAND_MAX + BORDER;
 }
 
-void createParticles(int max, Particle * particles, int type)
-{
+void createParticles(int max, Particle *particles, int type) {
     int i;
     for (i = 0; i < max; i++) {
         particles[i].x = randomX();
@@ -272,8 +264,7 @@ void redraw(GraphicsState * graphicsState, SDL_Surface * pixmap, Model * model)
     show_pixmap(graphicsState, pixmap);
 }
 
-void applyRules(Model * model)
-{
+void applyRules(Model *model) {
     int i, j;
 
     for (i = 0; i < model->atoms.max; i++) {
@@ -332,8 +323,7 @@ void applyRules(Model * model)
     }
 }
 
-void slowDown(Model * model)
-{
+void slowDown(Model *model) {
     int i;
     for (i = 0; i < model->atoms.max; i++) {
         Particle *p = &model->atoms.particles[i];
@@ -393,10 +383,10 @@ static void main_event_loop(GraphicsState * graphicsState, SDL_Surface * pixmap,
 }
 
 Model init_model(void) {
-    Color redColor = { 255, 80, 80 };
-    Color greenColor = { 80, 255, 80 };
-    Color blueColor = { 80, 80, 255 };
-    Color yellowColor = { 255, 255, 80 };
+    Color redColor = {255, 80, 80};
+    Color greenColor = {80, 255, 80};
+    Color blueColor = {80, 80, 255};
+    Color yellowColor = {255, 255, 80};
 
     Model model;
 
@@ -406,7 +396,8 @@ Model init_model(void) {
     model.atoms.colors[BLUE] = blueColor;
     model.atoms.colors[YELLOW] = yellowColor;
 
-    model.atoms.particles = (Particle *) malloc(MAX_PARTICLES * sizeof(Particle));
+    model.atoms.particles =
+        (Particle *)malloc(MAX_PARTICLES * sizeof(Particle));
     model.atoms.max = MAX_PARTICLES;
 
     createParticlesOfAllColors(&model);
