@@ -3,6 +3,7 @@
 """Renderer of the classic Newton fractal."""
 
 import math
+
 from PIL import Image
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
