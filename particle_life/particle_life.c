@@ -18,9 +18,9 @@
 #define BORDER 50
 
 /* number of particles of different colors/attributes */
-#define MAX_RED    3000
-#define MAX_GREEN  400
-#define MAX_BLUE   400
+#define MAX_RED 3000
+#define MAX_GREEN 400
+#define MAX_BLUE 400
 #define MAX_YELLOW 1000
 
 /* total number of particles */
@@ -48,8 +48,8 @@ typedef struct GraphicsState {
     SDL_Surface *screen_surface;
 } GraphicsState;
 
-static void init_sdl(GraphicsState * graphicsState, const char *title, const int width, const int height)
-{
+static void init_sdl(GraphicsState *graphicsState, const char *title,
+                     const int width, const int height) {
     graphicsState->window = NULL;
     graphicsState->screen_surface = NULL;
 
@@ -60,10 +60,9 @@ static void init_sdl(GraphicsState * graphicsState, const char *title, const int
         puts("SDL_Init ok");
     }
 
-    graphicsState->window =
-        SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED,
-                         SDL_WINDOWPOS_UNDEFINED, width, height,
-                         SDL_WINDOW_SHOWN);
+    graphicsState->window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED,
+                                             SDL_WINDOWPOS_UNDEFINED, width,
+                                             height, SDL_WINDOW_SHOWN);
 
     if (!graphicsState->window) {
         puts("Error creating window");
@@ -83,16 +82,14 @@ static void init_sdl(GraphicsState * graphicsState, const char *title, const int
     }
 }
 
-static void finalize(GraphicsState * graphicsState, SDL_Surface * pixmap)
-{
+static void finalize(GraphicsState *graphicsState, SDL_Surface *pixmap) {
     SDL_FreeSurface(pixmap);
     SDL_FreeSurface(graphicsState->screen_surface);
     SDL_DestroyWindow(graphicsState->window);
     SDL_Quit();
 }
 
-static void show_pixmap(GraphicsState * graphicsState, SDL_Surface * surface)
-{
+static void show_pixmap(GraphicsState *graphicsState, SDL_Surface *surface) {
     SDL_BlitSurface(surface, NULL, graphicsState->screen_surface, NULL);
     SDL_UpdateWindowSurface(graphicsState->window);
 }
@@ -237,12 +234,14 @@ void createParticles(int max, Particle *particles, int type) {
 void createParticlesOfAllColors(Model *model) {
     createParticles(MAX_RED, model->atoms.particles, RED);
     createParticles(MAX_GREEN, model->atoms.particles + MAX_RED, GREEN);
-    createParticles(MAX_BLUE, model->atoms.particles + MAX_RED + MAX_GREEN, BLUE);
-    createParticles(MAX_YELLOW, model->atoms.particles + MAX_RED + MAX_GREEN + MAX_BLUE, YELLOW);
+    createParticles(MAX_BLUE, model->atoms.particles + MAX_RED + MAX_GREEN,
+                    BLUE);
+    createParticles(MAX_YELLOW,
+                    model->atoms.particles + MAX_RED + MAX_GREEN + MAX_BLUE,
+                    YELLOW);
 }
 
-void redraw(GraphicsState * graphicsState, SDL_Surface * pixmap, Model * model)
-{
+void redraw(GraphicsState *graphicsState, SDL_Surface *pixmap, Model *model) {
     int i;
 
     Atoms atoms = model->atoms;
@@ -281,7 +280,7 @@ void applyRules(Model *model) {
                 float dy = a->y - b->y;
                 if (dx != 0.0 || dy != 0.0) {
                     float d = dx * dx + dy * dy;
-                    if (d < MAX_DISTANCE*MAX_DISTANCE) {
+                    if (d < MAX_DISTANCE * MAX_DISTANCE) {
                         /* repel force */
                         float f = g / sqrt(d);
                         fx += f * dx;
@@ -332,7 +331,8 @@ void slowDown(Model *model) {
     }
 }
 
-static void main_event_loop(GraphicsState * graphicsState, SDL_Surface * pixmap, Model * model) {
+static void main_event_loop(GraphicsState *graphicsState, SDL_Surface *pixmap,
+                            Model *model) {
     SDL_Event event;
     int done = 0;
 
@@ -405,8 +405,7 @@ Model init_model(void) {
     return model;
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     GraphicsState graphicsState;
     Model model;
     SDL_Surface *pixmap;
