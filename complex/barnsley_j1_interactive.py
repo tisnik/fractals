@@ -106,7 +106,7 @@ def event_loop(display, image1, image2, clock, renderer):
             scale_y = (YMAX - YMIN) / image1.get_height()
 
             cx = cx_scr * scale_x + XMIN
-            cy = cy_scr * scale_x + YMIN
+            cy = cy_scr * scale_y + YMIN
 
             renderer(
                 image2, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, cx, cy, MAXITER
