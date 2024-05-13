@@ -204,12 +204,17 @@ typedef struct {
 
 void initRules(Model *model) {
     int i, j;
+    printf("Rules:\n");
 
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 4; i++) {
-            model->rules[i][j] = 2.0 * (float)rand() / RAND_MAX - 1.0;
+            float rule = 2.0 * (float)rand() / RAND_MAX - 1.0;
+            printf("%6.3f ", rule);
+            model->rules[i][j] = rule;
         }
+        putchar('\n');
     }
+    putchar('\n');
 }
 
 float randomX() {
