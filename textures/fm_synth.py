@@ -29,7 +29,7 @@ def fm(
         x1 = xmin
         for x in range(width):
             x1 += stepx
-            val = 100 + 100.0 * sin(x / 4 + 2 * sin(x / 20 + y / 50))
+            val = 100 + 100.0 * sin(x1 / 4 + 2 * sin(x1 / 15 + y1 / 40))
             i = int(val) & 255
             color = (palette[i][0], palette[i][1], palette[i][2])
             image.putpixel((x, y), color)
@@ -42,11 +42,27 @@ def main() -> None:
     import palette_greens
     import palette_ice
     import palette_mandmap
+    import palette_juteblue
+    import palette_jutemap
+    import palette_jutes
+    import palette_phong
 
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-    fm(image, palette_gold.palette, -1.0, -1.0, 1.0, 1.0)
+    fm(image, palette_gold.palette, -100.0, -100.0, 100.0, 100.0)
     image.save("fm_1.png")
+
+    fm(image, palette_juteblue.palette, -50.0, -50.0, 50.0, 50.0)
+    image.save("fm_2.png")
+
+    fm(image, palette_jutemap.palette, -50.0, -50.0, 50.0, 50.0)
+    image.save("fm_3.png")
+
+    fm(image, palette_jutes.palette, -20.0, -20.0, 20.0, 20.0)
+    image.save("fm_4.png")
+
+    fm(image, palette_phong.palette, -80.0, -80.0, 80.0, 80.0)
+    image.save("fm_5.png")
 
 
 if __name__ == "__main__":
