@@ -1,3 +1,7 @@
+/* TODO: wrapping at screen edge
+ * TODO: better gravity model
+ * TODO: motion blur
+ */
 #include <SDL2/SDL.h>
 #include <math.h>
 #include <stdio.h>
