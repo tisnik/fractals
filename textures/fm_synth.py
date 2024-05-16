@@ -46,6 +46,7 @@ def main() -> None:
     import palette_jutemap
     import palette_jutes
     import palette_phong
+    import palette_rose
 
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
@@ -63,6 +64,9 @@ def main() -> None:
 
     fm(image, palette_phong.palette, -80.0, -80.0, 80.0, 80.0)
     image.save("fm_5.png")
+
+    fm(image, palette_rose.palette, -80.0, -80.0, 80.0, 80.0)
+    image.save("fm_6.png")
 
 
 if __name__ == "__main__":
