@@ -25,6 +25,11 @@ import textures.palette_gold as palette_gold
 import textures.palette_greens as palette_greens
 import textures.palette_ice as palette_ice
 import textures.palette_mandmap as palette_mandmap
+import textures.palette_juteblue as palette_juteblue
+import textures.palette_jutemap as palette_jutemap
+import textures.palette_jutes as palette_jutes
+import textures.palette_phong as palette_phong
+import textures.palette_rose as palette_rose
 
 
 class Resources:
@@ -61,6 +66,11 @@ class Resources:
         self._palettes.append(palette_greens.palette)
         self._palettes.append(palette_ice.palette)
         self._palettes.append(palette_mandmap.palette)
+        self._palettes.append(palette_juteblue.palette)
+        self._palettes.append(palette_jutemap.palette)
+        self._palettes.append(palette_jutes.palette)
+        self._palettes.append(palette_phong.palette)
+        self._palettes.append(palette_rose.palette)
 
     @property
     def palettes(self):
