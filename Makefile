@@ -9,3 +9,7 @@ strict-type-checks:
 
 missing-types:
 	MYPYPATH=game: mypy --explicit-package-bases --disallow-untyped-calls --disallow-untyped-defs --disallow-incomplete-defs demo
+
+demo.exe:
+	python -m nuitka --follow-imports demo.py
+
