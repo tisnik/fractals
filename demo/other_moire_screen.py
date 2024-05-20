@@ -92,7 +92,7 @@ class OtherMoireScreen(Screen):
                     sys.exit()
                 if event.type == pygame.locals.KEYDOWN:
                     if event.key == pygame.locals.K_ESCAPE:
-                        return
+                        return 0
                     if event.key == pygame.locals.K_LEFT:
                         self._zoom *= 1.5
                         self._image = self.calcImage()
