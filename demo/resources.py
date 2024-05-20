@@ -73,7 +73,7 @@ class Resources:
         self._palettes.append(palette_rose.palette)
 
     @property
-    def palettes(self):
+    def palettes(self) -> tuple:
         """Color palettes."""
         return self._palettes
 
