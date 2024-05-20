@@ -97,7 +97,7 @@ class AboutScreen(Screen):
         self._display.blit(self._pygame_version, (x, y + step))
         self._display.blit(self._sdl_version, (x, y + step * 2))
 
-    def eventLoop(self) -> None:
+    def eventLoop(self) -> int:
         """Event loop for About screen that just waits for keypress or window close operation."""
         while True:
             for event in pygame.event.get():
@@ -106,9 +106,9 @@ class AboutScreen(Screen):
                     sys.exit()
                 if event.type == pygame.locals.KEYDOWN:
                     if event.key == pygame.locals.K_ESCAPE:
-                        return
+                        return 0
                     if event.key == pygame.locals.K_RETURN:
-                        return
+                        return 0
 
             # all events has been processed - update scene and redraw the screen
             self.draw()
