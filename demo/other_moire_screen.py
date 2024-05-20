@@ -71,7 +71,7 @@ class OtherMoireScreen(Screen):
             OtherMoireScreen.FUNCTIONS[self._function],
         )
         return pygame.image.fromstring(
-            image.tobytes(), image.size, image.mode
+            image.tobytes(), image.size, "RGB"
         ).convert()
 
     def draw(self) -> None:

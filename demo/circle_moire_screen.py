@@ -49,7 +49,7 @@ class CircleMoireScreen(Screen):
         palette = self._resources.palettes[self._palette_index]
         self._renderer(image, palette, -threshold, -threshold, threshold, threshold)
         return pygame.image.fromstring(
-            image.tobytes(), image.size, image.mode
+            image.tobytes(), image.size, "RGB"
         ).convert()
 
     def draw(self) -> None:

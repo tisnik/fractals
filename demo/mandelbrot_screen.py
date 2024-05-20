@@ -45,7 +45,7 @@ class MandelbrotScreen(Screen):
         palette = self._resources.palettes[self._palette_index]
         recalc_fractal(image, palette, -2.0, -1.5, 1.0, 1.5, 500)
         return pygame.image.fromstring(
-            image.tobytes(), image.size, image.mode
+            image.tobytes(), image.size, "RGB"
         ).convert()
 
     def draw(self) -> None:
