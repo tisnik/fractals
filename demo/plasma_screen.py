@@ -64,7 +64,7 @@ class PlasmaScreen(Screen):
                     sys.exit()
                 if event.type == pygame.locals.KEYDOWN:
                     if event.key == pygame.locals.K_ESCAPE:
-                        return
+                        return 0
                     if event.key == pygame.locals.K_LEFT:
                         pass
                     if event.key == pygame.locals.K_RIGHT:
