@@ -117,13 +117,13 @@ def main() -> None:
             cplx_screen.draw()
             cplx_screen.eventLoop()
         elif menuItem == MainMenu.IFS.value:
-            cplx_screen = IteratedFunctionsSystemsScreen(display, resources, red_ghost)
-            cplx_screen.draw()
-            cplx_screen.eventLoop()
+            ifs_screen = IteratedFunctionsSystemsScreen(display, resources, red_ghost)
+            ifs_screen.draw()
+            ifs_screen.eventLoop()
         elif menuItem == MainMenu.DYNAMIC_SYSTEMS.value:
-            cplx_screen = DynamicSystemsScreen(display, resources, red_ghost)
-            cplx_screen.draw()
-            cplx_screen.eventLoop()
+            dynamic_system_screen = DynamicSystemsScreen(display, resources, red_ghost)
+            dynamic_system_screen.draw()
+            dynamic_system_screen.eventLoop()
         elif menuItem == MainMenu.ABOUT.value:
             about_screen = AboutScreen(display, resources)
             about_screen.draw()
