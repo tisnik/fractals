@@ -28,12 +28,20 @@ B_XMAX = 2.0
 B_YMIN = -2.0
 B_YMAX = 2.0
 
+# Magnet M1 and J1
+M_XMIN = -2.0
+M_XMAX = 2.0
+M_YMIN = -2.0
+M_YMAX = 2.0
+
 fractal_type_index = 0
 fractal_limits = {
         "Mandelbrot": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
         "Barnsley M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
         "Barnsley M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
         "Barnsley M3": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
+        "Magnet M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
+        "Magnet M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
 }
 fractal_types = list(fractal_limits.keys())
 
@@ -215,6 +223,8 @@ def fill_in_fractal_renderers(renderer):
             "Barnsley M1": (renderer.render_barnsley_m1, renderer.render_barnsley_j1),
             "Barnsley M2": (renderer.render_barnsley_m2, renderer.render_barnsley_j2),
             "Barnsley M3": (renderer.render_barnsley_m3, renderer.render_barnsley_j3),
+            "Magnet M1": (renderer.render_magnet_m1, renderer.render_magnet_j1),
+            "Magnet M2": (renderer.render_magnet_m2, renderer.render_magnet_j2),
     }
     return fractal_renderers
 
