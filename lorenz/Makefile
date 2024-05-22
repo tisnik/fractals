@@ -6,7 +6,7 @@ SRCDIR=src
 OBJDIR=obj
 TESTDIR=tests
 
-EXENAME=ps
+EXENAME=lorenz
 
 all:	$(EXENAME)
 
