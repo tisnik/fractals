@@ -4,7 +4,17 @@ from enum import Enum
 
 import pygame
 import pygame.locals
-from palette_mandmap import palette
+from palette_mandmap import palette as mandmap
+from palette_blues import palette as blues
+from palette_gold import palette as gold
+from palette_greens import palette as greens
+from palette_ice import palette as ice
+from palette_juteblue import palette as juteblue
+from palette_jutemap import palette as jutemap
+from palette_jutes import palette as jutes
+from palette_phong import palette as phong
+from palette_rose import palette as rose
+
 
 TITLE = "Svitava GUI: {name} + Julia variant  [T] fractal type  [P] palette"
 SCREEN_WIDTH = 600
@@ -101,8 +111,9 @@ def render_j_set(fractal_renderers, fractal_type_index, image_width, image_heigh
     )
 
 
-def event_loop(display, image1, image2, clock, pal, fractal_renderers, buffer):
+def event_loop(display, image1, image2, clock, palettes, fractal_renderers, buffer):
     global fractal_type_index
+    palette_index = 0
 
     cx_scr = image1.get_width() / 2 - 1 + 32
     cy_scr = image1.get_width() / 2 - 1 - 42 * 2
@@ -127,6 +138,11 @@ def event_loop(display, image1, image2, clock, pal, fractal_renderers, buffer):
                     if fractal_type_index >= len(fractal_types):
                         fractal_type_index = 0
                     set_window_title(fractal_types, fractal_type_index)
+                    first_draw = True
+                if event.key == pygame.locals.K_p:
+                    palette_index += 1
+                    if palette_index >= len(palettes):
+                        palette_index = 0
                     first_draw = True
                 if event.key == pygame.locals.K_LEFT:
                     cx_scr_delta = -1
@@ -161,6 +177,8 @@ def event_loop(display, image1, image2, clock, pal, fractal_renderers, buffer):
             cy_scr = 0
         if cy_scr > image1.get_height() - 1:
             cy_scr = image1.get_height() - 1
+
+        pal = palettes[palette_index]
 
         xmin, xmax, ymin, ymax = fractal_limits[fractal_types[fractal_type_index]]
         if first_draw:
@@ -230,7 +248,18 @@ def fill_in_fractal_renderers(renderer):
 
 
 def main():
-    pal = palette_to_buffer(palette)
+    palettes = [
+        palette_to_buffer(mandmap),
+        palette_to_buffer(blues),
+        palette_to_buffer(gold),
+        palette_to_buffer(greens),
+        palette_to_buffer(ice),
+        palette_to_buffer(juteblue),
+        palette_to_buffer(jutemap),
+        palette_to_buffer(jutes),
+        palette_to_buffer(phong),
+        palette_to_buffer(rose),
+    ]
 
     display, clock = initialize_ui(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -242,7 +271,7 @@ def main():
     image1 = pygame.Surface([IMAGE_WIDTH, IMAGE_HEIGHT])
     image2 = pygame.Surface([IMAGE_WIDTH, IMAGE_HEIGHT])
 
-    event_loop(display, image1, image2, clock, pal, fractal_renderers, buffer)
+    event_loop(display, image1, image2, clock, palettes, fractal_renderers, buffer)
 
 
 if __name__ == "__main__":
