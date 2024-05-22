@@ -6,7 +6,7 @@ import pygame
 import pygame.locals
 from palette_mandmap import palette
 
-TITLE = "Svitava GUI: {name} + Julia variant  [T] to change fractal type"
+TITLE = "Svitava GUI: {name} + Julia variant  [T] fractal type  [P] palette"
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 300
 IMAGE_WIDTH = 256
