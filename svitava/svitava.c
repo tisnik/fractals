@@ -502,44 +502,6 @@ void render_circle_pattern(unsigned int width, unsigned int height,
     }
 }
 
-void ppm_write_ascii_to_stream(unsigned int width, unsigned int height,
-                               unsigned char *pixels, FILE *fout) {
-    int x, y;
-    unsigned char r, g, b;
-    unsigned char *p = pixels;
-
-    /* header */
-    fprintf(fout, "P3 %d %d 255\n", width, height);
-
-    /* pixel array */
-    for (y = height - 1; y >= 0; y--) {
-        for (x = 0; x < width; x++) {
-            r = *p++;
-            g = *p++;
-            b = *p++;
-            p++;
-            fprintf(fout, "%d %d %d\n", r, g, b);
-        }
-    }
-}
-
-int ppm_write_ascii(unsigned int width, unsigned int height,
-                    unsigned char *pixels, const char *file_name) {
-    FILE *fout;
-
-    fout = fopen(file_name, "wb");
-    if (!fout) {
-        return -1;
-    }
-
-    ppm_write_ascii_to_stream(width, height, pixels, fout);
-
-    if (fclose(fout) == EOF) {
-        return -1;
-    }
-    return 0;
-}
-
 void render_magnet_j1(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
                       double cx, double cy) {
@@ -753,6 +715,44 @@ void render_magnet_j2(unsigned int width, unsigned int height,
         }
         cy0 += (ymax - ymin) / height;
     }
+}
+
+void ppm_write_ascii_to_stream(unsigned int width, unsigned int height,
+                               unsigned char *pixels, FILE *fout) {
+    int x, y;
+    unsigned char r, g, b;
+    unsigned char *p = pixels;
+
+    /* header */
+    fprintf(fout, "P3 %d %d 255\n", width, height);
+
+    /* pixel array */
+    for (y = height - 1; y >= 0; y--) {
+        for (x = 0; x < width; x++) {
+            r = *p++;
+            g = *p++;
+            b = *p++;
+            p++;
+            fprintf(fout, "%d %d %d\n", r, g, b);
+        }
+    }
+}
+
+int ppm_write_ascii(unsigned int width, unsigned int height,
+                    unsigned char *pixels, const char *file_name) {
+    FILE *fout;
+
+    fout = fopen(file_name, "wb");
+    if (!fout) {
+        return -1;
+    }
+
+    ppm_write_ascii_to_stream(width, height, pixels, fout);
+
+    if (fclose(fout) == EOF) {
+        return -1;
+    }
+    return 0;
 }
 
 int main(void) {
