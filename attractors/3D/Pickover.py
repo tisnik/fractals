@@ -24,17 +24,10 @@
 
 # Pickover 3D attractor
 
-
-# In[1]:
-
-
 # import všech potřebných knihoven - Numpy a Matplotlibu
-from math import cos, sin
-
 import matplotlib.pyplot as plt
 import numpy as np
-
-# In[2]:
+from math import cos, sin
 
 
 def pickover(x, y, z, a=2.24, b=0.43, c=-0.65, d=-2.43, e=1.0):
@@ -53,7 +46,6 @@ x = np.zeros((n,))
 y = np.zeros((n,))
 z = np.zeros((n,))
 
-
 # počáteční hodnoty
 x[0], y[0], z[0] = (0.0, 0.0, 0.0)
 
@@ -64,20 +56,27 @@ for i in range(n - 1):
     y[i + 1] = y_dot
     z[i + 1] = z_dot
 
-fig = plt.figure()
+# konstrukce 3D grafu
+fig = plt.figure(figsize=(8, 6))
 ax = fig.add_subplot(projection="3d")
+
+# změna velikosti komponent v grafu.
+plt.tight_layout()
 
 # vykreslení grafu
 ax.plot(x, y, z, "o", markersize=0.1)
 
-# zobrazení grafu
-plt.tight_layout()
-# plt.show()
+# uložení grafu
+plt.savefig("pickover_1.png")
 
+# zobrazení grafu
+plt.show()
+
+# grafy s více pohledy na atraktor
 ch_3d = np.stack((x, y, z))
 lim_xyz = [(np.min(ch_3d[ii]), np.max(ch_3d[ii])) for ii in range(3)]
 
-fig2 = plt.figure("3D Coordinates")
+fig2 = plt.figure("3D Coordinates", figsize=(8, 6))
 plt.subplot(2, 2, 1)
 plt.plot(y, x, "o", linewidth=0.75, markersize=0.1)
 plt.grid()
@@ -107,7 +106,11 @@ ax.plot(x, y, z, "o", linewidth=0.7, markersize=0.1)
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("Z")
-plt.tight_layout()
 
 plt.tight_layout()
+
+# uložení grafu
+plt.savefig("pickover_2.png")
+
+# zobrazení grafu
 plt.show()
