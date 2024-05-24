@@ -16,7 +16,7 @@ def lorenz(x, y, z, s=10, r=2.0, b=2.667):
 dt = 0.01
 
 # celkový počet vypočtených bodů na Lorenzově atraktoru
-n = 500
+n = 200
 
 
 def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, r):
@@ -41,7 +41,7 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, r):
 
 def attractor_for_r(r):
     # konstrukce 2D grafu
-    fig = plt.figure(figsize=(4, 3))
+    fig = plt.figure(figsize=(8, 6))
     ax = fig.gca()
     ax.set_xlim(-20, 20)
     ax.set_ylim(-10, 30)
@@ -49,10 +49,11 @@ def attractor_for_r(r):
 
     # vykreslení Lorenzova atraktoru s různými počátečními souřadnicemi x0 a y0
     x0 = 0.0
-    for y0 in np.linspace(-10.0, 10.0, 6):
-        for z0 in np.linspace(-10.0, 10.0, 6):
+    for y0 in np.linspace(-15.0, 15.0, 7):
+        for z0 in np.linspace(-10.0, 20.0, 7):
             draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, r)
 
+    plt.grid()
     # změna velikosti komponent v grafu.
     plt.tight_layout()
 
@@ -64,5 +65,5 @@ def attractor_for_r(r):
     plt.close()
 
 
-for r in np.linspace(1.0, 20.0, 20):
+for r in np.linspace(1.0, 10.0, 5):
     attractor_for_r(r)
