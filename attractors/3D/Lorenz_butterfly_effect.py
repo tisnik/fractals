@@ -68,7 +68,7 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0):
 
 
 fig = plt.figure()
-ax = fig.gca(projection="3d")
+ax = fig.add_subplot(projection="3d")
 
 draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.9, 1.05)
 draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.8, 1.05)
