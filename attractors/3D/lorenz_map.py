@@ -75,7 +75,8 @@ for yi in range(HEIGHT):
 
 plt.figure(1, figsize=(8, 6), dpi=100)
 plt.imshow(raster)
-plt.show()
 
 # uložení grafu
 plt.savefig("lorenz_map.png")
+
+plt.show()
