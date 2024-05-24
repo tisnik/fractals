@@ -16,10 +16,10 @@ def lorenz(x, y, z, s=10, r=28, b=2.667):
 dt = 0.01
 
 # celkový počet vypočtených bodů na Lorenzově atraktoru
-n = 1000
+n = 500
 
 
-def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, s, r, b):
+def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0):
     # prozatím prázdné pole připravené pro výpočet
     x = np.zeros((n,))
     y = np.zeros((n,))
@@ -30,7 +30,7 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, s, r, b):
 
     # vlastní výpočet atraktoru
     for i in range(n - 1):
-        x_dot, y_dot, z_dot = lorenz(x[i], y[i], z[i], s, r, b)
+        x_dot, y_dot, z_dot = lorenz(x[i], y[i], z[i])
         x[i + 1] = x[i] + x_dot * dt
         y[i + 1] = y[i] + y_dot * dt
         z[i + 1] = z[i] + z_dot * dt
@@ -42,23 +42,21 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, s, r, b):
 # konstrukce 2D grafu
 fig = plt.figure(figsize=(8, 6))
 
-b = 2.667
-
-# vykreslení Lorenzova atraktoru s různými parametry s a r
-for si in range(5):
-    for ri in range(5):
-        ax = fig.add_subplot(5, 5, si + 1 + ri * 5)
+# Vykreslení Lorenzova atraktoru s různými parametry s a r
+for yi in range(5):
+    for xi in range(5):
+        ax = fig.add_subplot(5, 5, xi + 1 + yi * 5)
         ax.axes.get_xaxis().set_visible(False)
         ax.axes.get_yaxis().set_visible(False)
-        draw_lorenz_for_input_values(
-            ax, dt, n, 0.0, 1.0, 1.05, si * 2.0 + 1.0, 4.0 + ri * 4, b
-        )
+        x0 = -1.5 + yi * 3.0 / 5.0
+        y0 = -1.5 + yi * 3.0 / 5.0
+        draw_lorenz_for_input_values(ax, dt, n, x0, y0, 1.05)
 
 # změna velikosti komponent v grafu.
 plt.tight_layout()
 
 # uložení grafu
-plt.savefig("variable_s_r_params_multiplot.png")
+plt.savefig("variable_x0_y0_params_multiplot.png")
 
 # zobrazení grafu
 plt.show()
