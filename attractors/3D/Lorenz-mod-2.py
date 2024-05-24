@@ -22,29 +22,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# Lorenz attractor
 
 # Please also see https://cdn.hipwallpaper.com/i/65/0/dP4ZTN.jpg
-
-# In[7]:
-
 
 # import všech potřebných knihoven - Numpy a Matplotlibu
 import matplotlib.pyplot as plt
 import numpy as np
 
-# In[8]:
 
-
-# funkce pro výpočet dalšího bodu Lorenzova mod2 atraktoru
 def lorenz_mod2(x, y, z, alfa, beta, gamma, delta):
     """Výpočet dalšího bodu Lorenzove mod2 atraktoru."""
     x_dot = -alfa * x + y * y - z * z + alfa * gamma
     y_dot = x * (y - beta * z) + delta
     z_dot = -z + x * (beta * y + z)
     return x_dot, y_dot, z_dot
-
-
-# In[9]:
 
 
 # krok (změna času)
@@ -58,10 +50,6 @@ x = np.zeros((n,))
 y = np.zeros((n,))
 z = np.zeros((n,))
 
-
-# In[10]:
-
-
 # počáteční hodnoty
 x[0], y[0], z[0] = (0.1, 0.1, 0)
 
@@ -72,24 +60,27 @@ for i in range(n - 1):
     y[i + 1] = y[i] + y_dot * dt
     z[i + 1] = z[i] + z_dot * dt
 
-fig = plt.figure()
+# konstrukce 3D grafu
+fig = plt.figure(figsize=(8, 6))
 ax = fig.add_subplot(projection="3d")
+
+# změna velikosti komponent v grafu.
+plt.tight_layout()
 
 # vykreslení grafu
 ax.plot(x[50000:], y[50000:], z[50000:])
 
+# uložení grafu
+plt.savefig("lorenz_mod_1.png")
+
 # zobrazení grafu
-plt.tight_layout()
 plt.show()
 
-
-# In[11]:
-
-
+# grafy s více pohledy na atraktor
 ch_3d = np.stack((x, y, z))
 lim_xyz = [(np.min(ch_3d[ii]), np.max(ch_3d[ii])) for ii in range(3)]
 
-fig2 = plt.figure("3D Coordinates")
+fig2 = plt.figure("3D Coordinates", figsize=(8, 6))
 plt.subplot(2, 2, 1)
 plt.plot(y, x, linewidth=0.75)
 plt.grid()
@@ -119,7 +110,11 @@ ax.plot(x, y, z, linewidth=0.7)
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("Z")
-plt.tight_layout()
 
 plt.tight_layout()
+
+# uložení grafu
+plt.savefig("lorenz_mod_2.png")
+
+# zobrazení grafu
 plt.show()
