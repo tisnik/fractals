@@ -24,8 +24,6 @@
 
 # Lorenz attractor
 
-# Please also see https://cdn.hipwallpaper.com/i/65/0/dP4ZTN.jpg
-
 # import všech potřebných knihoven - Numpy a Matplotlibu
 import matplotlib.pyplot as plt
 import numpy as np

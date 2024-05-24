@@ -21,10 +21,10 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
-# Demonstrační příklad:
+
 # - Lorenzův atraktor vykreslený v 3D prostoru
 
+# import všech potřebných knihoven - Numpy a Matplotlibu
 import matplotlib.pyplot as plt
 import numpy as np
 
