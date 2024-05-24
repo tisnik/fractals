@@ -66,19 +66,27 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0):
     ax.plot(x.copy(), y.copy(), z.copy())
 
 
-# konstrukce 3D grafu
-fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(projection="3d")
+def draw_butterfly_effect(n):
+    # konstrukce 3D grafu
+    fig = plt.figure(figsize=(8, 6))
+    ax = fig.add_subplot(projection="3d")
+    ax.set_xlim(-20, 20)
+    ax.set_ylim(-20, 20)
 
-# změna velikosti komponent v grafu.
-plt.tight_layout()
+    # změna velikosti komponent v grafu.
+    plt.tight_layout()
 
-draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.9, 1.05)
-draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.8, 1.05)
-draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.7, 1.05)
+    draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.9, 1.05)
+    draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.8, 1.05)
+    draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.7, 1.05)
 
-# uložení grafu
-plt.savefig("butterfly.png")
+    # uložení grafu
+    plt.savefig(f"butterfly_{n:04d}.png")
 
-# zobrazení grafu
-plt.show()
+    # zobrazení grafu
+    # plt.show()
+    plt.close()
+
+
+for n in np.linspace(50, 1500, 100):
+    draw_butterfly_effect(int(n))
