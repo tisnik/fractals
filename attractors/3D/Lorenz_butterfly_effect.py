@@ -21,7 +21,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-# Jupyter Notebook
 #
 # Demonstrační příklad:
 # - Lorenzův atraktor vykreslený v 3D prostoru
@@ -67,12 +66,19 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0):
     ax.plot(x.copy(), y.copy(), z.copy())
 
 
-fig = plt.figure()
+# konstrukce 3D grafu
+fig = plt.figure(figsize=(8, 6))
 ax = fig.add_subplot(projection="3d")
+
+# změna velikosti komponent v grafu.
+plt.tight_layout()
 
 draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.9, 1.05)
 draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.8, 1.05)
 draw_lorenz_for_input_values(ax, dt, n, 0.0, 0.7, 1.05)
+
+# uložení grafu
+plt.savefig("butterfly.png")
 
 # zobrazení grafu
 plt.show()
