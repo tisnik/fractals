@@ -1,14 +1,11 @@
-# Jupyter Notebook
-#
-# Třicátý demonstrační příklad:
-# - Lorenzův atraktor
+# Vykreslení Lorenzova atraktoru s různými parametry s a r
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-# funkce pro výpočet dalšího bodu Lorenzova atraktoru
 def lorenz(x, y, z, s=10, r=28, b=2.667):
+    """Výpočet dalšího bodu Lorenzove mod2 atraktoru."""
     x_dot = s * (y - x)
     y_dot = r * x - y - x * z
     z_dot = x * y - b * z
