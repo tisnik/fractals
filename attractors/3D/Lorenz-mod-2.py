@@ -73,7 +73,7 @@ for i in range(n - 1):
     z[i + 1] = z[i] + z_dot * dt
 
 fig = plt.figure()
-ax = fig.gca(projection="3d")
+ax = fig.add_subplot(projection="3d")
 
 # vykreslení grafu
 ax.plot(x[50000:], y[50000:], z[50000:])
