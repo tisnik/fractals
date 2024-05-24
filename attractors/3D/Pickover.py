@@ -65,7 +65,7 @@ for i in range(n - 1):
     z[i + 1] = z_dot
 
 fig = plt.figure()
-ax = fig.gca(projection="3d")
+ax = fig.add_subplot(projection="3d")
 
 # vykreslení grafu
 ax.plot(x, y, z, "o", markersize=0.1)
