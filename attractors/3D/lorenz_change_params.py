@@ -42,14 +42,22 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, s, r, b):
     ax.plot(y.copy(), z.copy())
 
 
-fig = plt.figure()
+# konstrukce 2D grafu
+fig = plt.figure(figsize=(8, 6))
 ax = fig.gca()
 
 b = 2.667
 
+# vykreslení Lorenzova atraktoru s různými parametry s a r
 for s in np.arange(0, 10, 1.0):
     for r in np.arange(0, 28, 4):
         draw_lorenz_for_input_values(ax, dt, n, 0.0, 1.0, 1.05, s, r, b)
+
+# změna velikosti komponent v grafu.
+plt.tight_layout()
+
+# uložení grafu
+plt.savefig("variable_s_r_params.png")
 
 # zobrazení grafu
 plt.show()
