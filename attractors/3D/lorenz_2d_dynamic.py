@@ -1,17 +1,11 @@
-"""Notebook with the classic Lorenz attractor."""
-
-# Jupyter Notebook
-#
-# Třicátý demonstrační příklad:
-# - Lorenzův atraktor
+# Vykreslení Lorenzova atraktoru s různými počátečními souřadnicemi x0 a y0
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-# funkce pro výpočet dalšího bodu Lorenzova atraktoru
 def lorenz(x, y, z, s=10, r=28, b=2.667):
-    """Calculation of the next point in Lorenz attractor."""
+    """Výpočet dalšího bodu Lorenzove mod2 atraktoru."""
     x_dot = s * (y - x)
     y_dot = r * x - y - x * z
     z_dot = x * y - b * z
@@ -45,12 +39,21 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0):
     ax.plot(y.copy(), z.copy())
 
 
-fig = plt.figure()
+# konstrukce 2D grafu
+fig = plt.figure(figsize=(8, 6))
 ax = fig.gca()
 
+
+# vykreslení Lorenzova atraktoru s různými počátečními souřadnicemi x0 a y0
 for y0 in np.arange(-1.5, 1.5, 0.5):
     for x0 in np.arange(-1.5, 1.5, 0.5):
         draw_lorenz_for_input_values(ax, dt, n, x0, y0, 1.05)
+
+# změna velikosti komponent v grafu.
+plt.tight_layout()
+
+# uložení grafu
+plt.savefig("variable_x0_y0_params.png")
 
 # zobrazení grafu
 plt.show()
