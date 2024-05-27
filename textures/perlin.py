@@ -87,7 +87,7 @@ def random_array(width: int, height: int, amplitude: float) -> List[List[float]]
 
 
 def perlin_noise(
-    image: PIL.Image.Image,
+    image: Image.Image,
     palette: Tuple[Tuple[int, int, int], ...],
     noise: float,
     octaves: int,
