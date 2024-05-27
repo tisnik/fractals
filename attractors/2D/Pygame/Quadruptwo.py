@@ -1,12 +1,21 @@
-# vim: set fileencoding=utf-8
+#
+#  (C) Copyright 2024  Pavel Tisnovsky
+#
+#  All rights reserved. This program and the accompanying materials
+#  are made available under the terms of the Eclipse Public License v1.0
+#  which accompanies this distribution, and is available at
+#  http://www.eclipse.org/legal/epl-v10.html
+#
+#  Contributors:
+#      Pavel Tisnovsky
+#
 
-import sys
-from enum import Enum
 from math import atan, copysign, sin
 from math import log as ln
+from typing import Tuple
 
-import pygame
-import pygame.locals
+from renderer import render_attractor
+from ui import event_loop, initialize
 
 # window settings
 WINDOW_WIDTH = 800
@@ -14,88 +23,42 @@ WINDOW_HEIGHT = 600
 WINDOW_TITLE = "Quadruptwo dynamical system"
 
 
-class Colors(Enum):
-    """Named colors used everywhere on demo screens."""
-
-    BLACK = (0, 0, 0)
-    BLUE = (0, 0, 255)
-    CYAN = (0, 255, 255)
-    GREEN = (0, 255, 0)
-    YELLOW = (255, 255, 0)
-    RED = (255, 0, 0)
-    MAGENTA = (255, 0, 255)
-    WHITE = (255, 255, 255)
-
-
-def sqr(x):
+def sqr(x: float) -> float:
     """Square calculation."""
     return x * x
 
 
-def redraw_system(surface):
-    """Redraw the whole dynamical system."""
-    surface.fill(Colors.BLACK.value)
-
-    a = 3.1
-    b = 1.8
-    c = -0.9
-
-    x = 0
-    y = 0
-
-    max_points = 1000000
-    scale = 9.0
-
-    for i in range(max_points):
-        xi = WINDOW_WIDTH // 2 + int(scale * x)
-        yi = WINDOW_HEIGHT // 2 + int(scale * y)
-        # try to draw pixel
-        if xi >= 0 and yi >= 0 and xi < WINDOW_WIDTH and yi < WINDOW_HEIGHT:
-            surface.set_at((xi, yi), i * 10)
-
-        # next point calculation
-        x_dot = y - copysign(1, x) * sin(ln(abs(b * x - c))) * atan(
-            sqr(ln(abs(c * x - b)))
-        )
-        y_dot = a - x
-        x, y = x_dot, y_dot
+def quadruptwo(
+    x: float, y: float, A: float, B: float, C: float, D: float
+) -> Tuple[float, float]:
+    """Calculate next point in the strange attractor."""
+    x_dot = y - copysign(1, x) * sin(ln(abs(B * x - C))) * atan(sqr(ln(abs(C * x - B))))
+    y_dot = A - x
+    return x_dot, y_dot
 
 
-def event_loop(display, surface, clock):
-    """Event loop that just waits for keypress or window close operation."""
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.locals.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.locals.KEYDOWN:
-                if event.key == pygame.locals.K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
-                if event.key == pygame.locals.K_RETURN:
-                    pygame.quit()
-                    sys.exit()
-
-        # all events has been processed - update scene and redraw the screen
-        display.blit(surface, (0, 0))
-        pygame.display.update()
-        clock.tick(25)
-
-
-def main():
-    # set window title
-    pygame.display.set_caption(WINDOW_TITLE)
-
-    # initialize window
-    display = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
-    display.fill(Colors.BLACK.value)
-
-    # create all required Pygame objects
-    surface = pygame.Surface([WINDOW_WIDTH, WINDOW_HEIGHT])
-    clock = pygame.time.Clock()
+def main() -> None:
+    # initialize user interface based on Pygame
+    display, surface, clock = initialize(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT)
 
     # redraw the whole dynamical system
-    redraw_system(surface)
+    render_attractor(
+        surface=surface,
+        x=0,
+        y=0,
+        scale=9.0,
+        x_offset=0,
+        y_offset=0,
+        max_points=1000000,
+        settle_down_points=10,
+        attractor_formula=quadruptwo,
+        contrast=1 / 7.0,
+        filename="quadruptwo.png",
+        A=3.1,
+        B=1.8,
+        C=-0.9,
+        D=0.2277,
+    )
 
     # and enter the event loop
     event_loop(display, surface, clock)
