@@ -5,7 +5,7 @@ import numpy as np
 
 
 def lorenz(x, y, z, s=10, r=2.0, b=2.667):
-    """Výpočet dalšího bodu Lorenzove mod2 atraktoru."""
+    """Výpočet dalšího bodu Lorenzova atraktoru."""
     x_dot = s * (y - x)
     y_dot = r * x - y - x * z
     z_dot = x * y - b * z
@@ -42,7 +42,7 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, r, skip):
 def anim_attractor_for_r(r):
     # konstrukce 2D grafu
     for skip in range(0, n-50):
-        fig = plt.figure(figsize=(8, 6))
+        fig = plt.figure(figsize=(4, 3))
         ax = fig.gca()
         ax.set_xlim(-20, 20)
         ax.set_ylim(-10, 30)
@@ -69,4 +69,4 @@ def anim_attractor_for_r(r):
 anim_attractor_for_r(1.0)
 anim_attractor_for_r(2.0)
 anim_attractor_for_r(5.0)
-anim_attractor_for_r(28.0)
+anim_attractor_for_r(14.0)

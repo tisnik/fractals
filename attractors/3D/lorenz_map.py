@@ -18,7 +18,6 @@ def lorenz(x, y, z, s=10, r=28, b=2.667):
     return x_dot, y_dot, z_dot
 
 
-
 # krok (změna času)
 dt = 0.005
 
@@ -29,8 +28,6 @@ n = 20000
 x = np.zeros((n,))
 y = np.zeros((n,))
 z = np.zeros((n,))
-
-
 
 # počáteční hodnoty
 x[0], y[0], z[0] = (0.0, 0.5, 1.05)

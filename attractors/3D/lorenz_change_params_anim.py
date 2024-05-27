@@ -5,7 +5,7 @@ import numpy as np
 
 
 def lorenz(x, y, z, s=10, r=2.0, b=2.667):
-    """Výpočet dalšího bodu Lorenzove mod2 atraktoru."""
+    """Výpočet dalšího bodu Lorenzova atraktoru."""
     x_dot = s * (y - x)
     y_dot = r * x - y - x * z
     z_dot = x * y - b * z
@@ -16,7 +16,7 @@ def lorenz(x, y, z, s=10, r=2.0, b=2.667):
 dt = 0.01
 
 # celkový počet vypočtených bodů na Lorenzově atraktoru
-n = 200
+n = 20000
 
 
 def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, r):
