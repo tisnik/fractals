@@ -12,8 +12,9 @@
 
 
 from math import cos, sin
+from typing import Tuple
 
-from bitmap import create_bitmap, draw_bitmap
+from renderer import render_attractor
 from ui import event_loop, initialize
 
 # window settings
@@ -22,54 +23,37 @@ WINDOW_HEIGHT = 600
 WINDOW_TITLE = "De jong strange attractor"
 
 
-def de_jong(x, y, a, b, c, d):
+def de_jong(
+    x: float, y: float, A: float, B: float, C: float, D: float
+) -> Tuple[float, float]:
     """Calculate next point in the strange attractor."""
-    x_dot = sin(a * y) - cos(b * x)
-    y_dot = sin(c * x) - cos(d * y)
+    x_dot = sin(A * y) - cos(B * x)
+    y_dot = sin(C * x) - cos(D * y)
     return x_dot, y_dot
 
 
-def redraw_system(surface):
-    """Redraw the whole dynamical system."""
-    width, height = surface.get_size()
-    bitmap = create_bitmap(width, height)
-
-    A = -2.7
-    B = -0.09
-    C = -0.86
-    D = -2.20
-
-    max_points = 1000000
-    settle_down_points = 10
-
-    x = 0
-    y = 0
-    scale = 180.0
-    x_offset = 120
-    y_offset = -80
-
-    for i in range(max_points):
-        x_dot, y_dot = de_jong(x, y, A, B, C, D)
-        xi = width // 2 + int(scale * x_dot) + x_offset
-        yi = height // 2 + int(scale * y_dot) + y_offset
-
-        # try to draw pixel
-        if i > settle_down_points:
-            if xi >= 0 and yi >= 0 and xi < width and yi < height:
-                bitmap[yi][xi] += 1
-
-        # next point calculation
-        x, y = x_dot, y_dot
-
-    draw_bitmap(bitmap, surface, 1 / 1000.0)
-
-
-def main():
+def main() -> None:
     # initialize user interface based on Pygame
     display, surface, clock = initialize(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT)
 
     # redraw the whole dynamical system
-    redraw_system(surface)
+    render_attractor(
+        surface=surface,
+        x=0,
+        y=0,
+        scale=180.0,
+        x_offset=120,
+        y_offset=-80,
+        max_points=1000000,
+        settle_down_points=10,
+        contrast=1 / 1000.0,
+        attractor_formula=de_jong,
+        filename="de_jong.png",
+        A=-2.7,
+        B=-0.09,
+        C=-0.86,
+        D=-2.20,
+    )
 
     # and enter the event loop
     event_loop(display, surface, clock)
