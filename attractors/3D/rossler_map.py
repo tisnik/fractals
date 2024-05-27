@@ -4,14 +4,10 @@
 
 # # Mapa Rosslerova atraktoru
 
-# In[1]:
-
 
 # import všech potřebných knihoven - Numpy a Matplotlibu
 import matplotlib.pyplot as plt
 import numpy as np
-
-# In[2]:
 
 
 # funkce pro výpočet dalšího bodu Rosslerova atraktoru
@@ -21,9 +17,6 @@ def rossler(x, y, z, a=0.2, b=0.2, c=5.7):
     y_dot = x + a * y
     z_dot = b + z * (x - c)
     return x_dot, y_dot, z_dot
-
-
-# In[3]:
 
 
 # krok (změna času)
@@ -36,10 +29,6 @@ n = 20000
 x = np.zeros((n,))
 y = np.zeros((n,))
 z = np.zeros((n,))
-
-
-# In[4]:
-
 
 # počáteční hodnoty
 x[0], y[0], z[0] = (1.0, 0.5, 1.05)
@@ -62,15 +51,9 @@ plt.tight_layout()
 plt.show()
 
 
-# In[5]:
-
-
 WIDTH = 256
 HEIGHT = 256
 raster = np.zeros(shape=(HEIGHT, WIDTH, 3), dtype=np.uint8)
-
-
-# In[6]:
 
 
 ax = 255.0 / (max(x) - min(x))
@@ -99,9 +82,10 @@ for yi in range(HEIGHT):
         raster[yi][xi][2] = (z[xi * 50] - oz) * az
 
 
-# In[7]:
-
-
 plt.figure(1, figsize=(8, 6), dpi=100)
 plt.imshow(raster)
+
+# uložení grafu
+plt.savefig("rossler_map.png")
+
 plt.show()

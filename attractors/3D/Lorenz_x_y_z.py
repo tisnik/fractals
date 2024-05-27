@@ -51,14 +51,14 @@ z = np.zeros((n,))
 # počáteční hodnoty
 x[0], y[0], z[0] = (0.0, 1.0, 1.05)
 
-# vlastní výpočet atraktoru
+# vlastní výpočet bodů z nichž se postupně vytvoří Lorenzův systém
 for i in range(n - 1):
     x_dot, y_dot, z_dot = lorenz(x[i], y[i], z[i])
     x[i + 1] = x[i] + x_dot * dt
     y[i + 1] = y[i] + y_dot * dt
     z[i + 1] = z[i] + z_dot * dt
 
-# konstrukce 3D grafu
+# konstrukce 2D grafu s nastaveným rozlišením výsledného obrázku
 fig = plt.figure(figsize=(8, 6))
 
 # vykreslení grafu
