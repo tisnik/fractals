@@ -13,15 +13,17 @@
 
 from typing import List, Tuple
 
+from pygame import Surface
+
 
 def compute_min_max(
     bitmap: List[List[float]], width: int, height: int
 ) -> Tuple[float, float]:
-    # pro prepocet intenzit pixelu
+    # initial limits for pixel values normalization
     min = float("inf")
     max = float("-inf")
 
-    # ziskani statistiky o obrazku - minimalni a maximalni hodnoty
+    # retrieve minimal and maximal pixel values
     for j in range(height):
         for i in range(width):
             z = bitmap[j][i]
@@ -36,15 +38,16 @@ def create_bitmap(width: int, height: int) -> List[List[float]]:
     return [[0 for x in range(width)] for y in range(height)]
 
 
-def draw_bitmap(bitmap: List[List[float]], surface, max_factor: float) -> None:
+def draw_bitmap(bitmap: List[List[float]], surface: Surface, max_factor: float) -> None:
     print("contrast adjustment")
     width, height = surface.get_size()
 
+    # retrieve minimal and maximal pixel values
     min, max = compute_min_max(bitmap, width, height)
     max *= max_factor
     k = 255.0 / (max - min)
 
-    # zmena kontrastu
+    # contrast change
     for y in range(height):
         for x in range(width):
             f = float(bitmap[y][x])
