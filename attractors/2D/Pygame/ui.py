@@ -12,13 +12,16 @@
 
 
 import sys
+from typing import Tuple
 
 import pygame
 import pygame.locals
 from colors import Colors
 
 
-def initialize(title, width, height):
+def initialize(
+    title: str, width: int, height: int
+) -> Tuple[pygame.Surface, pygame.Surface, pygame.time.Clock]:
     """Initialize Pygame display, drawing surface, and clocks."""
     # set window title
     pygame.display.set_caption(title)
@@ -36,7 +39,9 @@ def initialize(title, width, height):
     return display, surface, clock
 
 
-def event_loop(display, surface, clock):
+def event_loop(
+    display: pygame.Surface, surface: pygame.Surface, clock: pygame.time.Clock
+) -> None:
     """Event loop that just waits for keypress or window close operation."""
     while True:
         for event in pygame.event.get():
