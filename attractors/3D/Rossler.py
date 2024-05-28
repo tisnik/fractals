@@ -42,7 +42,7 @@ def rossler(x, y, z, a=0.2, b=0.2, c=5.7):
 dt = 0.001
 
 # celkový počet vypočtených bodů na Lorenzově atraktoru
-n = 100000
+n = 200000
 
 # prozatím prázdné pole připravené pro výpočet
 x = np.zeros((n,))

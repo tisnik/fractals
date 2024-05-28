@@ -1,4 +1,4 @@
-"""Výpočet a vykreslení Wan-Sunova podivného atraktoru."""
+"""Výpočet a vykreslení Wang-Sunova podivného atraktoru."""
 
 # MIT License
 #
