@@ -20,16 +20,16 @@ from typing import Dict, List, Tuple
 import pygame
 from pygame.font import Font
 
-import textures.palette_blues as palette_blues
-import textures.palette_gold as palette_gold
-import textures.palette_greens as palette_greens
-import textures.palette_ice as palette_ice
-import textures.palette_juteblue as palette_juteblue
-import textures.palette_jutemap as palette_jutemap
-import textures.palette_jutes as palette_jutes
-import textures.palette_mandmap as palette_mandmap
-import textures.palette_phong as palette_phong
-import textures.palette_rose as palette_rose
+from textures import palette_blues
+from textures import palette_gold
+from textures import palette_greens
+from textures import palette_ice
+from textures import palette_juteblue
+from textures import palette_jutemap
+from textures import palette_jutes
+from textures import palette_mandmap
+from textures import palette_phong
+from textures import palette_rose
 
 
 class Resources:
