@@ -4,7 +4,7 @@ import math
 import sys
 
 import pygame
-import pygame.draw as draw
+from pygame import draw
 
 # Nutno importovat kvůli konstantám QUIT atd.
 from pygame.locals import K_ESCAPE, KEYDOWN, QUIT
