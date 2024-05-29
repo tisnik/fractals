@@ -40,7 +40,7 @@ def main() -> None:
         image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
         mez = (2 << 5) + i * 2.5
         recalc_circle_pattern(image, -mez, -mez, mez, mez)
-        fileName = "patternA{index:02d}.png".format(index=i)
+        fileName = f"patternA{i:02d}.png"
         image.save(fileName)
 
 
