@@ -32,7 +32,7 @@ size = (500, 374)
 
 def main():
     """Read all PNG images in current directory and resize them."""
-    files = list(Path(".").rglob("*.png"))
+    files = list(Path().rglob("*.png"))
 
     for filename in files:
         print(filename)
