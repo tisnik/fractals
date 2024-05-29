@@ -41,10 +41,10 @@ def main() -> None:
     import palette_gold
     import palette_greens
     import palette_ice
-    import palette_mandmap
     import palette_juteblue
     import palette_jutemap
     import palette_jutes
+    import palette_mandmap
     import palette_phong
     import palette_rose
 
