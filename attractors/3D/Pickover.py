@@ -25,9 +25,10 @@
 # Pickover 3D attractor
 
 # import všech potřebných knihoven - Numpy a Matplotlibu
+from math import cos, sin
+
 import matplotlib.pyplot as plt
 import numpy as np
-from math import cos, sin
 
 
 def pickover(x, y, z, a=2.24, b=0.43, c=-0.65, d=-2.43, e=1.0):
