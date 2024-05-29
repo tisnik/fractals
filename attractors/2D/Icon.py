@@ -22,7 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Pickover attractor
+# Icon attractor
 
 # Import všech potřebných knihoven - Numpy, Matplotlibu a standardní
 # matematické knihovny, ze které se využijí jen některé vybrané funkce.
