@@ -1,4 +1,3 @@
-# vim: set fileencoding=utf-8
 
 import sys
 from math import atan, copysign, sin
