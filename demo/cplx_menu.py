@@ -1,4 +1,3 @@
-# vim: set fileencoding=utf-8
 
 #
 #  (C) Copyright 2023, 2024  Pavel Tisnovsky
