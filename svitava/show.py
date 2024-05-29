@@ -4,7 +4,6 @@ from enum import Enum
 
 import pygame
 import pygame.locals
-from palette_mandmap import palette as mandmap
 from palette_blues import palette as blues
 from palette_gold import palette as gold
 from palette_greens import palette as greens
@@ -12,9 +11,9 @@ from palette_ice import palette as ice
 from palette_juteblue import palette as juteblue
 from palette_jutemap import palette as jutemap
 from palette_jutes import palette as jutes
+from palette_mandmap import palette as mandmap
 from palette_phong import palette as phong
 from palette_rose import palette as rose
-
 
 TITLE = "Svitava GUI: {name} + Julia variant  [T] fractal type  [P] palette"
 SCREEN_WIDTH = 600
