@@ -70,7 +70,7 @@ def draw_icon(filename, lambda_, alfa, beta, gamma, omega, degree, color):
         y[i + 1] = y_dot
 
     # Změna velikosti komponent v grafu.
-    plt.figure(figsize=(8, 8))
+    plt.figure(figsize=(6.4, 4.8))
 
     # Vykreslení grafu.
     plt.plot(
