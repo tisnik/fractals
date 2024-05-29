@@ -60,7 +60,7 @@ def main() -> None:
     for image_pal in image_pals:
         print(image_pal[1])
         recalc_circle_pattern(image, image_pal[0], -mez, -mez, mez, mez)
-        image.save("patternB_{name}.png".format(name=image_pal[1]))
+        image.save(f"patternB_{image_pal[1]}.png")
 
 
 if __name__ == "__main__":
