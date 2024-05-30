@@ -63,7 +63,7 @@ def draw_lorenz_for_input_values(ax, dt, n, x0, y0, z0, r, skip):
 
 def anim_attractor_for_r(r):
     # konstrukce 2D grafu
-    for skip in range(0, n-50):
+    for skip in range(n-50):
         fig = plt.figure(figsize=(4, 3))
         ax = fig.gca()
         ax.set_xlim(-20, 20)
