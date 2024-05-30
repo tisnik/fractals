@@ -29,7 +29,6 @@ def sqr(x):
 
 def redraw_system(image: Image.Image):
     """Redraw the whole dynamical system."""
-
     a = 3.1
     b = 1.8
     c = -0.9
