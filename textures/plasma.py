@@ -47,8 +47,7 @@ def create_matrix(width: int, height: int) -> List[List[float]]:
 
 
 def random_gauss() -> float:
-    """
-    Random number generator.
+    """Random number generator.
 
     Vygenerovani nahodneho cisla v rozsahu 0..1 s pribliznym
     Gaussovym rozlozenim.
