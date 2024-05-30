@@ -20,16 +20,18 @@ from typing import Dict, List, Tuple
 import pygame
 from pygame.font import Font
 
-from textures import palette_blues
-from textures import palette_gold
-from textures import palette_greens
-from textures import palette_ice
-from textures import palette_juteblue
-from textures import palette_jutemap
-from textures import palette_jutes
-from textures import palette_mandmap
-from textures import palette_phong
-from textures import palette_rose
+from textures import (
+    palette_blues,
+    palette_gold,
+    palette_greens,
+    palette_ice,
+    palette_juteblue,
+    palette_jutemap,
+    palette_jutes,
+    palette_mandmap,
+    palette_phong,
+    palette_rose,
+)
 
 
 class Resources:
