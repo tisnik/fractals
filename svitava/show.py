@@ -15,6 +15,8 @@ from palette_mandmap import palette as mandmap
 from palette_phong import palette as phong
 from palette_rose import palette as rose
 
+DISPLAY_C_COORDINATES = True
+
 TITLE = "Svitava GUI: {name} + Julia variant  [T] fractal type  [P] palette"
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 300
@@ -192,6 +194,9 @@ def event_loop(display, image1, image2, clock, palettes, fractal_renderers, buff
 
             cx = cx_scr * scale_x + xmin
             cy = cy_scr * scale_y + ymin
+
+            if DISPLAY_C_COORDINATES:
+                print(cx, cy)
 
             render_j_set(fractal_renderers, fractal_type_index, IMAGE_WIDTH, IMAGE_HEIGHT, pal, buffer, cx, cy)
             image2 = image_from_buffer(buffer, IMAGE_WIDTH, IMAGE_HEIGHT, "RGBX")
