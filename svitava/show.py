@@ -53,6 +53,7 @@ fractal_limits = {
         "Barnsley M3": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
         "Magnet M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
         "Magnet M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
+        "Phoenix": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
 }
 fractal_types = list(fractal_limits.keys())
 
@@ -247,6 +248,7 @@ def fill_in_fractal_renderers(renderer):
             "Barnsley M3": (renderer.render_barnsley_m3, renderer.render_barnsley_j3),
             "Magnet M1": (renderer.render_magnet_m1, renderer.render_magnet_j1),
             "Magnet M2": (renderer.render_magnet_m2, renderer.render_magnet_j2),
+            "Phoenix": (renderer.render_phoenix_m, renderer.render_phoenix_j),
     }
     return fractal_renderers
 
