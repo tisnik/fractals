@@ -764,6 +764,54 @@ void render_phoenix_m(unsigned int width, unsigned int height,
     }
 }
 
+void render_phoenix_j(unsigned int width, unsigned int height,
+                      const unsigned char *palette, unsigned char *pixels,
+                      double cx, double cy) {
+    int x, y;
+    double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
+    unsigned char *p = pixels;
+
+    double zy0 = ymin;
+
+    for (y = 0; y < height; y++) {
+        double zx0 = xmin;
+        for (x = 0; x < width; x++) {
+            double zx = zx0;
+            double zy = zy0;
+            double ynx = 0.0;
+            double yny = 0.0;
+
+            unsigned int i = 0;
+
+            while (i < 150) {
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                double zxn = zx2 - zy2 + cx + cy * ynx;
+                double zyn = 2.0 * zx * zy + cy * yny;
+                if (zx2+zy2>4) {
+                    break;
+                }
+                ynx = zx;
+                yny = zy;
+                zx = zxn;
+                zy = zyn;
+                i++;
+            }
+            {
+                unsigned char *pal =
+                    (unsigned char *)palette + (unsigned char)(i * 3);
+
+                *p++ = *pal++;
+                *p++ = *pal++;
+                *p++ = *pal;
+                p++;
+            }
+            zx0 += (xmax - xmin) / width;
+        }
+        zy0 += (ymax - ymin) / height;
+    }
+}
+
 void ppm_write_ascii_to_stream(unsigned int width, unsigned int height,
                                unsigned char *pixels, FILE *fout) {
     int x, y;
