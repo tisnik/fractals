@@ -873,6 +873,59 @@ void render_newton_m(unsigned int width, unsigned int height,
 void render_newton_j(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
                       double cx, double cy) {
+    int x, y;
+    double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
+    unsigned char *p = pixels;
+
+#define PI 3.1415927
+#define EPSILON 0.1
+#define DIST2(x1, y1, x2, y2) (((x1)-(x2))*((x1)-(x2))+((y1)-(y2))*((y1)-(y2)))
+
+    double rootx[3];
+    double rooty[3];
+
+    double zy0 = ymin;
+
+    rootx[0] = cx;
+    rootx[1] = cos(2.0*PI/3.0);
+    rootx[2] = cos(4.0*PI/3.0);
+    rooty[0] = cy;
+    rooty[1] = sin(2.0*PI/3.0);
+    rooty[2] = sin(4.0*PI/3.0);
+
+    for (y = 0; y < height; y++) {
+        double zx0 = xmin;
+        for (x = 0; x < width; x++) {
+            double zx = zx0;
+            double zy = zy0;
+
+            unsigned int i = 0;
+
+            while (i < 150) {
+                double zx2 = zx*zx;
+                double zy2 = zy*zy;
+                double zxn = 2.0/3.0*zx+(zx2-zy2)/(3.0*(zx2*zx2+zy2*zy2+2.0*zx2*zy2));
+                double zyn = 2.0/3.0*zy-2.0*zx*zy/(3.0*(zx2*zx2+zy2*zy2+2.0*zx2*zy2));
+                if (DIST2(zxn, zyn, rootx[0], rooty[0])<EPSILON || 
+                    DIST2(zxn, zyn, rootx[1], rooty[1])<EPSILON ||
+                    DIST2(zxn, zyn, rootx[2], rooty[2])<EPSILON) break;
+                zx=zxn;
+                zy=zyn;
+                i++;
+            }
+            {
+                unsigned char *pal =
+                    (unsigned char *)palette + (unsigned char)(i * 3);
+
+                *p++ = *pal++;
+                *p++ = *pal++;
+                *p++ = *pal;
+                p++;
+            }
+            zx0 += (xmax - xmin) / width;
+        }
+        zy0 += (ymax - ymin) / height;
+    }
 }
 
 void ppm_write_ascii_to_stream(unsigned int width, unsigned int height,
