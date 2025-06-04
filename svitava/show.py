@@ -14,6 +14,7 @@ from palette_jutes import palette as jutes
 from palette_mandmap import palette as mandmap
 from palette_phong import palette as phong
 from palette_rose import palette as rose
+from palette_volcano import palette as volcano
 
 DISPLAY_C_COORDINATES = True
 
@@ -265,6 +266,7 @@ def main():
         palette_to_buffer(jutes),
         palette_to_buffer(phong),
         palette_to_buffer(rose),
+        palette_to_buffer(volcano),
     ]
 
     display, clock = initialize_ui(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
