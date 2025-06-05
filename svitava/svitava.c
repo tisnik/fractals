@@ -1,6 +1,6 @@
 /*
 
-   (C) Copyright 2024  Pavel Tisnovsky
+   (C) Copyright 2024, 2025  Pavel Tisnovsky
 
    All rights reserved. This program and the accompanying materials
    are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +20,10 @@ testlib.c build as executable:
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+/* TODO: need to be passed as argument */
+#define maxiter 150
+
 
 void render_test_rgb_image(unsigned int width, unsigned int height,
                            unsigned char *pixels, unsigned char green) {
@@ -67,7 +71,7 @@ void render_mandelbrot(unsigned int width, unsigned int height,
             double zx = 0.0;
             double zy = 0.0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 if (zx2 + zy2 > 4.0) {
@@ -111,7 +115,7 @@ void render_julia(unsigned int width, unsigned int height,
             double zx = zx0;
             double zy = zy0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 if (zx2 + zy2 > 4.0) {
@@ -150,7 +154,7 @@ void render_barnsley_m1(unsigned int width, unsigned int height,
             double zx = 0.0;
             double zy = 0.0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 double zxn, zyn;
@@ -198,7 +202,7 @@ void render_barnsley_j1(unsigned int width, unsigned int height,
             double zx = zx0;
             double zy = zy0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 double zxn, zyn;
@@ -245,7 +249,7 @@ void render_barnsley_m2(unsigned int width, unsigned int height,
             double zx = 0.0;
             double zy = 0.0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 double zxn, zyn;
@@ -293,7 +297,7 @@ void render_barnsley_j2(unsigned int width, unsigned int height,
             double zx = zx0;
             double zy = zy0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 double zxn, zyn;
@@ -340,7 +344,7 @@ void render_barnsley_m3(unsigned int width, unsigned int height,
             double zx = 0.0;
             double zy = 0.0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 double zxn, zyn;
@@ -388,7 +392,7 @@ void render_barnsley_j3(unsigned int width, unsigned int height,
             double zx = zx0;
             double zy = zy0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 double zxn, zyn;
@@ -435,7 +439,7 @@ void render_magnet_m1(unsigned int width, unsigned int height,
             double zx = 0.0;
             double zy = 0.0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
                 zx2 = zx * zx;
                 zy2 = zy * zy;
@@ -518,7 +522,7 @@ void render_magnet_j1(unsigned int width, unsigned int height,
             double zx = zx0;
             double zy = zy0;
             unsigned int i = 0;
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
                 zx2 = zx * zx;
                 zy2 = zy * zy;
@@ -581,7 +585,7 @@ void render_magnet_m2(unsigned int width, unsigned int height,
             cm2x += cm2x + cm2x;
             cm2y += cm2y + cm2y;
 
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
                 zx2 = zx * zx;
                 zy2 = zy * zy;
@@ -663,7 +667,7 @@ void render_magnet_j2(unsigned int width, unsigned int height,
             cm2x += cm2x + cm2x;
             cm2y += cm2y + cm2y;
 
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2, zy2, zxn, zyn, tzx, tzy, bzx, bzy, div;
                 zx2 = zx * zx;
                 zy2 = zy * zy;
@@ -736,7 +740,7 @@ void render_phoenix_m(unsigned int width, unsigned int height,
 
             unsigned int i = 0;
 
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 double zxn = zx2 - zy2 + cx + cy * ynx;
@@ -784,7 +788,7 @@ void render_phoenix_j(unsigned int width, unsigned int height,
 
             unsigned int i = 0;
 
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx * zx;
                 double zy2 = zy * zy;
                 double zxn = zx2 - zy2 + cx + cy * ynx;
@@ -843,7 +847,7 @@ void render_newton_m(unsigned int width, unsigned int height,
 
             unsigned int i = 0;
 
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx*zx;
                 double zy2 = zy*zy;
                 double zxn = 2.0/3.0*zx+(zx2-zy2)/(3.0*(zx2*zx2+zy2*zy2+2.0*zx2*zy2));
@@ -901,7 +905,7 @@ void render_newton_j(unsigned int width, unsigned int height,
 
             unsigned int i = 0;
 
-            while (i < 150) {
+            while (i < maxiter) {
                 double zx2 = zx*zx;
                 double zy2 = zy*zy;
                 double zxn = 2.0/3.0*zx+(zx2-zy2)/(3.0*(zx2*zx2+zy2*zy2+2.0*zx2*zy2));
