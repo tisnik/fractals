@@ -55,6 +55,7 @@ fractal_limits = {
         "Magnet M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
         "Magnet M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
         "Phoenix": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
+        "Newton": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
 }
 fractal_types = list(fractal_limits.keys())
 
@@ -250,6 +251,7 @@ def fill_in_fractal_renderers(renderer):
             "Magnet M1": (renderer.render_magnet_m1, renderer.render_magnet_j1),
             "Magnet M2": (renderer.render_magnet_m2, renderer.render_magnet_j2),
             "Phoenix": (renderer.render_phoenix_m, renderer.render_phoenix_j),
+            "Newton": (renderer.render_newton_m, renderer.render_newton_j),
     }
     return fractal_renderers
 
