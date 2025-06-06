@@ -21,8 +21,6 @@ testlib.c build as executable:
 #include <stdlib.h>
 #include <math.h>
 
-/* TODO: need to be passed as argument */
-#define maxiter 150
 
 
 void render_test_rgb_image(unsigned int width, unsigned int height,
@@ -58,7 +56,8 @@ void render_test_palette_image(unsigned int width, unsigned int height,
 }
 
 void render_mandelbrot(unsigned int width, unsigned int height,
-                       const unsigned char *palette, unsigned char *pixels) {
+                       const unsigned char *palette, unsigned char *pixels,
+                       int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -1.5, xmax = 1.0, ymax = 1.5;
@@ -98,7 +97,8 @@ void render_mandelbrot(unsigned int width, unsigned int height,
 
 void render_julia(unsigned int width, unsigned int height,
                   const unsigned char *palette, unsigned char *pixels,
-                  double cx, double cy) {
+                  double cx, double cy,
+                  int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -1.5, ymin = -1.5, xmax = 1.5, ymax = 1.5;
@@ -141,7 +141,8 @@ void render_julia(unsigned int width, unsigned int height,
 }
 
 void render_barnsley_m1(unsigned int width, unsigned int height,
-                        const unsigned char *palette, unsigned char *pixels) {
+                        const unsigned char *palette, unsigned char *pixels,
+                        int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -189,7 +190,8 @@ void render_barnsley_m1(unsigned int width, unsigned int height,
 
 void render_barnsley_j1(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
-                        double cx, double cy) {
+                        double cx, double cy,
+                        int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -236,7 +238,8 @@ void render_barnsley_j1(unsigned int width, unsigned int height,
 }
 
 void render_barnsley_m2(unsigned int width, unsigned int height,
-                        const unsigned char *palette, unsigned char *pixels) {
+                        const unsigned char *palette, unsigned char *pixels,
+                        int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -284,7 +287,8 @@ void render_barnsley_m2(unsigned int width, unsigned int height,
 
 void render_barnsley_j2(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
-                        double cx, double cy) {
+                        double cx, double cy,
+                        int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -331,7 +335,8 @@ void render_barnsley_j2(unsigned int width, unsigned int height,
 }
 
 void render_barnsley_m3(unsigned int width, unsigned int height,
-                        const unsigned char *palette, unsigned char *pixels) {
+                        const unsigned char *palette, unsigned char *pixels,
+                        int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -379,7 +384,8 @@ void render_barnsley_m3(unsigned int width, unsigned int height,
 
 void render_barnsley_j3(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
-                        double cx, double cy) {
+                        double cx, double cy,
+                        int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -426,7 +432,8 @@ void render_barnsley_j3(unsigned int width, unsigned int height,
 }
 
 void render_magnet_m1(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels) {
+                      const unsigned char *palette, unsigned char *pixels,
+                      int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -478,7 +485,8 @@ void render_magnet_m1(unsigned int width, unsigned int height,
 
 void render_circle_pattern(unsigned int width, unsigned int height,
                            const unsigned char *palette,
-                           unsigned char *pixels) {
+                           unsigned char *pixels,
+                           int maxiter) {
     unsigned char *p = pixels;
 
     double xmin = -150;
@@ -509,7 +517,8 @@ void render_circle_pattern(unsigned int width, unsigned int height,
 
 void render_magnet_j1(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
-                      double cx, double cy) {
+                      double cx, double cy,
+                      int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -560,7 +569,8 @@ void render_magnet_j1(unsigned int width, unsigned int height,
 }
 
 void render_magnet_m2(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels) {
+                      const unsigned char *palette, unsigned char *pixels,
+                      int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -642,7 +652,8 @@ void render_magnet_m2(unsigned int width, unsigned int height,
 
 void render_magnet_j2(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
-                      double cx, double cy) {
+                      double cx, double cy,
+                      int maxiter) {
     int x, y;
     double cx0, cy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -723,7 +734,8 @@ void render_magnet_j2(unsigned int width, unsigned int height,
 }
 
 void render_phoenix_m(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels) {
+                      const unsigned char *palette, unsigned char *pixels,
+                      int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -771,7 +783,8 @@ void render_phoenix_m(unsigned int width, unsigned int height,
 
 void render_phoenix_j(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
-                      double cx, double cy) {
+                      double cx, double cy,
+                      int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = pixels;
@@ -818,7 +831,8 @@ void render_phoenix_j(unsigned int width, unsigned int height,
 }
 
 void render_newton_m(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels) {
+                     const unsigned char *palette, unsigned char *pixels,
+                     int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = pixels;
@@ -875,8 +889,9 @@ void render_newton_m(unsigned int width, unsigned int height,
 }
 
 void render_newton_j(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels,
-                      double cx, double cy) {
+                     const unsigned char *palette, unsigned char *pixels,
+                     double cx, double cy,
+                     int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = pixels;
