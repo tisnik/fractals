@@ -18,7 +18,7 @@ from palette_volcano import palette as volcano
 
 DISPLAY_C_COORDINATES = True
 
-TITLE = "Svitava GUI: {name} + Julia variant  [T] fractal type  [P] palette"
+TITLE = "Svitava GUI: {name} + Julia variant  [T]ype  [P]alette  [+/-]iter"
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 300
 IMAGE_WIDTH = 256
@@ -48,16 +48,17 @@ M_YMAX = 2.0
 
 fractal_type_index = 0
 fractal_limits = {
-        "Mandelbrot": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
-        "Barnsley M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
-        "Barnsley M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
-        "Barnsley M3": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
-        "Magnet M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
-        "Magnet M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
-        "Phoenix": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
-        "Newton": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
+    "Mandelbrot": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
+    "Barnsley M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
+    "Barnsley M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
+    "Barnsley M3": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
+    "Magnet M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
+    "Magnet M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
+    "Phoenix": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
+    "Newton": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
 }
 fractal_types = list(fractal_limits.keys())
+maxiter = 150
 
 
 class Colors(Enum):
@@ -94,15 +95,31 @@ def initialize_ui(title, width, height):
     return display, clock
 
 
-def render_m_set(fractal_renderers, fractal_type_index, image_width, image_height, palette, buffer):
+def render_m_set(
+    fractal_renderers,
+    fractal_type_index,
+    image_width,
+    image_height,
+    palette,
+    buffer,
+    maxiter,
+):
     fractal_type = fractal_types[fractal_type_index]
     renderer = fractal_renderers[fractal_type][0]
-    renderer(
-        c_int(image_width), c_int(image_height), palette, buffer
-    )
+    renderer(c_int(image_width), c_int(image_height), palette, buffer, c_int(maxiter))
 
 
-def render_j_set(fractal_renderers, fractal_type_index, image_width, image_height, palette, buffer, cx, cy):
+def render_j_set(
+    fractal_renderers,
+    fractal_type_index,
+    image_width,
+    image_height,
+    palette,
+    buffer,
+    cx,
+    cy,
+    maxiter,
+):
     fractal_type = fractal_types[fractal_type_index]
     renderer = fractal_renderers[fractal_type][1]
     renderer(
@@ -112,11 +129,13 @@ def render_j_set(fractal_renderers, fractal_type_index, image_width, image_heigh
         buffer,
         c_double(cx),
         c_double(cy),
+        c_int(maxiter),
     )
 
 
 def event_loop(display, image1, image2, clock, palettes, fractal_renderers, buffer):
     global fractal_type_index
+    global maxiter
     palette_index = 0
 
     cx_scr = image1.get_width() / 2 - 1 + 32
@@ -156,6 +175,14 @@ def event_loop(display, image1, image2, clock, palettes, fractal_renderers, buff
                     cy_scr_delta = -1
                 if event.key == pygame.locals.K_DOWN:
                     cy_scr_delta = 1
+                if event.key == pygame.locals.K_EQUALS:
+                    maxiter += 10
+                    first_draw = True
+                    print("Maxiter:", maxiter)
+                if event.key == pygame.locals.K_MINUS:
+                    maxiter -= 10
+                    first_draw = True
+                    print("Maxiter:", maxiter)
             if event.type == pygame.locals.KEYUP:
                 if event.key == pygame.locals.K_LEFT:
                     cx_scr_delta = 0
@@ -186,7 +213,15 @@ def event_loop(display, image1, image2, clock, palettes, fractal_renderers, buff
 
         xmin, xmax, ymin, ymax = fractal_limits[fractal_types[fractal_type_index]]
         if first_draw:
-            render_m_set(fractal_renderers, fractal_type_index, IMAGE_WIDTH, IMAGE_HEIGHT, pal, buffer)
+            render_m_set(
+                fractal_renderers,
+                fractal_type_index,
+                IMAGE_WIDTH,
+                IMAGE_HEIGHT,
+                pal,
+                buffer,
+                maxiter,
+            )
             image1 = image_from_buffer(buffer, IMAGE_WIDTH, IMAGE_HEIGHT, "RGBX")
 
         # recalculate Julia set if needed
@@ -201,7 +236,17 @@ def event_loop(display, image1, image2, clock, palettes, fractal_renderers, buff
             if DISPLAY_C_COORDINATES:
                 print(cx, cy)
 
-            render_j_set(fractal_renderers, fractal_type_index, IMAGE_WIDTH, IMAGE_HEIGHT, pal, buffer, cx, cy)
+            render_j_set(
+                fractal_renderers,
+                fractal_type_index,
+                IMAGE_WIDTH,
+                IMAGE_HEIGHT,
+                pal,
+                buffer,
+                cx,
+                cy,
+                maxiter,
+            )
             image2 = image_from_buffer(buffer, IMAGE_WIDTH, IMAGE_HEIGHT, "RGBX")
 
         # display Mandelbrot set and Julia se
@@ -244,14 +289,14 @@ def image_from_buffer(buffer, width, height, fmt):
 
 def fill_in_fractal_renderers(renderer):
     fractal_renderers = {
-            "Mandelbrot": (renderer.render_mandelbrot, renderer.render_julia),
-            "Barnsley M1": (renderer.render_barnsley_m1, renderer.render_barnsley_j1),
-            "Barnsley M2": (renderer.render_barnsley_m2, renderer.render_barnsley_j2),
-            "Barnsley M3": (renderer.render_barnsley_m3, renderer.render_barnsley_j3),
-            "Magnet M1": (renderer.render_magnet_m1, renderer.render_magnet_j1),
-            "Magnet M2": (renderer.render_magnet_m2, renderer.render_magnet_j2),
-            "Phoenix": (renderer.render_phoenix_m, renderer.render_phoenix_j),
-            "Newton": (renderer.render_newton_m, renderer.render_newton_j),
+        "Mandelbrot": (renderer.render_mandelbrot, renderer.render_julia),
+        "Barnsley M1": (renderer.render_barnsley_m1, renderer.render_barnsley_j1),
+        "Barnsley M2": (renderer.render_barnsley_m2, renderer.render_barnsley_j2),
+        "Barnsley M3": (renderer.render_barnsley_m3, renderer.render_barnsley_j3),
+        "Magnet M1": (renderer.render_magnet_m1, renderer.render_magnet_j1),
+        "Magnet M2": (renderer.render_magnet_m2, renderer.render_magnet_j2),
+        "Phoenix": (renderer.render_phoenix_m, renderer.render_phoenix_j),
+        "Newton": (renderer.render_newton_m, renderer.render_newton_j),
     }
     return fractal_renderers
 
