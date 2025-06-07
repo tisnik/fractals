@@ -18,7 +18,7 @@ from palette_volcano import palette as volcano
 
 DISPLAY_C_COORDINATES = True
 
-TITLE = "Svitava GUI: {name} + Julia variant  [T]ype  [P]alette  [+/-]iter"
+TITLE = "Svitava GUI: {name} + Julia variant  [T]ype  [P]alette  [+/-]iter   [H]elp"
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 300
 IMAGE_WIDTH = 256
