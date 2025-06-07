@@ -17,11 +17,9 @@ build as shared library: gcc -shared -Wl,-soname,testlib -o testlib.so -fPIC
 testlib.c build as executable:
 */
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-
-
 
 void render_test_rgb_image(unsigned int width, unsigned int height,
                            unsigned char *pixels, unsigned char green) {
@@ -97,8 +95,7 @@ void render_mandelbrot(unsigned int width, unsigned int height,
 
 void render_julia(unsigned int width, unsigned int height,
                   const unsigned char *palette, unsigned char *pixels,
-                  double cx, double cy,
-                  int maxiter) {
+                  double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -1.5, ymin = -1.5, xmax = 1.5, ymax = 1.5;
@@ -190,8 +187,7 @@ void render_barnsley_m1(unsigned int width, unsigned int height,
 
 void render_barnsley_j1(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
-                        double cx, double cy,
-                        int maxiter) {
+                        double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -287,8 +283,7 @@ void render_barnsley_m2(unsigned int width, unsigned int height,
 
 void render_barnsley_j2(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
-                        double cx, double cy,
-                        int maxiter) {
+                        double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -384,8 +379,7 @@ void render_barnsley_m3(unsigned int width, unsigned int height,
 
 void render_barnsley_j3(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
-                        double cx, double cy,
-                        int maxiter) {
+                        double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -484,8 +478,7 @@ void render_magnet_m1(unsigned int width, unsigned int height,
 }
 
 void render_circle_pattern(unsigned int width, unsigned int height,
-                           const unsigned char *palette,
-                           unsigned char *pixels,
+                           const unsigned char *palette, unsigned char *pixels,
                            int maxiter) {
     unsigned char *p = pixels;
 
@@ -517,8 +510,7 @@ void render_circle_pattern(unsigned int width, unsigned int height,
 
 void render_magnet_j1(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
-                      double cx, double cy,
-                      int maxiter) {
+                      double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -652,8 +644,7 @@ void render_magnet_m2(unsigned int width, unsigned int height,
 
 void render_magnet_j2(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
-                      double cx, double cy,
-                      int maxiter) {
+                      double cx, double cy, int maxiter) {
     int x, y;
     double cx0, cy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -757,7 +748,7 @@ void render_phoenix_m(unsigned int width, unsigned int height,
                 double zy2 = zy * zy;
                 double zxn = zx2 - zy2 + cx + cy * ynx;
                 double zyn = 2.0 * zx * zy + cy * yny;
-                if (zx2+zy2>4) {
+                if (zx2 + zy2 > 4) {
                     break;
                 }
                 ynx = zx;
@@ -783,8 +774,7 @@ void render_phoenix_m(unsigned int width, unsigned int height,
 
 void render_phoenix_j(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
-                      double cx, double cy,
-                      int maxiter) {
+                      double cx, double cy, int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = pixels;
@@ -806,7 +796,7 @@ void render_phoenix_j(unsigned int width, unsigned int height,
                 double zy2 = zy * zy;
                 double zxn = zx2 - zy2 + cx + cy * ynx;
                 double zyn = 2.0 * zx * zy + cy * yny;
-                if (zx2+zy2>4) {
+                if (zx2 + zy2 > 4) {
                     break;
                 }
                 ynx = zx;
@@ -839,7 +829,8 @@ void render_newton_m(unsigned int width, unsigned int height,
 
 #define PI 3.1415927
 #define EPSILON 0.1
-#define DIST2(x1, y1, x2, y2) (((x1)-(x2))*((x1)-(x2))+((y1)-(y2))*((y1)-(y2)))
+#define DIST2(x1, y1, x2, y2)                                                  \
+    (((x1) - (x2)) * ((x1) - (x2)) + ((y1) - (y2)) * ((y1) - (y2)))
 
     double rootx[3];
     double rooty[3];
@@ -847,11 +838,11 @@ void render_newton_m(unsigned int width, unsigned int height,
     double zy0 = ymin;
 
     rootx[0] = 1.0;
-    rootx[1] = cos(2.0*PI/3.0);
-    rootx[2] = cos(4.0*PI/3.0);
+    rootx[1] = cos(2.0 * PI / 3.0);
+    rootx[2] = cos(4.0 * PI / 3.0);
     rooty[0] = 0.0;
-    rooty[1] = sin(2.0*PI/3.0);
-    rooty[2] = sin(4.0*PI/3.0);
+    rooty[1] = sin(2.0 * PI / 3.0);
+    rooty[2] = sin(4.0 * PI / 3.0);
 
     for (y = 0; y < height; y++) {
         double zx0 = xmin;
@@ -862,15 +853,22 @@ void render_newton_m(unsigned int width, unsigned int height,
             unsigned int i = 0;
 
             while (i < maxiter) {
-                double zx2 = zx*zx;
-                double zy2 = zy*zy;
-                double zxn = 2.0/3.0*zx+(zx2-zy2)/(3.0*(zx2*zx2+zy2*zy2+2.0*zx2*zy2));
-                double zyn = 2.0/3.0*zy-2.0*zx*zy/(3.0*(zx2*zx2+zy2*zy2+2.0*zx2*zy2));
-                if (DIST2(zxn, zyn, rootx[0], rooty[0])<EPSILON || 
-                    DIST2(zxn, zyn, rootx[1], rooty[1])<EPSILON ||
-                    DIST2(zxn, zyn, rootx[2], rooty[2])<EPSILON) break;
-                zx=zxn;
-                zy=zyn;
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                double zxn =
+                    2.0 / 3.0 * zx +
+                    (zx2 - zy2) /
+                        (3.0 * (zx2 * zx2 + zy2 * zy2 + 2.0 * zx2 * zy2));
+                double zyn =
+                    2.0 / 3.0 * zy -
+                    2.0 * zx * zy /
+                        (3.0 * (zx2 * zx2 + zy2 * zy2 + 2.0 * zx2 * zy2));
+                if (DIST2(zxn, zyn, rootx[0], rooty[0]) < EPSILON ||
+                    DIST2(zxn, zyn, rootx[1], rooty[1]) < EPSILON ||
+                    DIST2(zxn, zyn, rootx[2], rooty[2]) < EPSILON)
+                    break;
+                zx = zxn;
+                zy = zyn;
                 i++;
             }
             {
@@ -890,15 +888,15 @@ void render_newton_m(unsigned int width, unsigned int height,
 
 void render_newton_j(unsigned int width, unsigned int height,
                      const unsigned char *palette, unsigned char *pixels,
-                     double cx, double cy,
-                     int maxiter) {
+                     double cx, double cy, int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = pixels;
 
 #define PI 3.1415927
 #define EPSILON 0.1
-#define DIST2(x1, y1, x2, y2) (((x1)-(x2))*((x1)-(x2))+((y1)-(y2))*((y1)-(y2)))
+#define DIST2(x1, y1, x2, y2)                                                  \
+    (((x1) - (x2)) * ((x1) - (x2)) + ((y1) - (y2)) * ((y1) - (y2)))
 
     double rootx[3];
     double rooty[3];
@@ -906,11 +904,11 @@ void render_newton_j(unsigned int width, unsigned int height,
     double zy0 = ymin;
 
     rootx[0] = cx;
-    rootx[1] = cos(2.0*PI/3.0);
-    rootx[2] = cos(4.0*PI/3.0);
+    rootx[1] = cos(2.0 * PI / 3.0);
+    rootx[2] = cos(4.0 * PI / 3.0);
     rooty[0] = cy;
-    rooty[1] = sin(2.0*PI/3.0);
-    rooty[2] = sin(4.0*PI/3.0);
+    rooty[1] = sin(2.0 * PI / 3.0);
+    rooty[2] = sin(4.0 * PI / 3.0);
 
     for (y = 0; y < height; y++) {
         double zx0 = xmin;
@@ -921,15 +919,22 @@ void render_newton_j(unsigned int width, unsigned int height,
             unsigned int i = 0;
 
             while (i < maxiter) {
-                double zx2 = zx*zx;
-                double zy2 = zy*zy;
-                double zxn = 2.0/3.0*zx+(zx2-zy2)/(3.0*(zx2*zx2+zy2*zy2+2.0*zx2*zy2));
-                double zyn = 2.0/3.0*zy-2.0*zx*zy/(3.0*(zx2*zx2+zy2*zy2+2.0*zx2*zy2));
-                if (DIST2(zxn, zyn, rootx[0], rooty[0])<EPSILON || 
-                    DIST2(zxn, zyn, rootx[1], rooty[1])<EPSILON ||
-                    DIST2(zxn, zyn, rootx[2], rooty[2])<EPSILON) break;
-                zx=zxn;
-                zy=zyn;
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                double zxn =
+                    2.0 / 3.0 * zx +
+                    (zx2 - zy2) /
+                        (3.0 * (zx2 * zx2 + zy2 * zy2 + 2.0 * zx2 * zy2));
+                double zyn =
+                    2.0 / 3.0 * zy -
+                    2.0 * zx * zy /
+                        (3.0 * (zx2 * zx2 + zy2 * zy2 + 2.0 * zx2 * zy2));
+                if (DIST2(zxn, zyn, rootx[0], rooty[0]) < EPSILON ||
+                    DIST2(zxn, zyn, rootx[1], rooty[1]) < EPSILON ||
+                    DIST2(zxn, zyn, rootx[2], rooty[2]) < EPSILON)
+                    break;
+                zx = zxn;
+                zy = zyn;
                 i++;
             }
             {
