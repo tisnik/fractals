@@ -31,6 +31,12 @@ M_YMIN = -1.5
 M_YMAX = 1.5
 MAXITER = 100
 
+# Mandelbrot^3 fractal parameters
+M3_XMIN = -1.5
+M3_XMAX = 1.5
+M3_YMIN = -1.5
+M3_YMAX = 1.5
+
 XSTART = 30
 YSTART = 20
 
@@ -49,6 +55,7 @@ M_YMAX = 2.0
 fractal_type_index = 0
 fractal_limits = {
     "Mandelbrot": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
+    "Mandelbrot3": (M3_XMIN, M3_XMAX, M3_YMIN, M3_YMAX),
     "Barnsley M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
     "Barnsley M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
     "Barnsley M3": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
@@ -290,6 +297,7 @@ def image_from_buffer(buffer, width, height, fmt):
 def fill_in_fractal_renderers(renderer):
     fractal_renderers = {
         "Mandelbrot": (renderer.render_mandelbrot, renderer.render_julia),
+        "Mandelbrot3": (renderer.render_mandelbrot_3, renderer.render_julia_3),
         "Barnsley M1": (renderer.render_barnsley_m1, renderer.render_barnsley_j1),
         "Barnsley M2": (renderer.render_barnsley_m2, renderer.render_barnsley_j2),
         "Barnsley M3": (renderer.render_barnsley_m3, renderer.render_barnsley_j3),
