@@ -231,6 +231,52 @@ void render_julia_3(unsigned int width, unsigned int height,
     }
 }
 
+void render_mandelbrot_4(unsigned int width, unsigned int height,
+                       const unsigned char *palette, unsigned char *pixels,
+                       int maxiter) {
+    int x, y;
+    double cx, cy;
+    double xmin = -1.5, ymin = -1.5, xmax = 1.5, ymax = 1.5;
+    unsigned char *p = pixels;
+
+    cy = ymin;
+    for (y = 0; y < height; y++) {
+        cx = xmin;
+        for (x = 0; x < width; x++) {
+            double zx = 0.0;
+            double zy = 0.0;
+            unsigned int i = 0;
+            while (i < maxiter) {
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                double zx4, zy4;
+                double zxn, zyn;
+                if (zx2 + zy2 > 4.0) {
+                    break;
+                }
+                zxn=zx2-zy2;
+                zyn=2.0*zx*zy;
+                zx4=zxn*zxn;
+                zy4=zyn*zyn;
+                zy=2.0*zxn*zyn+cy;
+                zx=zx4-zy4+cx;
+                i++;
+            }
+            {
+                unsigned char *pal =
+                    (unsigned char *)palette + (unsigned char)(i * 3);
+
+                *p++ = *pal++;
+                *p++ = *pal++;
+                *p++ = *pal;
+                p++;
+            }
+            cx += (xmax - xmin) / width;
+        }
+        cy += (ymax - ymin) / height;
+    }
+}
+
 void render_barnsley_m1(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
                         int maxiter) {
