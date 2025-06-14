@@ -21,6 +21,16 @@ testlib.c build as executable:
 #include <stdio.h>
 #include <stdlib.h>
 
+void putpixel(unsigned char **pixel, const unsigned char *palette, int color_index) {
+    int color_offset = color_index * 3;
+    unsigned char *pal = (unsigned char *)(palette + color_offset);
+
+    *(*pixel)++ = *pal++;
+    *(*pixel)++ = *pal++;
+    *(*pixel)++ = *pal;
+    (*pixel)++;
+}
+
 void render_test_rgb_image(unsigned int width, unsigned int height,
                            unsigned char *pixels, unsigned char green) {
     unsigned int i, j;
@@ -1160,15 +1170,7 @@ void render_fm_synth_mandelbrot(unsigned int width, unsigned int height,
         for (x=0; x<width; x++) {
             double val = 100.0 + 100.0 * sin(x1 / 4.0 + 2.0 * sin(x1 / 15.0 + y1 / 40.0));
             int i = (int)val & 255;
-            {
-                unsigned char *pal =
-                    (unsigned char *)palette + (unsigned char)(i * 3);
-            
-                *p++ = *pal++;
-                *p++ = *pal++;
-                *p++ = *pal;
-                p++;
-            }
+            putpixel(&p, palette, i);
             x1 += stepx;
         }
         y1 += stepy;
