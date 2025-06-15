@@ -54,11 +54,8 @@ void render_test_palette_image(unsigned int width, unsigned int height,
 
     for (j = 0; j < height; j++) {
         for (i = 0; i < width; i++) {
-            int color = i * 3;
-            *p++ = palette[color];
-            *p++ = palette[color + 1];
-            *p++ = palette[color + 2];
-            p++;
+            int color = i;
+            putpixel(&p, palette, color);
         }
     }
 }
