@@ -1177,6 +1177,26 @@ void render_fm_synth_mandelbrot(unsigned int width, unsigned int height,
 void render_fm_synth_julia(unsigned int width, unsigned int height,
                      const unsigned char *palette, unsigned char *pixels,
                      double cx, double cy, int maxiter) {
+#define LIMIT 100
+    double xmin = -LIMIT, ymin = -LIMIT, xmax = LIMIT, ymax = LIMIT;
+    double stepx = (xmax-xmin)/(double)width;
+    double stepy = (ymax-ymin)/(double)height;
+
+    double y1 = ymin;
+    unsigned char *p = pixels;
+
+    int x, y;
+
+    for (y=0; y<height; y++) {
+        double x1 = xmin;
+        for (x=0; x<width; x++) {
+            double val = 100.0 + 100.0 * sin(x1 / 4.0 + 2.0 * sin(cx * x1 / 15.0 + cy * y1 / 40.0));
+            int i = (int)val & 255;
+            putpixel(&p, palette, i);
+            x1 += stepx;
+        }
+        y1 += stepy;
+    }
 }
 
 void ppm_write_ascii_to_stream(unsigned int width, unsigned int height,
