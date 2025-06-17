@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Renderer of the classic Julia fractal."""
+"""Renderer of the classic Lambda fractal."""
 
 from PIL import Image
 
@@ -46,8 +46,11 @@ def main():
 
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-    recalc_fractal(image, palette_blues.palette, -1.5, -2.0, 2.5, 2.0, 0.85, 0.6, 1000)
-    image.save("lambda.png")
+    recalc_fractal(image, palette_mandmap.palette, -1.0, -1.5, 2.0, 1.5, 0.85, 0.6, 1000)
+    image.save("lambda_1.png")
+
+    recalc_fractal(image, palette_mandmap.palette, -0.25, -0.7, 0.75, 0.3, 0.85, 0.6, 1000)
+    image.save("lambda_2.png")
 
 
 if __name__ == "__main__":
