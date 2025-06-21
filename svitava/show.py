@@ -55,7 +55,6 @@ M_YMAX = 2.0
 
 fractal_type_index = 0
 fractal_limits = {
-    "FM-synth": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "Mandelbrot": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "Mandelbrot3": (M3_XMIN, M3_XMAX, M3_YMIN, M3_YMAX),
     "Mandelbrot4": (M3_XMIN, M3_XMAX, M3_YMIN, M3_YMAX),
@@ -66,6 +65,7 @@ fractal_limits = {
     "Magnet M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
     "Phoenix": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "Newton": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
+    "FM-synth": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
 }
 fractal_types = list(fractal_limits.keys())
 maxiter = 150
@@ -299,7 +299,6 @@ def image_from_buffer(buffer, width, height, fmt):
 
 def fill_in_fractal_renderers(renderer):
     fractal_renderers = {
-        "FM-synth": (renderer.render_fm_synth_mandelbrot, renderer.render_fm_synth_julia),
         "Mandelbrot": (renderer.render_mandelbrot, renderer.render_julia),
         "Mandelbrot3": (renderer.render_mandelbrot_3, renderer.render_julia_3),
         "Mandelbrot4": (renderer.render_mandelbrot_4, renderer.render_julia_4),
@@ -310,6 +309,7 @@ def fill_in_fractal_renderers(renderer):
         "Magnet M2": (renderer.render_magnet_m2, renderer.render_magnet_j2),
         "Phoenix": (renderer.render_phoenix_m, renderer.render_phoenix_j),
         "Newton": (renderer.render_newton_m, renderer.render_newton_j),
+        "FM-synth": (renderer.render_fm_synth_mandelbrot, renderer.render_fm_synth_julia),
     }
     return fractal_renderers
 
