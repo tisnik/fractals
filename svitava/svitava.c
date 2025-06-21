@@ -237,15 +237,7 @@ void render_mandelbrot_4(unsigned int width, unsigned int height,
                 zx=zx4-zy4+cx;
                 i++;
             }
-            {
-                unsigned char *pal =
-                    (unsigned char *)palette + (unsigned char)(i * 3);
-
-                *p++ = *pal++;
-                *p++ = *pal++;
-                *p++ = *pal;
-                p++;
-            }
+            putpixel(&p, palette, i);
             cx += (xmax - xmin) / width;
         }
         cy += (ymax - ymin) / height;
