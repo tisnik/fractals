@@ -10,7 +10,7 @@ IMAGE_WIDTH = 512
 IMAGE_HEIGHT = 512
 
 
-def julia(zx0, zy0, cx, cy, maxiter):
+def mandelbrot(zx0, zy0, cx, cy, maxiter):
     """Calculate number of iterations for given complex number to escape from set."""
     c = complex(cx, cy)
     z = c
