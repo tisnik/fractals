@@ -18,18 +18,18 @@ def compute_min_max(
     bitmap: List[List[float]], width: int, height: int
 ) -> Tuple[float, float]:
     # pro prepocet intenzit pixelu
-    min = float("inf")
-    max = float("-inf")
+    min_value = float("inf")
+    max_value = float("-inf")
 
     # ziskani statistiky o obrazku - minimalni a maximalni hodnoty
     for j in range(height):
         for i in range(width):
             z = bitmap[j][i]
-            if max < z:
-                max = z
-            if min > z:
-                min = z
-    return min, max
+            if max_value < z:
+                max_value = z
+            if min_value > z:
+                min_value = z
+    return min_value, max_value
 
 
 def create_bitmap(width: int, height: int) -> List[List[float]]:
