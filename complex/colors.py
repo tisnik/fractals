@@ -1,3 +1,5 @@
+"""Named colors used everywhere on demo screens."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
