@@ -519,15 +519,7 @@ void render_barnsley_j3(unsigned int width, unsigned int height,
                 zy = zyn;
                 i++;
             }
-            {
-                unsigned char *pal =
-                    (unsigned char *)palette + (unsigned char)(i * 3);
-
-                *p++ = *pal++;
-                *p++ = *pal++;
-                *p++ = *pal;
-                p++;
-            }
+            putpixel(&p, palette, i);
             zx0 += (xmax - xmin) / width;
         }
         zy0 += (ymax - ymin) / height;
