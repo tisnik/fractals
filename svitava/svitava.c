@@ -570,37 +570,6 @@ void render_magnet_m1(unsigned int width, unsigned int height,
     }
 }
 
-void render_circle_pattern(unsigned int width, unsigned int height,
-                           const unsigned char *palette, unsigned char *pixels,
-                           int maxiter) {
-    unsigned char *p = pixels;
-
-    double xmin = -150;
-    double ymin = -150;
-    double xmax = 150;
-    double ymax = 150;
-
-    int i, j;
-    double x1, y1;
-
-    y1 = ymin;
-    for (j = 0; j < height; j++) {
-        x1 = xmin;
-        for (i = 0; i < width; i++) {
-            double x2 = x1 * x1;
-            double y2 = y1 * y1;
-            int i = (int)(x2 + y2) % 256;
-            int color = i * 3;
-            *p++ = palette[color];
-            *p++ = palette[color + 1];
-            *p++ = palette[color + 2];
-            p++;
-            x1 += (xmax - xmin) / width;
-        }
-        y1 += (ymax - ymin) / height;
-    }
-}
-
 void render_magnet_j1(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
                       double cx, double cy, int maxiter) {
@@ -1084,6 +1053,37 @@ void render_fm_synth_julia(unsigned int width, unsigned int height,
             x1 += stepx;
         }
         y1 += stepy;
+    }
+}
+
+void render_circle_pattern(unsigned int width, unsigned int height,
+                           const unsigned char *palette, unsigned char *pixels,
+                           int maxiter) {
+    unsigned char *p = pixels;
+
+    double xmin = -150;
+    double ymin = -150;
+    double xmax = 150;
+    double ymax = 150;
+
+    int i, j;
+    double x1, y1;
+
+    y1 = ymin;
+    for (j = 0; j < height; j++) {
+        x1 = xmin;
+        for (i = 0; i < width; i++) {
+            double x2 = x1 * x1;
+            double y2 = y1 * y1;
+            int i = (int)(x2 + y2) % 256;
+            int color = i * 3;
+            *p++ = palette[color];
+            *p++ = palette[color + 1];
+            *p++ = palette[color + 2];
+            p++;
+            x1 += (xmax - xmin) / width;
+        }
+        y1 += (ymax - ymin) / height;
     }
 }
 
