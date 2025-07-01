@@ -2,8 +2,9 @@
 
 """Renderer of the Lambda fractal based on selected function."""
 
-from PIL import Image
 import cmath
+
+from PIL import Image
 
 # textura by mela byt ctvercova a jeji sirka i vyska by mela byt
 # mocninou cisla 2
