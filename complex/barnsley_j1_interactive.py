@@ -90,14 +90,10 @@ def event_loop(display, image1, image2, clock, renderer):
         cy_scr += cy_scr_delta
 
         # check for limits
-        if cx_scr < 0:
-            cx_scr = 0
-        if cx_scr > image1.get_width() - 1:
-            cx_scr = image1.get_width() - 1
-        if cy_scr < 0:
-            cy_scr = 0
-        if cy_scr > image1.get_height() - 1:
-            cy_scr = image1.get_height() - 1
+        cx_scr = max(cx_scr, 0)
+        cx_scr = min(cx_scr, image1.get_width() - 1)
+        cy_scr = max(cy_scr, 0)
+        cy_scr = min(cy_scr, image1.get_height() - 1)
 
         # recalculate Julia set if needed
         if cx_scr_delta != 0 or cy_scr_delta != 0 or first_draw:
