@@ -48,10 +48,10 @@ B_YMIN = -2.0
 B_YMAX = 2.0
 
 # Magnet M1 and J1
-M_XMIN = -2.0
-M_XMAX = 2.0
-M_YMIN = -2.0
-M_YMAX = 2.0
+MAG_XMIN = -2.0
+MAG_XMAX = 2.0
+MAG_YMIN = -2.0
+MAG_YMAX = 2.0
 
 fractal_type_index = 0
 fractal_limits = {
@@ -61,8 +61,8 @@ fractal_limits = {
     "Barnsley M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
     "Barnsley M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
     "Barnsley M3": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
-    "Magnet M1": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
-    "Magnet M2": (B_XMIN, B_XMAX, B_YMIN, B_YMAX),
+    "Magnet M1": (MAG_XMIN, MAG_XMAX, MAG_YMIN, MAG_YMAX),
+    "Magnet M2": (MAG_XMIN, MAG_XMAX, MAG_YMIN, MAG_YMAX),
     "Phoenix": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "Newton": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "FM-synth": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
