@@ -755,15 +755,7 @@ void render_magnet_j2(unsigned int width, unsigned int height,
                 zy = 2.0 * zxn * zyn;
                 i++;
             }
-            {
-                unsigned char *pal =
-                    (unsigned char *)palette + (unsigned char)(i * 3);
-
-                *p++ = *pal++;
-                *p++ = *pal++;
-                *p++ = *pal;
-                p++;
-            }
+            putpixel(&p, palette, i);
             cx0 += (xmax - xmin) / width;
         }
         cy0 += (ymax - ymin) / height;
