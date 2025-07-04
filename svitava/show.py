@@ -309,7 +309,10 @@ def fill_in_fractal_renderers(renderer):
         "Magnet M2": (renderer.render_magnet_m2, renderer.render_magnet_j2),
         "Phoenix": (renderer.render_phoenix_m, renderer.render_phoenix_j),
         "Newton": (renderer.render_newton_m, renderer.render_newton_j),
-        "FM-synth": (renderer.render_fm_synth_mandelbrot, renderer.render_fm_synth_julia),
+        "FM-synth": (
+            renderer.render_fm_synth_mandelbrot,
+            renderer.render_fm_synth_julia,
+        ),
     }
     return fractal_renderers
 
