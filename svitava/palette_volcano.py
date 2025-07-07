@@ -1,7 +1,8 @@
-"""Color palette taken from Fractint. Author: D. Egnor"""
+"""Color palette taken from Fractint."""
 
 # taken from Fractint
 # see https://www.fractint.org/
+# Author: Daniel Egnor
 palette = (
     (  0,   0,   0),
     ( 60,  60,  60),
