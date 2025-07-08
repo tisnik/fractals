@@ -52,6 +52,7 @@ def event_loop(display, image1, image2, clock, renderer):
     cx_scr_delta = 0
     cy_scr_delta = 0
     first_draw = True
+    maxiter = MAXITER
 
     while True:
         for event in pygame.event.get():
@@ -73,6 +74,14 @@ def event_loop(display, image1, image2, clock, renderer):
                     cy_scr_delta = -1
                 if event.key == pygame.locals.K_DOWN:
                     cy_scr_delta = 1
+                if event.key == pygame.locals.K_EQUALS:
+                    maxiter += 10
+                    first_draw = True
+                    print("Maxiter:", maxiter)
+                if event.key == pygame.locals.K_MINUS:
+                    maxiter -= 10
+                    first_draw = True
+                    print("Maxiter:", maxiter)
             if event.type == pygame.locals.KEYUP:
                 if event.key == pygame.locals.K_LEFT:
                     cx_scr_delta = 0
@@ -105,7 +114,7 @@ def event_loop(display, image1, image2, clock, renderer):
             cy = cy_scr * scale_y + YMIN
 
             renderer(
-                image2, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, cx, cy, MAXITER
+                image2, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, cx, cy, maxiter
             )
 
         # display Mandelbrot set and Julia se
