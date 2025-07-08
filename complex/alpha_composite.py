@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Alpha channel-based composition of two fractals into one image."""
+
 import palette_blues
 import palette_greens
 import palette_mandmap
@@ -32,7 +34,7 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
         x1 = xmin
         for x in range(width):
             i = mandelbrot(x1, y1, maxiter)
-            alpha = i
+            alpha = i  # alpha channel value is based directly on number of iterations
             i = 3 * i % 256
             color = (palette[i][0], palette[i][1], palette[i][2], alpha)
             image.putpixel((x, y), color)
