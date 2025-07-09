@@ -50,6 +50,9 @@ def main():
     recalc_fractal(image, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, 0.0, 1.0, 1000)
     image.save("phoenix_j.png")
 
+    recalc_fractal(image, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, -0.4, -1.2, 1000)
+    image.save("phoenix_j_2.png")
+
 
 if __name__ == "__main__":
     main()
