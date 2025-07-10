@@ -1028,11 +1028,7 @@ void render_circle_pattern(unsigned int width, unsigned int height,
             double x2 = x1 * x1;
             double y2 = y1 * y1;
             int i = (int)(x2 + y2) % 256;
-            int color = i * 3;
-            *p++ = palette[color];
-            *p++ = palette[color + 1];
-            *p++ = palette[color + 2];
-            p++;
+            putpixel(&p, palette, i);
             x1 += (xmax - xmin) / width;
         }
         y1 += (ymax - ymin) / height;
