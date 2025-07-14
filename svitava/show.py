@@ -4,6 +4,7 @@ from enum import Enum
 
 import pygame
 import pygame.locals
+from palette_avia import palette as avia
 from palette_blues import palette as blues
 from palette_gold import palette as gold
 from palette_greens import palette as greens
@@ -341,6 +342,7 @@ def main():
         palette_to_buffer(rose),
         palette_to_buffer(volcano),
         palette_to_buffer(chroma),
+        palette_to_buffer(avia),
     ]
 
     display, clock = initialize_ui(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
