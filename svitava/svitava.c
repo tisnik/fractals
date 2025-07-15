@@ -21,6 +21,9 @@ testlib.c build as executable:
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * Writes an RGB color from the palette at the specified index into the pixel buffer and advances the pixel pointer by 4 bytes.
+ */
 void putpixel(unsigned char **pixel, const unsigned char *palette, int color_index) {
     int color_offset = color_index * 3;
     unsigned char *pal = (unsigned char *)(palette + color_offset);
@@ -31,6 +34,12 @@ void putpixel(unsigned char **pixel, const unsigned char *palette, int color_ind
     (*pixel)++;
 }
 
+/**
+ * Fills the pixel buffer with a test RGB image where the red channel is set to the x-coordinate, the green channel is set to a fixed value, and the blue channel is set to the y-coordinate.
+ *
+ * The pixel buffer is assumed to use 4 bytes per pixel, with the fourth byte unused or as padding.
+ * @param green Value to assign to the green channel for all pixels.
+ */
 void render_test_rgb_image(unsigned int width, unsigned int height,
                            unsigned char *pixels, unsigned char green) {
     unsigned int i, j;
@@ -46,6 +55,11 @@ void render_test_rgb_image(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Fills the pixel buffer with a test image using colors from the palette indexed by the x-coordinate.
+ *
+ * Each pixel in the image is assigned a color from the palette based on its horizontal position, creating vertical color bands.
+ */
 void render_test_palette_image(unsigned int width, unsigned int height,
                                const unsigned char *palette,
                                unsigned char *pixels) {
@@ -60,6 +74,11 @@ void render_test_palette_image(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders the Mandelbrot set fractal into a pixel buffer using a specified color palette.
+ *
+ * Iterates over each pixel, maps it to a point in the complex plane, and computes the escape time for the Mandelbrot set. The iteration count determines the color index used from the palette.
+ */
 void render_mandelbrot(unsigned int width, unsigned int height,
                        const unsigned char *palette, unsigned char *pixels,
                        int maxiter) {
@@ -92,6 +111,11 @@ void render_mandelbrot(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a Julia set fractal image into the provided pixel buffer.
+ *
+ * Maps each pixel to a point in the complex plane and iterates the function z = z^2 + c, where c is specified by `cx` and `cy`. Colors are assigned based on the number of iterations before escape, using the provided palette.
+ */
 void render_julia(unsigned int width, unsigned int height,
                   const unsigned char *palette, unsigned char *pixels,
                   double cx, double cy, int maxiter) {
@@ -128,6 +152,11 @@ void render_julia(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a cubic Mandelbrot fractal (z = z³ + c) into the pixel buffer.
+ *
+ * Each pixel is mapped to a point in the complex plane, and the cubic Mandelbrot iteration is performed up to `maxiter` times. The number of iterations before escape determines the color index from the palette.
+ */
 void render_mandelbrot_3(unsigned int width, unsigned int height,
                        const unsigned char *palette, unsigned char *pixels,
                        int maxiter) {
@@ -165,6 +194,15 @@ void render_mandelbrot_3(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a cubic Julia set fractal image using the formula z = z³ + c.
+ *
+ * Each pixel is mapped to a point in the complex plane, and the cubic Julia iteration is performed up to `maxiter` times or until the escape radius is exceeded. The number of iterations before escape determines the color, which is selected from the palette.
+ *
+ * @param cx Real part of the constant complex parameter c.
+ * @param cy Imaginary part of the constant complex parameter c.
+ * @param maxiter Maximum number of iterations for the escape test.
+ */
 void render_julia_3(unsigned int width, unsigned int height,
                   const unsigned char *palette, unsigned char *pixels,
                   double cx, double cy, int maxiter) {
@@ -206,6 +244,19 @@ void render_julia_3(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a quartic Mandelbrot set fractal image into a pixel buffer.
+ *
+ * Iterates the function z = z⁴ + c for each pixel mapped to the complex plane,
+ * coloring pixels based on the number of iterations before escape, using the provided palette.
+ * The fractal is rendered over the region [-1.5, 1.5] x [-1.5, 1.5] in the complex plane.
+ * 
+ * @param width Image width in pixels.
+ * @param height Image height in pixels.
+ * @param palette Pointer to the color palette (array of RGB triplets).
+ * @param pixels Output pixel buffer (4 bytes per pixel, RGB in first 3 bytes).
+ * @param maxiter Maximum number of iterations for the escape algorithm.
+ */
 void render_mandelbrot_4(unsigned int width, unsigned int height,
                        const unsigned char *palette, unsigned char *pixels,
                        int maxiter) {
@@ -244,6 +295,15 @@ void render_mandelbrot_4(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a quartic Julia set fractal image using the formula z = z⁴ + c.
+ *
+ * Iterates the quartic Julia set for each pixel, mapping image coordinates to the complex plane in the range [-1.5, 1.5] for both axes. The constant complex parameter c is specified by `cx` and `cy`. Each pixel is colored based on the number of iterations before escape, using the provided palette.
+ *
+ * @param cx Real part of the constant parameter c for the Julia set.
+ * @param cy Imaginary part of the constant parameter c for the Julia set.
+ * @param maxiter Maximum number of iterations for the escape condition.
+ */
 void render_julia_4(unsigned int width, unsigned int height,
                   const unsigned char *palette, unsigned char *pixels,
                   double cx, double cy, int maxiter) {
@@ -286,6 +346,11 @@ void render_julia_4(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders the Barnsley Mandelbrot-type fractal (variant 1) into a pixel buffer.
+ *
+ * Iterates a piecewise complex function for each pixel mapped to the complex plane, coloring pixels based on the number of iterations before escape or reaching `maxiter`. The function uses a conditional transformation depending on the sign of the real part of z.
+ */
 void render_barnsley_m1(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
                         int maxiter) {
@@ -326,6 +391,11 @@ void render_barnsley_m1(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a Barnsley Julia fractal image using a piecewise complex function.
+ *
+ * Maps each pixel to a point in the complex plane and iterates a piecewise function based on the sign of the real part, using parameters `cx` and `cy`. Colors are assigned from the palette based on the number of iterations before escape or reaching `maxiter`.
+ */
 void render_barnsley_j1(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
                         double cx, double cy, int maxiter) {
@@ -366,6 +436,17 @@ void render_barnsley_j1(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a Barnsley fractal (variant m2) to a pixel buffer using a piecewise complex function.
+ *
+ * The fractal is generated by iterating a piecewise function on the complex plane for each pixel, with the function branch determined by the sign of (zx * cy + zy * cx). The number of iterations before escape (or reaching maxiter) determines the color index for each pixel.
+ *
+ * @param width Width of the output image in pixels.
+ * @param height Height of the output image in pixels.
+ * @param palette Pointer to the color palette used for mapping iteration counts to RGB values.
+ * @param pixels Pointer to the pixel buffer to be filled (assumes 4 bytes per pixel).
+ * @param maxiter Maximum number of iterations for the fractal calculation.
+ */
 void render_barnsley_m2(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
                         int maxiter) {
@@ -406,6 +487,11 @@ void render_barnsley_m2(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a Barnsley Julia set fractal variant using a piecewise complex function.
+ *
+ * For each pixel, maps its coordinates to the complex plane and iterates a piecewise function based on the sign of a linear combination of zx and zy, with parameters cx and cy. Colors are assigned from the palette based on the number of iterations before escape or reaching maxiter.
+ */
 void render_barnsley_j2(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
                         double cx, double cy, int maxiter) {
@@ -446,6 +532,11 @@ void render_barnsley_j2(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders the Barnsley M3 fractal set into a pixel buffer using a palette.
+ *
+ * Iterates a piecewise quadratic function over the complex plane for each pixel, with the function's behavior depending on the sign of the real part of z. Colors are assigned based on the number of iterations before escape, up to `maxiter`.
+ */
 void render_barnsley_m3(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
                         int maxiter) {
@@ -486,6 +577,23 @@ void render_barnsley_m3(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a Barnsley Julia-type fractal variant using a piecewise quadratic iteration.
+ *
+ * For each pixel, maps coordinates to the complex plane and iterates a piecewise function:
+ * - If the real part is positive, applies z = z^2 - 1.
+ * - If the real part is non-positive, applies z = z^2 - 1 + c*z, where c = cx + i*cy.
+ * Iteration stops when the magnitude squared exceeds 4 or the maximum number of iterations is reached.
+ * The number of iterations determines the color index for each pixel.
+ *
+ * @param width Image width in pixels.
+ * @param height Image height in pixels.
+ * @param palette Pointer to the color palette (array of RGB triples).
+ * @param pixels Output pixel buffer (4 bytes per pixel, RGB in first 3 bytes).
+ * @param cx Real part of the Julia parameter c.
+ * @param cy Imaginary part of the Julia parameter c.
+ * @param maxiter Maximum number of iterations per pixel.
+ */
 void render_barnsley_j3(unsigned int width, unsigned int height,
                         const unsigned char *palette, unsigned char *pixels,
                         double cx, double cy, int maxiter) {
@@ -526,6 +634,11 @@ void render_barnsley_j3(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a "magnet" type 1 Mandelbrot fractal into the pixel buffer.
+ *
+ * Iterates a rational function over the complex plane for each pixel, mapping escape or convergence behavior to color indices from the palette. The fractal is rendered over the region [-2, 2] x [-2, 2] with up to `maxiter` iterations per pixel.
+ */
 void render_magnet_m1(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
                       int maxiter) {
@@ -570,6 +683,19 @@ void render_magnet_m1(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a "magnet" type Julia fractal image using a rational function iteration.
+ *
+ * The fractal is generated by iterating a complex rational function for each pixel, using the provided Julia parameters (`cx`, `cy`). The number of iterations before escape or convergence determines the color, which is selected from the palette and written to the pixel buffer.
+ *
+ * @param width Width of the output image in pixels.
+ * @param height Height of the output image in pixels.
+ * @param palette Pointer to the color palette (array of RGB triplets).
+ * @param pixels Pointer to the output pixel buffer (4 bytes per pixel).
+ * @param cx Real part of the Julia set parameter.
+ * @param cy Imaginary part of the Julia set parameter.
+ * @param maxiter Maximum number of iterations per pixel.
+ */
 void render_magnet_j1(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
                       double cx, double cy, int maxiter) {
@@ -614,6 +740,11 @@ void render_magnet_j1(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders the Magnet type 2 fractal (Mandelbrot variant) into a pixel buffer using a given color palette.
+ *
+ * Iterates a complex rational function for each pixel mapped to the complex plane, coloring pixels based on the number of iterations before escape or convergence, up to `maxiter`.
+ */
 void render_magnet_m2(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
                       int maxiter) {
@@ -674,6 +805,19 @@ void render_magnet_m2(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders the Magnet type 2 Julia fractal set into a pixel buffer using the specified complex parameter.
+ *
+ * Each pixel is mapped to a point in the complex plane and iterated using a rational function involving the parameter (cx, cy). The number of iterations before escape or convergence determines the color index from the palette.
+ *
+ * @param width Width of the image in pixels.
+ * @param height Height of the image in pixels.
+ * @param palette Pointer to the color palette (array of RGB triplets).
+ * @param pixels Output pixel buffer (4 bytes per pixel).
+ * @param cx Real part of the Julia set parameter.
+ * @param cy Imaginary part of the Julia set parameter.
+ * @param maxiter Maximum number of iterations per pixel.
+ */
 void render_magnet_j2(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
                       double cx, double cy, int maxiter) {
@@ -748,6 +892,12 @@ void render_magnet_j2(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a Phoenix Mandelbrot fractal image into a pixel buffer.
+ *
+ * Iterates the Phoenix fractal formula over each pixel, mapping pixel coordinates to the complex plane and using the number of iterations before escape to select a color from the palette.
+ * The resulting image is written to the provided pixel buffer.
+ */
 void render_phoenix_m(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
                       int maxiter) {
@@ -788,6 +938,20 @@ void render_phoenix_m(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a Phoenix Julia fractal image into a pixel buffer using the specified palette and Julia parameters.
+ *
+ * The function maps each pixel to a point in the complex plane and iterates the Phoenix Julia set formula,
+ * using `cx` and `cy` as parameters. The number of iterations before escape determines the color index for each pixel.
+ *
+ * @param width Width of the output image in pixels.
+ * @param height Height of the output image in pixels.
+ * @param palette Pointer to the color palette (array of RGB triplets).
+ * @param pixels Pointer to the output pixel buffer (4 bytes per pixel).
+ * @param cx Real part of the Julia parameter.
+ * @param cy Imaginary part of the Julia parameter and Phoenix coupling parameter.
+ * @param maxiter Maximum number of iterations for the fractal calculation.
+ */
 void render_phoenix_j(unsigned int width, unsigned int height,
                       const unsigned char *palette, unsigned char *pixels,
                       double cx, double cy, int maxiter) {
@@ -828,6 +992,11 @@ void render_phoenix_j(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a Newton fractal for the roots of unity over the complex plane and writes the result to a pixel buffer.
+ *
+ * Each pixel is mapped to a point in the complex plane and iteratively updated using Newton's method for the equation z³ = 1. The pixel color is determined by the number of iterations required to converge to one of the three roots, using the provided palette.
+ */
 void render_newton_m(unsigned int width, unsigned int height,
                      const unsigned char *palette, unsigned char *pixels,
                      int maxiter) {
@@ -886,6 +1055,15 @@ void render_newton_m(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a Newton fractal for a cubic polynomial with one user-specified root and two fixed roots, coloring pixels by convergence.
+ *
+ * The function maps each pixel to a point in the complex plane and applies Newton's method to find roots of a cubic polynomial. The roots are at (cx, cy) and two fixed points on the unit circle. Iteration stops when the current value is sufficiently close to any root or when the maximum number of iterations is reached. The number of iterations determines the color assigned from the palette.
+ *
+ * @param cx Real part of the user-specified root.
+ * @param cy Imaginary part of the user-specified root.
+ * @param maxiter Maximum number of Newton iterations per pixel.
+ */
 void render_newton_j(unsigned int width, unsigned int height,
                      const unsigned char *palette, unsigned char *pixels,
                      double cx, double cy, int maxiter) {
@@ -944,6 +1122,11 @@ void render_newton_j(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a synthetic Mandelbrot-like pattern using frequency-modulated sine functions and writes the result to the pixel buffer.
+ *
+ * The generated image displays smooth, wave-like color variations based on the pixel's mapped coordinates, producing a non-fractal but visually complex pattern. Colors are selected from the palette using the computed value.
+ */
 void render_fm_synth_mandelbrot(unsigned int width, unsigned int height,
                      const unsigned char *palette, unsigned char *pixels,
                      int maxiter) {
@@ -969,6 +1152,11 @@ void render_fm_synth_mandelbrot(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a synthetic Julia-like pattern using frequency-modulated sine functions and writes the result to the pixel buffer.
+ *
+ * The color of each pixel is determined by a combination of its mapped coordinates and the parameters `cx` and `cy`, producing smooth, wave-like color variations. The palette is used to map computed values to RGB colors.
+ */
 void render_fm_synth_julia(unsigned int width, unsigned int height,
                      const unsigned char *palette, unsigned char *pixels,
                      double cx, double cy, int maxiter) {
@@ -994,6 +1182,11 @@ void render_fm_synth_julia(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Renders a concentric circle pattern by coloring each pixel based on the squared distance from the image center modulo 256.
+ * 
+ * The color index for each pixel is determined by (x^2 + y^2) % 256, producing repeating circular bands using the provided palette.
+ */
 void render_circle_pattern(unsigned int width, unsigned int height,
                            const unsigned char *palette, unsigned char *pixels,
                            int maxiter) {
@@ -1021,6 +1214,11 @@ void render_circle_pattern(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Writes pixel data to a file stream in ASCII PPM (P3) format.
+ *
+ * The output image is written from bottom to top, with each pixel's RGB values output as text. Assumes the pixel buffer uses 4 bytes per pixel, with the fourth byte ignored.
+ */
 void ppm_write_ascii_to_stream(unsigned int width, unsigned int height,
                                unsigned char *pixels, FILE *fout) {
     int x, y;
@@ -1042,6 +1240,15 @@ void ppm_write_ascii_to_stream(unsigned int width, unsigned int height,
     }
 }
 
+/**
+ * Writes pixel data to a file in ASCII PPM (P3) format.
+ *
+ * @param width Image width in pixels.
+ * @param height Image height in pixels.
+ * @param pixels Pointer to the pixel buffer (assumed 4 bytes per pixel, RGB in first 3 bytes).
+ * @param file_name Name of the output file.
+ * @return 0 on success, -1 on failure to open or close the file.
+ */
 int ppm_write_ascii(unsigned int width, unsigned int height,
                     unsigned char *pixels, const char *file_name) {
     FILE *fout;
@@ -1059,6 +1266,17 @@ int ppm_write_ascii(unsigned int width, unsigned int height,
     return 0;
 }
 
+/**
+ * Writes a pixel buffer to a BMP file with 24 bits per pixel.
+ *
+ * The pixel data is written in bottom-up order, with each pixel's RGB channels reordered as BGR. The function assumes the input buffer uses 4 bytes per pixel, with the fourth byte ignored. Returns 0 on success, or 1 if the file cannot be opened.
+ *
+ * @param width Width of the image in pixels.
+ * @param height Height of the image in pixels.
+ * @param pixels Pointer to the pixel buffer (4 bytes per pixel, only RGB used).
+ * @param file_name Name of the output BMP file.
+ * @return 0 on success, 1 on failure to open the file.
+ */
 int bmp_write(unsigned int width, unsigned int height, unsigned char *pixels,
               const char *file_name) {
     unsigned char bmp_header[] = {
@@ -1114,6 +1332,10 @@ int bmp_write(unsigned int width, unsigned int height, unsigned char *pixels,
     return 0;
 }
 
+/**
+ * Entry point for the program. Renders a test RGB image and writes it to both PPM and BMP files.
+ * @returns 0 on successful execution.
+ */
 int main(void) {
 #define WIDTH 256
 #define HEIGHT 256
