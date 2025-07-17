@@ -925,20 +925,6 @@ void render_magnet_j2(unsigned int width, unsigned int height,
                     break;
                 if (zx2 + zy2 > 100)
                     break;
-                if (((zx - 1.0) * (zx - 1.0) + zy * zy) < 0.001)
-                    break;
-                tzx = zx2 - zy2 + cx - 1;
-                tzy = 2.0 * zx * zy + cy;
-                bzx = 2.0 * zx + cx - 2;
-                bzy = 2.0 * zy + cy;
-                div = bzx * bzx + bzy * bzy;
-#define MIN_VALUE 1.0 - 100
-                if (div < MIN_VALUE)
-                    break;
-                zxn = (tzx * bzx + tzy * bzy) / div;
-                zyn = (tzy * bzx - tzx * bzy) / div;
-                zx = (zxn + zyn) * (zxn - zyn);
-                zy = 2.0 * zxn * zyn;
                 i++;
             }
             putpixel(&p, palette, i);
