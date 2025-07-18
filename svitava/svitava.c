@@ -21,6 +21,8 @@ testlib.c build as executable:
 #include <stdio.h>
 #include <stdlib.h>
 
+#define NULL_CHECK(value)  if (value == NULL) {puts("NULL parameter"); return;}
+
 /**
  * Writes an RGB color from the palette at the specified index into the pixel
  * buffer and advances the pixel pointer by 4 bytes.
@@ -96,6 +98,9 @@ void render_mandelbrot(unsigned int width, unsigned int height,
     double cx, cy;
     double xmin = -2.0, ymin = -1.5, xmax = 1.0, ymax = 1.5;
     unsigned char *p = pixels;
+
+    NULL_CHECK(palette)
+    NULL_CHECK(pixels)
 
     cy = ymin;
     for (y = 0; y < height; y++) {
