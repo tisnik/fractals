@@ -58,6 +58,16 @@ def event_loop(display, image1, image2, clock, renderer):
             if event.type == pygame.locals.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            # modification keys
+            mods = pygame.key.get_mods()
+
+            step_delta = 1
+            if mods & pygame.locals.KMOD_SHIFT:
+                step_delta = 10
+            if mods & pygame.locals.KMOD_CTRL:
+                step_delta = 5
+
             if event.type == pygame.locals.KEYDOWN:
                 if event.key == pygame.locals.K_ESCAPE:
                     pygame.quit()
@@ -66,13 +76,13 @@ def event_loop(display, image1, image2, clock, renderer):
                     pygame.quit()
                     sys.exit()
                 if event.key == pygame.locals.K_LEFT:
-                    cx_scr_delta = -1
+                    cx_scr_delta = -step_delta
                 if event.key == pygame.locals.K_RIGHT:
-                    cx_scr_delta = 1
+                    cx_scr_delta = step_delta
                 if event.key == pygame.locals.K_UP:
-                    cy_scr_delta = -1
+                    cy_scr_delta = -step_delta
                 if event.key == pygame.locals.K_DOWN:
-                    cy_scr_delta = 1
+                    cy_scr_delta = step_delta
             if event.type == pygame.locals.KEYUP:
                 if event.key == pygame.locals.K_LEFT:
                     cx_scr_delta = 0
