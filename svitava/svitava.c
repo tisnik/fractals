@@ -297,6 +297,9 @@ void render_mandelbrot_4(unsigned int width, unsigned int height,
     double xmin = -1.5, ymin = -1.5, xmax = 1.5, ymax = 1.5;
     unsigned char *p = pixels;
 
+    NULL_CHECK(palette)
+    NULL_CHECK(pixels)
+
     cy = ymin;
     for (y = 0; y < height; y++) {
         cx = xmin;
