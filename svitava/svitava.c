@@ -350,6 +350,9 @@ void render_julia_4(unsigned int width, unsigned int height,
     double xmin = -1.5, ymin = -1.5, xmax = 1.5, ymax = 1.5;
     unsigned char *p = pixels;
 
+    NULL_CHECK(palette)
+    NULL_CHECK(pixels)
+
 #ifdef DEBUG
     printf("%f %f\n", cx, cy);
 #endif
