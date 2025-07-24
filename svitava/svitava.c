@@ -13,8 +13,8 @@
 */
 
 /*
-build as shared library: gcc -shared -Wl,-soname,testlib -o testlib.so -fPIC
-testlib.c build as executable:
+build as shared library: gcc -shared -Wl,-soname,svitava -o svitava.so -fPIC
+svitava.c build as executable:
 */
 
 #include <math.h>
