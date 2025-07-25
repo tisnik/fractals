@@ -403,6 +403,9 @@ void render_barnsley_m1(unsigned int width, unsigned int height,
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = pixels;
 
+    NULL_CHECK(palette)
+    NULL_CHECK(pixels)
+
     cy = ymin;
     for (y = 0; y < height; y++) {
         cx = xmin;
