@@ -2,6 +2,7 @@
 
 # taken from Fractint
 # see https://www.fractint.org/
+# Author: Daniel Egnor
 palette = (
     (000, 000, 0),
     (000, 000, 0),
