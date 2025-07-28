@@ -1398,6 +1398,7 @@ int bmp_write(unsigned int width, unsigned int height, unsigned char *pixels,
     FILE *fout;
     int x, y;
 
+    /* initialize BMP header */
     bmp_header[18] = width & 0xff;
     bmp_header[19] = (width >> 8) & 0xff;
     bmp_header[20] = (width >> 16) & 0xff;
@@ -1411,17 +1412,20 @@ int bmp_write(unsigned int width, unsigned int height, unsigned char *pixels,
     if (!fout) {
         return 1;
     }
+
+    /* write BMP header */
     fwrite(bmp_header, sizeof(bmp_header), 1, fout);
 
-    /* pixel array */
+    /* write the whole pixel array into BMP file */
     for (y = height - 1; y >= 0; y--) {
+        /* pointer to the 1st pixel on scan line */
         unsigned char *p = pixels + y * width * 4;
         for (x = 0; x < width; x++) {
-            /* swap RGB */
+            /* swap RGB color components as required by file format */
             fwrite(p + 2, 1, 1, fout);
             fwrite(p + 1, 1, 1, fout);
             fwrite(p, 1, 1, fout);
-            /* next pixel */
+            /* move to next pixel on scan line */
             p += 4;
         }
     }
