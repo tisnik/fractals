@@ -83,7 +83,7 @@ class OtherMoireScreen(Screen):
         self._display.blit(self._image, (x, y))
 
     def eventLoop(self) -> int:
-        """Event loop for splash screen that just waits for keypress or window close action."""
+        """Event loop for moiré screen that handles zoom, function cycling, palette changes, and user input."""
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.locals.QUIT:
