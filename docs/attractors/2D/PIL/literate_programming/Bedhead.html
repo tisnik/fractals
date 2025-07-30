@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>Bedhead.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>Bedhead.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      <p>(C) Copyright 2024  Pavel Tisnovsky</p>
+<p>All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html</p>
+<p>Contributors:
+     Pavel Tisnovsky</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
+
+<span class="kn">from</span> <span class="nn">bitmap</span> <span class="kn">import</span> <span class="n">create_bitmap</span><span class="p">,</span> <span class="n">draw_bitmap</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">PIL.ImageOps</span> <span class="kn">import</span> <span class="n">invert</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>image settings</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="n">IMAGE_WIDTH</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="n">IMAGE_HEIGHT</span> <span class="o">=</span> <span class="mi">600</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>Calculate next point in the strange attractor.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">bedhead</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">x_dot</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">y_dot</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">sin</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">y_dot</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>Redraw the whole dynamical system.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">redraw_system</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">x_offset</span><span class="p">,</span> <span class="n">y_offset</span><span class="p">,</span> <span class="n">max_factor</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">bitmap</span> <span class="o">=</span> <span class="n">create_bitmap</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+
+    <span class="n">max_points</span> <span class="o">=</span> <span class="mi">1000000</span>
+    <span class="n">settle_down_points</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_points</span><span class="p">):</span>
+        <span class="n">x_dot</span><span class="p">,</span> <span class="n">y_dot</span> <span class="o">=</span> <span class="n">bedhead</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+
+        <span class="n">xi</span> <span class="o">=</span> <span class="n">width</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="n">x_dot</span><span class="p">)</span> <span class="o">+</span> <span class="n">x_offset</span>
+        <span class="n">yi</span> <span class="o">=</span> <span class="n">height</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="n">y_dot</span><span class="p">)</span> <span class="o">+</span> <span class="n">y_offset</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>try to draw pixel</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">settle_down_points</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">xi</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">yi</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">xi</span> <span class="o">&lt;</span> <span class="n">width</span> <span class="ow">and</span> <span class="n">yi</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">:</span>
+                <span class="n">bitmap</span><span class="p">[</span><span class="n">yi</span><span class="p">][</span><span class="n">xi</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>next point calculation</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x_dot</span><span class="p">,</span> <span class="n">y_dot</span>
+
+    <span class="n">draw_bitmap</span><span class="p">(</span><span class="n">bitmap</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">max_factor</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">IMAGE_WIDTH</span><span class="p">,</span> <span class="n">IMAGE_HEIGHT</span><span class="p">))</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="mf">0.06</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="mf">0.98</span>
+    <span class="n">redraw_system</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span>
+    <span class="n">invert</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;bedhead_1.png&quot;</span><span class="p">)</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.67</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="mf">0.83</span>
+    <span class="n">redraw_system</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+    <span class="n">invert</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;bedhead_2.png&quot;</span><span class="p">)</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.67</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="mf">0.68</span>
+    <span class="n">redraw_system</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">50.0</span><span class="p">)</span>
+    <span class="n">invert</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;bedhead_3.png&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
