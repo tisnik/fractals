@@ -13,8 +13,6 @@
 
 """Ghost class that represents any ghost in the demo."""
 
-from typing import Any, Dict
-
 import pygame
 
 from demo.direction import Direction
@@ -34,7 +32,7 @@ class Ghost(Sprite):
         self._scared = False
         self._scared_tick = 0
 
-        self._sprites: Dict[Any, Any] = {}
+        self._sprites: dict[Direction, pygame.Surface] = {}
         self._sprites[Direction.LEFT] = resources.images[filename_prefix + "_left"]
         self._sprites[Direction.RIGHT] = resources.images[filename_prefix + "_right"]
         self._sprites[Direction.UP] = resources.images[filename_prefix + "_up"]
