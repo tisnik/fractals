@@ -13,8 +13,6 @@
 
 """Dynamic system screen."""
 
-import sys
-
 import pygame
 
 from demo.abstract_menu_screen import AbstractMenuScreen
