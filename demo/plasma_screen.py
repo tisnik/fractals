@@ -55,7 +55,7 @@ class PlasmaScreen(Screen):
         self._display.blit(self._image, (x, y))
 
     def eventLoop(self) -> int:
-        """Event loop for splash screen that just waits for keypress or window close action."""
+        """Event loop for plasma screen that handles user input and renders the plasma effect."""
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.locals.QUIT:
