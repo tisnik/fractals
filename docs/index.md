@@ -1,9 +1,5 @@
 # Fractals and procedural graphics
 
-## [Strange attractors](attractors/index.md)
-
-[![Strange attractor](attractors/2D/hopalong.png)](attractors/)
-
 
 
 ## [Fractals in complex plane](complex/index.md)
@@ -15,6 +11,12 @@
 ## [Procedural textures](textures/index.md)
 
 [![Procedural texture](textures/patternE_perlin_noise2.png)](textures/)
+
+
+
+## [Strange attractors](attractors/index.md)
+
+[![Strange attractor](attractors/2D/hopalong.png)](attractors/)
 
 
 
