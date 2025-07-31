@@ -16,3 +16,8 @@
 
 [![Procedural texture](textures/patternE_perlin_noise2.png)](textures/)
 
+
+
+## [Iterated Function System (IFS)](ifs/index.md)
+
+[![IFS](IFS/spiral.png")](IFS/)
