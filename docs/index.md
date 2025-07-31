@@ -20,4 +20,4 @@
 
 ## [Iterated Function System (IFS)](ifs/index.md)
 
-[![IFS](IFS/spiral.png")](IFS/)
+[![IFS](IFS/spiral.png)](IFS/)
