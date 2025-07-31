@@ -36,6 +36,12 @@
 
 
 
+## [Magnet fractal](magnet.md)
+
+![Magnet](magnet_small.png)
+
+
+
 ## [Newton fractal](newton.md)
 
 ![Newton](newton_small.png)
