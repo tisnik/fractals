@@ -23,6 +23,7 @@ def loadConfiguration(filename: str) -> configparser.ConfigParser:
     return config
 
 
-def saveConfiguration(filename: str) -> None:
+def saveConfiguration(filename: str, config: configparser.ConfigParser) -> None:
     """Store configuration into provided INI file."""
-    # TODO: add implementation there
+    with open(filename, "w") as configfile:
+        config.write(configfile)
