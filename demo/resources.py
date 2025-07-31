@@ -61,7 +61,7 @@ class Resources:
         for imageName in imageList:
             self._images[imageName[0]] = pygame.image.load(imageName[1])
 
-    def loadPalettes(self):
+    def loadPalettes(self) -> None:
         self._palettes = []
         self._palettes.append(palette_blues.palette)
         self._palettes.append(palette_gold.palette)
@@ -75,7 +75,7 @@ class Resources:
         self._palettes.append(palette_rose.palette)
 
     @property
-    def palettes(self) -> tuple:
+    def palettes(self) -> list[list[tuple[int, int, int]]]:
         """Color palettes."""
         return self._palettes
 
