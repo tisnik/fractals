@@ -50,6 +50,10 @@ class Resources:
         fontDirectory = configuration["paths"]["fonts"]
         fullFontFileName = os.path.join(fontDirectory, Resources.FONT_FILE_NAME)
 
+        # check if file with font exists
+        if not os.path.isfile(fullFontFileName):
+            raise FileNotFoundError(f"Font file not found: {fullFontFileName}")
+
         self._big_font = pygame.font.Font(fullFontFileName, 60)
         self._normal_font = pygame.font.Font(fullFontFileName, 40)
         self._small_font = pygame.font.Font(fullFontFileName, 20)
