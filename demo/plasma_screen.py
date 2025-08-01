@@ -65,8 +65,10 @@ class PlasmaScreen(Screen):
                     if event.key == pygame.locals.K_ESCAPE:
                         return 0
                     if event.key == pygame.locals.K_LEFT:
+                        # TODO: implement zoom out functionality
                         pass
                     if event.key == pygame.locals.K_RIGHT:
+                        # TODO: implement zoom in functionality
                         pass
                     if event.key == pygame.locals.K_p:
                         self._palette_index += 1
