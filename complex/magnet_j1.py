@@ -13,7 +13,8 @@ IMAGE_WIDTH = 512
 IMAGE_HEIGHT = 512
 
 # bailout value
-BAILOUT = 2
+BAILOUT = 100
+
 
 def magnet_j1(zx0, zy0, cx, cy, maxiter):
     """Calculate number of iterations for given complex number to escape from set."""
@@ -51,18 +52,26 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, cx, cy, maxiter=1000)
 def main():
     """Function called after the script initialization."""
     import palette_blues
+    import palette_gold
 
     # construct new image
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
     print("Calculation started")
     t1 = time()
-    recalc_fractal(image, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, 0.390625, -1.328125, 500)
-    image.save("magnet_j1.png")
+    recalc_fractal(image, palette_gold.palette, -2.0, -2.0, 2.0, 2.0, 0.390625, -1.328125, 255)
+    image.save("magnet_j1_A.png")
     t2 = time()
     difftime = t2 - t1
     print(f"Calculation finished in {difftime:4.1f} seconds")
 
+    print("Calculation started")
+    t1 = time()
+    recalc_fractal(image, palette_gold.palette, -2.0, -2.0, 2.0, 2.0, 0.484375, -1.328125, 255)
+    image.save("magnet_j1_B.png")
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
 
 if __name__ == "__main__":
     # call the main function
