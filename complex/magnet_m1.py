@@ -9,13 +9,16 @@ from PIL import Image
 IMAGE_WIDTH = 512
 IMAGE_HEIGHT = 512
 
+# bailout value
+BAILOUT = 100
+
 
 def magnet_m1(cx, cy, maxiter):
     """Calculate number of iterations for given complex number to escape from set."""
     c = complex(cx, cy)
     z = 0
     for i in range(maxiter):
-        if abs(z) > 2:
+        if abs(z) > BAILOUT:
             return i
         z = ((z**2 + (c-1)) / (2*z + (c-2)))**2
 
