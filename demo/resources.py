@@ -63,7 +63,10 @@ class Resources:
         imageList = get_list_of_images(configuration)
         self._images = {}
         for imageName in imageList:
-            self._images[imageName[0]] = pygame.image.load(imageName[1])
+            try:
+                self._images[imageName[0]] = pygame.image.load(imageName[1])
+            except pygame.error as e:
+                print(f"Warning: Could not load image {imageName[1]}: {e}")
 
     def loadPalettes(self) -> None:
         self._palettes = []
