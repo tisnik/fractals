@@ -28,7 +28,7 @@ class SetupScreen(AbstractMenuScreen):
     ) -> None:
         """Initialize the screen."""
         super(SetupScreen, self).__init__(
-            display, resources, ghost, "Fractals in complex plane"
+            display, resources, ghost, "Setup"
         )
 
         # pre-render all menu items onto surfaces
