@@ -1,4 +1,3 @@
-
 #
 #  (C) Copyright 2023  Pavel Tisnovsky
 #
@@ -13,7 +12,7 @@
 
 """Super class for all movable objects on the scene."""
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import Tuple
 
 import pygame
@@ -36,8 +35,10 @@ class Sprite(ABC):
         # surface used to display the sprite
         self._surface = surface
 
+    @abstractmethod
     def draw(self) -> None:
         """Elementary draw method to be overwritten in derived classes."""
+        pass
 
     def setDirection(self, direction: Direction) -> None:
         """Set sprite direction (if applicable)."""
