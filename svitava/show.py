@@ -66,6 +66,12 @@ MAG2_XMAX = 2.5
 MAG2_YMIN = -2.0
 MAG2_YMAX = 2.0
 
+# Lambda M + J
+LAMBDA_XMIN = -2.0
+LAMBDA_XMAX = 4.0
+LAMBDA_YMIN = -2.5
+LAMBDA_YMAX = 2.5
+
 fractal_type_index = 0
 fractal_limits = {
     "Mandelbrot": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
@@ -77,6 +83,7 @@ fractal_limits = {
     "Magnet M1": (MAG1_XMIN, MAG1_XMAX, MAG1_YMIN, MAG1_YMAX),
     "Magnet M2": (MAG2_XMIN, MAG2_XMAX, MAG2_YMIN, MAG2_YMAX),
     "Phoenix": (PHO_XMIN, PHO_XMAX, PHO_YMIN, PHO_YMAX),
+    "Lambda":  (LAMBDA_XMIN, LAMBDA_XMAX, LAMBDA_XMIN, LAMBDA_YMAX),
     "Newton": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "FM-synth": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "Circle": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
@@ -331,6 +338,7 @@ def fill_in_fractal_renderers(renderer):
         "Barnsley M3": (renderer.render_barnsley_m3, renderer.render_barnsley_j3),
         "Magnet M1": (renderer.render_magnet_m1, renderer.render_magnet_j1),
         "Magnet M2": (renderer.render_magnet_m2, renderer.render_magnet_j2),
+        "Lambda": (renderer.render_mandelbrot_lambda, renderer.render_lambda),
         "Phoenix": (renderer.render_phoenix_m, renderer.render_phoenix_j),
         "Newton": (renderer.render_newton_m, renderer.render_newton_j),
         "FM-synth": (
