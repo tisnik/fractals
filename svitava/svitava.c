@@ -1110,6 +1110,53 @@ void render_mandelbrot_lambda(unsigned int width, unsigned int height,
 }
 
 /**
+ * Renders the Lambda set fractal into a pixel buffer using a specified
+ * color palette.
+ *
+ * Iterates over each pixel, maps it to a point in the complex plane, and
+ * computes the escape time for the Mandelbrot set. The iteration count
+ * determines the color index used from the palette.
+ */
+void render_lambda(unsigned int width, unsigned int height,
+                       const unsigned char *palette, unsigned char *pixels,
+                       double cx, double cy, int maxiter) {
+    int x, y;
+    double zx0, zy0;
+    double xmin = -1.0, ymin = -1.5, xmax = 2.0, ymax = 1.5;
+    unsigned char *p = pixels;
+
+    NULL_CHECK(palette)
+    NULL_CHECK(pixels)
+
+    zy0 = ymin;
+    for (y = 0; y < height; y++) {
+        zx0 = xmin;
+        for (x = 0; x < width; x++) {
+            double zx = zx0;
+            double zy = zy0;
+            unsigned int i = 0;
+            while (i < maxiter) {
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                double zx_, zy_;
+                if (zx2 + zy2 > 4.0) {
+                    break;
+                }
+                /* Z = C * Z * (1 - Z) */
+                zx_ = cx*zx - cy*zy - cx*zx2 + cx*zy2 + 2*cy*zx*zy;
+                zy_ = cy*zx + cx*zy - cy*zx2 + cy*zy2 - 2*cx*zx*zy;
+                zx = zx_;
+                zy = zy_;
+                i++;
+            }
+            putpixel(&p, palette, i & 0xff);
+            zx0 += (xmax - xmin) / width;
+        }
+        zy0 += (ymax - ymin) / height;
+    }
+}
+
+/**
  * Renders a Newton fractal for the roots of unity over the complex plane and
  * writes the result to a pixel buffer.
  *
