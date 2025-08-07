@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Renderer of the classic Barnsley J1 fractal."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
@@ -11,10 +13,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-
-
-"""Renderer of the classic Barnsley J1 fractal."""
 
 from PIL import Image
 
