@@ -1157,6 +1157,58 @@ void render_lambda(unsigned int width, unsigned int height,
 }
 
 /**
+ * Renders the Mandel version of Manowar set fractal into a pixel buffer using
+ * a specified color palette.
+ *
+ * Iterates over each pixel, maps it to a point in the complex plane, and
+ * computes the escape time for the Mandelbrot set. The iteration count
+ * determines the color index used from the palette.
+ */
+void render_manowar_m(unsigned int width, unsigned int height,
+                       const unsigned char *palette, unsigned char *pixels,
+                       int maxiter) {
+    int x, y;
+    double cx, cy;
+    double xmin = -1.5, ymin = -1.0, xmax = 0.5, ymax = 1.0;
+    unsigned char *p = pixels;
+
+    NULL_CHECK(palette)
+    NULL_CHECK(pixels)
+
+    cy = ymin;
+    for (y = 0; y < height; y++) {
+        cx = xmin;
+        for (x = 0; x < width; x++) {
+            double zx = cx;
+            double zy = cy;
+            double z1x = zx;
+            double z1y = zy;
+            unsigned int i = 0;
+            while (i < maxiter) {
+                double zx2 = zx * zx;
+                double zy2 = zy * zy;
+                double z2x, z2y;
+                if (zx2 + zy2 > 4.0) {
+                    break;
+                }
+                /* Z = Z * Z + Z1 + C */
+                /* Z1 = Z */
+                z2x = zx2 - zy2 + z1x + cx;
+                z2y = 2.0*zx*zy + z1y + cy;
+                z1x = zx;
+                z1y = zy;
+                zx = z2x;
+                zy = z2y;
+                i++;
+            }
+            putpixel(&p, palette, i);
+            cx += (xmax - xmin) / width;
+        }
+        cy += (ymax - ymin) / height;
+    }
+}
+
+/**
  * Renders a Newton fractal for the roots of unity over the complex plane and
  * writes the result to a pixel buffer.
  *
