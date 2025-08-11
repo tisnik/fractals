@@ -1644,11 +1644,15 @@ int main(void) {
 
     int i;
     unsigned char *p = palette;
-    for (i=0; i<=255; i++) {
-        *p++=i;
-        *p++=i;
-        *p++=i;
+    for (i=0; i<=254; i++) {
+        *p++=i*3;
+        *p++=i*3;
+        *p++=i*3;
     }
+    /* last color is black */
+    *p++=0;
+    *p++=0;
+    *p++=0;
 
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb_1.ppm");
@@ -1657,6 +1661,9 @@ int main(void) {
     render_test_palette_image(WIDTH, HEIGHT, palette, pixels);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_palette.ppm");
     bmp_write(WIDTH, HEIGHT, pixels, "test_palette.bmp");
+
+    render_manowar_j(WIDTH, HEIGHT, palette, pixels, 0.0542, -0.045, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "manowar.bmp");
 
     return 0;
 }
