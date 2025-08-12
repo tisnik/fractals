@@ -4,6 +4,8 @@
 
 ## Programs written in Python
 
+### Classic Mandelbrot and Julia fractals or their variants
+
 1. [Classic Mandelbrot fractal](mandelbrot.py)
 1. [Classic Julia fractals](julia.py)
 1. [Julia fractal spirals](julia_spirals.py)
@@ -12,6 +14,13 @@
 1. [Mandelbrot variant z^3+c](mandelbrot_z^3.py)
 1. [Mandelbrot variant z^3-z+c](mandelbrot_z^3-z.py)
 1. [Mandelbrot variant z^4+c](mandelbrot_z^4.py)
+
+### Barnsley fractals
+
+### Magnet fractals
+
+### Blending between two fracals
+
 1. [Alpha compositing during Mandelbrot fractal rendering](alpha_composite.py)
 1. [Blending two fractal images](blend_add.py)
 1. [Blending two fractal images](blending.py)
