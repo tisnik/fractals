@@ -1504,6 +1504,40 @@ void render_circle_pattern(unsigned int width, unsigned int height,
 }
 
 /**
+ * Renders a concentric circle "julia" pattern by coloring each pixel based on the
+ * squared distance from the image center modulo 256.
+ *
+ * The color index for each pixel is determined by (x^2 + y^2) % 256, producing
+ * repeating circular bands using the provided palette.
+ */
+void render_circle_pattern_j(unsigned int width, unsigned int height,
+                           const unsigned char *palette, unsigned char *pixels,
+                           double cx, double cy, int maxiter) {
+    unsigned char *p = pixels;
+
+    double xmin = -150;
+    double ymin = -150;
+    double xmax = 150;
+    double ymax = 150;
+
+    int i, j;
+    double x1, y1;
+
+    y1 = ymin;
+    for (j = 0; j < height; j++) {
+        x1 = xmin;
+        for (i = 0; i < width; i++) {
+            double x2 = (x1 + cx) * (x1 + cx);
+            double y2 = (y1 + cy) * (y1 + cy);
+            int i = (int)(x2 + y2) % 256;
+            putpixel(&p, palette, i);
+            x1 += (xmax - xmin) / width;
+        }
+        y1 += (ymax - ymin) / height;
+    }
+}
+
+/**
  * Writes pixel data to a file stream in ASCII PPM (P3) format.
  *
  * The output image is written from bottom to top, with each pixel's RGB values
