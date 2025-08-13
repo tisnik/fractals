@@ -17,6 +17,42 @@ build as shared library: gcc -shared -Wl,-soname,svitava -o svitava.so -fPIC
 svitava.c build as executable:
 */
 
+/*
+Renderers implemented:
+----------------------
+
+render_test_rgb_image
+render_test_palette_image
+render_mandelbrot
+render_julia
+render_mandelbrot_3
+render_julia_3
+render_mandelbrot_4
+render_julia_4
+render_barnsley_m1
+render_barnsley_j1
+render_barnsley_m2
+render_barnsley_j2
+render_barnsley_m3
+render_barnsley_j3
+render_magnet_m1
+render_magnet_j1
+render_magnet_m2
+render_magnet_j2
+render_phoenix_m
+render_phoenix_j
+render_mandelbrot_lambda
+render_lambda
+render_manowar_m
+render_manowar_j
+render_newton_m
+render_newton_j
+render_fm_synth_mandelbrot
+render_fm_synth_julia
+render_circle_pattern
+render_circle_pattern_j
+*/
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
