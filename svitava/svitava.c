@@ -1701,12 +1701,11 @@ int bmp_write(unsigned int width, unsigned int height, unsigned char *pixels,
     return 0;
 }
 
-/**
- * Entry point for the program. Renders a test RGB image and writes it to both
+/*
+ * Renders bunch of test images and writes it to both
  * PPM and BMP files.
- * @returns 0 on successful execution.
  */
-int main(void) {
+int render_test_images(void) {
 #define WIDTH 256
 #define HEIGHT 256
     unsigned char *pixels = (unsigned char *)malloc(WIDTH * HEIGHT * 4);
@@ -1736,4 +1735,14 @@ int main(void) {
     bmp_write(WIDTH, HEIGHT, pixels, "manowar.bmp");
 
     return 0;
+}
+
+/**
+ * Entry point for the program.
+ * @returns 0 on successful execution.
+ */
+int main(void) {
+    int result = render_test_images();
+
+    return result;
 }
