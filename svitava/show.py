@@ -93,7 +93,7 @@ fractal_limits = {
     "Lambda":  (LAMBDA_XMIN, LAMBDA_XMAX, LAMBDA_XMIN, LAMBDA_YMAX),
     "Newton": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "FM-synth": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
-    "Circle": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
+    "Circle": (-1.5, 1.5, -1.5, 1.5),
 }
 fractal_types = list(fractal_limits.keys())
 maxiter = 150
@@ -353,7 +353,7 @@ def fill_in_fractal_renderers(renderer):
             renderer.render_fm_synth_mandelbrot,
             renderer.render_fm_synth_julia,
         ),
-        "Circle": (renderer.render_circle_pattern, renderer.render_circle_pattern),
+        "Circle": (renderer.render_circle_pattern, renderer.render_circle_pattern_j),
     }
     return fractal_renderers
 
