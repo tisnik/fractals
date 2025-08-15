@@ -44,7 +44,7 @@ def main():
 
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
-    recalc_fractal(image, palette_blues.palette, -2.0, -1.5, 1.0, 1.5, 1000)
+    recalc_fractal(image, palette_blues.palette, -1.5, -1.5, 1.5, 1.5, 1000)
     image.save("mandelbrot_z^2-z.png")
 
 
