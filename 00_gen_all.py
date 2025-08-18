@@ -18,9 +18,9 @@ for directory in directories:
                 with open(file, "r") as fin:
                     for line in fin:
                         line = line.strip()
-                        if line == "":
+                        if line.startswith('"""') and line.endswith('"""'):
+                            line=line[3:][:-3]
+                            print("# " + line, file=indexfile)
                             break
-                        if line.startswith("# - ") or line.startswith("#  "):
-                            print(line, file=indexfile)
                 print("#", file=indexfile)
     os.chdir(cwd)
