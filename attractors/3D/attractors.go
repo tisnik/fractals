@@ -93,10 +93,10 @@ func (state *State) finalize() {
 }
 
 func lorenz(x, y, z, s, r, b float64) (float64, float64, float64) {
-	x_dot := s * (y - x)
-	y_dot := r*x - y - x*z
-	z_dot := x*y - b*z
-	return x_dot, y_dot, z_dot
+	xDot := s * (y - x)
+	yDot := r*x - y - x*z
+	zDot := x*y - b*z
+	return xDot, yDot, zDot
 }
 
 func (state *State) redraw() {
@@ -108,11 +108,13 @@ func (state *State) redraw() {
 	err := state.PrimarySurface.FillRect(nil, sdl.MapRGB(state.PrimarySurface.Format, backgroundColor, backgroundColor, backgroundColor))
 	if err != nil {
 		log.Println(err)
+		return
 	}
 
 	err = state.PrimarySurface.Lock()
 	if err != nil {
 		log.Println(err)
+		return
 	}
 
 	dt := 0.001
