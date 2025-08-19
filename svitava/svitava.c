@@ -58,7 +58,11 @@ render_circle_pattern_j
 #include <stdlib.h>
 #include <string.h>
 
-#define NULL_CHECK(value)  if (value == NULL) {puts("NULL parameter"); return;}
+#define NULL_CHECK(value)                                                      \
+    if (value == NULL) {                                                       \
+        puts("NULL parameter");                                                \
+        return;                                                                \
+    }
 
 /**
  * Writes an RGB color from the palette at the specified index into the pixel
@@ -1108,8 +1112,8 @@ void render_phoenix_j(unsigned int width, unsigned int height,
  * determines the color index used from the palette.
  */
 void render_mandelbrot_lambda(unsigned int width, unsigned int height,
-                       const unsigned char *palette, unsigned char *pixels,
-                       int maxiter) {
+                              const unsigned char *palette,
+                              unsigned char *pixels, int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.5, xmax = 4.0, ymax = 2.5;
@@ -1133,8 +1137,8 @@ void render_mandelbrot_lambda(unsigned int width, unsigned int height,
                     break;
                 }
                 /* Z = C * Z * (1 - Z) */
-                zx_ = cx*zx - cy*zy - cx*zx2 + cx*zy2 + 2*cy*zx*zy;
-                zy_ = cy*zx + cx*zy - cy*zx2 + cy*zy2 - 2*cx*zx*zy;
+                zx_ = cx * zx - cy * zy - cx * zx2 + cx * zy2 + 2 * cy * zx * zy;
+                zy_ = cy * zx + cx * zy - cy * zx2 + cy * zy2 - 2 * cx * zx * zy;
                 zx = zx_;
                 zy = zy_;
                 i++;
@@ -1155,8 +1159,8 @@ void render_mandelbrot_lambda(unsigned int width, unsigned int height,
  * determines the color index used from the palette.
  */
 void render_lambda(unsigned int width, unsigned int height,
-                       const unsigned char *palette, unsigned char *pixels,
-                       double cx, double cy, int maxiter) {
+                   const unsigned char *palette, unsigned char *pixels,
+                   double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -1.0, ymin = -1.5, xmax = 2.0, ymax = 1.5;
@@ -1180,8 +1184,8 @@ void render_lambda(unsigned int width, unsigned int height,
                     break;
                 }
                 /* Z = C * Z * (1 - Z) */
-                zx_ = cx*zx - cy*zy - cx*zx2 + cx*zy2 + 2*cy*zx*zy;
-                zy_ = cy*zx + cx*zy - cy*zx2 + cy*zy2 - 2*cx*zx*zy;
+                zx_ = cx * zx - cy * zy - cx * zx2 + cx * zy2 + 2 * cy * zx * zy;
+                zy_ = cy * zx + cx * zy - cy * zx2 + cy * zy2 - 2 * cx * zx * zy;
                 zx = zx_;
                 zy = zy_;
                 i++;
@@ -1202,8 +1206,8 @@ void render_lambda(unsigned int width, unsigned int height,
  * determines the color index used from the palette.
  */
 void render_manowar_m(unsigned int width, unsigned int height,
-                       const unsigned char *palette, unsigned char *pixels,
-                       int maxiter) {
+                      const unsigned char *palette, unsigned char *pixels,
+                      int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -1.5, ymin = -1.0, xmax = 0.5, ymax = 1.0;
@@ -1231,7 +1235,7 @@ void render_manowar_m(unsigned int width, unsigned int height,
                 /* Z = Z * Z + Z1 + C */
                 /* Z1 = Z */
                 z2x = zx2 - zy2 + z1x + cx;
-                z2y = 2.0*zx*zy + z1y + cy;
+                z2y = 2.0 * zx * zy + z1y + cy;
                 z1x = zx;
                 z1y = zy;
                 zx = z2x;
@@ -1283,7 +1287,7 @@ void render_manowar_j(unsigned int width, unsigned int height,
                 /* Z = Z * Z + Z1 + C */
                 /* Z1 = Z */
                 z2x = zx2 - zy2 + z1x + cx;
-                z2y = 2.0*zx*zy + z1y + cy;
+                z2y = 2.0 * zx * zy + z1y + cy;
                 z1x = zx;
                 z1y = zy;
                 zx = z2x;
@@ -1541,15 +1545,16 @@ void render_circle_pattern(unsigned int width, unsigned int height,
 }
 
 /**
- * Renders a concentric circle "julia" pattern by coloring each pixel based on the
- * squared distance from the image center modulo 256.
+ * Renders a concentric circle "julia" pattern by coloring each pixel based on
+ * the squared distance from the image center modulo 256.
  *
  * The color index for each pixel is determined by (x^2 + y^2) % 256, producing
  * repeating circular bands using the provided palette.
  */
 void render_circle_pattern_j(unsigned int width, unsigned int height,
-                           const unsigned char *palette, unsigned char *pixels,
-                           double cx, double cy, int maxiter) {
+                             const unsigned char *palette,
+                             unsigned char *pixels, double cx, double cy,
+                             int maxiter) {
     unsigned char *p = pixels;
 
     double xmin = -150;
@@ -1716,9 +1721,8 @@ static const unsigned char true_color_tga_header[] = {
     0x20                    /* picture orientation: top-left origin */
 };
 
-int tga_write(unsigned int width, unsigned int height, const unsigned char *pixels,
-              const char *file_name)
-{
+int tga_write(unsigned int width, unsigned int height,
+              const unsigned char *pixels, const char *file_name) {
     FILE *fout;
     const unsigned char *p = pixels;
     unsigned char header[sizeof true_color_tga_header];
@@ -1776,19 +1780,19 @@ int render_test_images(void) {
 #define WIDTH 256
 #define HEIGHT 256
     unsigned char *pixels = (unsigned char *)malloc(WIDTH * HEIGHT * 4);
-    unsigned char *palette = (unsigned char *)malloc(256*3);
+    unsigned char *palette = (unsigned char *)malloc(256 * 3);
 
     int i;
     unsigned char *p = palette;
-    for (i=0; i<=254; i++) {
-        *p++=i*3;
-        *p++=i*3;
-        *p++=i*3;
+    for (i = 0; i <= 254; i++) {
+        *p++ = i * 3;
+        *p++ = i * 3;
+        *p++ = i * 3;
     }
     /* last color is black */
-    *p++=0;
-    *p++=0;
-    *p++=0;
+    *p++ = 0;
+    *p++ = 0;
+    *p++ = 0;
 
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb_1.ppm");
