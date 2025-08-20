@@ -11,6 +11,7 @@ import (
 
 type Palette [][]byte
 
+// produced an error prior to termination).
 func LoadTextRGBPalette(filename string) (Palette, error) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -54,7 +55,9 @@ func (writer PNGImageWriter) WriteImage(filename string, img image.Image) error 
 	return png.Encode(outfile, img)
 }
 
-// NewPNGImageWriter is a constructor for PNG image writer
+// NewPNGImageWriter is a constructor for PNG image writer.
+//
+// The returned value is an empty struct value used to call WriteImage for PNG encoding.
 func NewPNGImageWriter() PNGImageWriter {
 	return PNGImageWriter{}
 }
@@ -68,7 +71,8 @@ type ZPixel struct {
 // ZImage is representation of raster image consisting of ZPixels
 type ZImage [][]ZPixel
 
-// NewZImage constructs new instance of ZImage
+// NewZImage returns a new ZImage with the given width and height.
+// The result is a height-by-width 2D slice (each row has length width) of zero-valued ZPixel entries.
 func NewZImage(width uint, height uint) ZImage {
 	zimage := make([][]ZPixel, height)
 	for i := uint(0); i < height; i++ {
@@ -77,6 +81,7 @@ func NewZImage(width uint, height uint) ZImage {
 	return zimage
 }
 
+// and len(zimage[y]) == int(width)); otherwise indexing will be invalid.
 func complexImageToImage(zimage ZImage, width uint, height uint, palette Palette) image.Image {
 	image := image.NewNRGBA(image.Rect(0, 0, int(width), int(height)))
 
@@ -97,6 +102,11 @@ func complexImageToImage(zimage ZImage, width uint, height uint, palette Palette
 	return image
 }
 
+// renderCirclePattern fills zimage with a radial intensity pattern.
+// It maps the pixel grid (width × height) onto the coordinate rectangle
+// [xmin, xmax] × [ymin, ymax], computes (x^2 + y^2) & 255 at each sample,
+// and stores that value in the pixel's Iter field. The provided zimage is
+// modified in-place; the Z field of ZPixel is not changed by this function.
 func renderCirclePattern(zimage ZImage, width uint, height uint, xmin, ymin, xmax, ymax float32) {
 	stepx := (xmax - xmin) / float32(width)
 	stepy := (ymax - ymin) / float32(height)
@@ -117,6 +127,16 @@ func renderCirclePattern(zimage ZImage, width uint, height uint, xmin, ymin, xma
 
 type patternHandler func(x, y float32) float32
 
+// renderCircleLikePattern fills zimage with iteration values computed by `function`
+// over the rectangular region [xmin,xmax] × [ymin,ymax] sampled on a width×height grid.
+//
+// The provided `function` is called with the floating-point coordinate (x,y) for
+// each pixel in row-major order (y then x). Its returned float32 is converted
+// to an int and stored in the pixel's Iter field (cast to uint). The Z field
+// is not modified.
+//
+// The caller must ensure `zimage` has height rows and each row has length width.
+// Note: converting negative results will underflow when cast to uint.
 func renderCircleLikePattern(
 	zimage ZImage, width uint, height uint,
 	xmin, ymin, xmax, ymax float32,
@@ -137,6 +157,11 @@ func renderCircleLikePattern(
 	}
 }
 
+// main is the program entry point. It loads an RGB palette from "mandmap.map" (panics on load error),
+// creates a 512×512 ZImage, renders several circle and circle-like patterns into that ZImage,
+// converts each rendered ZImage to an RGBA image using the loaded palette, and writes five PNG files:
+// "circles.png", "circles1.png", "circles2.png", "circles3.png", and "circles4.png".
+// Image write errors returned by the writer are not checked by main.
 func main() {
 	palette, err := LoadTextRGBPalette("mandmap.map")
 	if err != nil {
