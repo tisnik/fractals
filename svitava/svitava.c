@@ -58,6 +58,14 @@ render_circle_pattern_j
 #include <stdlib.h>
 #include <string.h>
 
+/* ABI type definitions */
+
+typedef struct {
+    unsigned int width;
+    unsigned int height;
+    unsigned char *pixels;
+} image_t;
+
 #define NULL_CHECK(value)                                                      \
     if (value == NULL) {                                                       \
         puts("NULL parameter");                                                \
@@ -1781,13 +1789,14 @@ int render_test_images(void) {
 #define HEIGHT 256
     unsigned char *pixels = (unsigned char *)malloc(WIDTH * HEIGHT * 4);
     unsigned char *palette = (unsigned char *)malloc(256 * 3);
+    unsigned char *p = palette;
+    int i;
+    image_t image = {WIDTH, HEIGHT, pixels};
 
     if (!pixels) {
         return -1;
     }
 
-    int i;
-    unsigned char *p = palette;
     for (i = 0; i <= 254; i++) {
         *p++ = i * 3;
         *p++ = i * 3;
