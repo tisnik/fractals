@@ -1,5 +1,16 @@
 import sys
-from ctypes import CDLL, c_double, c_int, create_string_buffer
+from ctypes import (
+    CDLL,
+    c_double,
+    c_int,
+    c_uint,
+    c_char,
+    create_string_buffer,
+    Structure,
+    pointer,
+    POINTER,
+)
+
 from enum import Enum
 
 import pygame
@@ -78,6 +89,12 @@ MANOWAR_XMAX = 0.5
 MANOWAR_YMIN = -1.0
 MANOWAR_YMAX = 1.0
 
+
+class Image(Structure):
+    """ABI structure."""
+    _fields_ = [("width", c_uint), ("height", c_uint), ("pixels", POINTER(c_char))]
+
+
 fractal_type_index = 0
 fractal_limits = {
     "Mandelbrot": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
@@ -144,7 +161,9 @@ def render_m_set(
 ):
     fractal_type = fractal_types[fractal_type_index]
     renderer = fractal_renderers[fractal_type][0]
-    renderer(c_int(image_width), c_int(image_height), palette, buffer, c_int(maxiter))
+
+    c_image = Image(image_width, image_height, buffer)
+    renderer(pointer(c_image), palette, c_int(maxiter))
 
 
 def render_j_set(
@@ -160,11 +179,10 @@ def render_j_set(
 ):
     fractal_type = fractal_types[fractal_type_index]
     renderer = fractal_renderers[fractal_type][1]
+    c_image = Image(image_width, image_height, buffer)
     renderer(
-        c_int(image_width),
-        c_int(image_height),
+        pointer(c_image),
         palette,
-        buffer,
         c_double(cx),
         c_double(cy),
         c_int(maxiter),
@@ -377,10 +395,13 @@ def main():
 
     display, clock = initialize_ui(TITLE, SCREEN_WIDTH, SCREEN_HEIGHT)
 
+    # try to load dynamically linked library
     svitava = CDLL("./svitava.so")
     fractal_renderers = fill_in_fractal_renderers(svitava)
 
+    # create buffer for raster image
     buffer = create_string_buffer(4 * IMAGE_WIDTH * IMAGE_HEIGHT)
+
 
     image1 = pygame.Surface([IMAGE_WIDTH, IMAGE_HEIGHT])
     image2 = pygame.Surface([IMAGE_WIDTH, IMAGE_HEIGHT])
