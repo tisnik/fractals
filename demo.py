@@ -29,6 +29,7 @@ from demo.ghost import Ghost
 from demo.ifs_screen import IteratedFunctionsSystemsScreen
 from demo.main_menu import MainMenu
 from demo.mandelbrot_screen import MandelbrotScreen
+from demo.julia_screen import JuliaScreen
 from demo.other_moire_screen import OtherMoireScreen
 from demo.plasma_screen import PlasmaScreen
 from demo.resources import Resources
@@ -98,6 +99,12 @@ def in_cplx_screen(display, resources, red_ghost) -> None:
             )
             mandelbrot_screen.draw()
             mandelbrot_screen.eventLoop()
+        elif choice == CplxMenu.JULIA.value:
+            julia_screen = JuliaScreen(
+                display, resources, "Julia fractal"
+            )
+            julia_screen.draw()
+            julia_screen.eventLoop()
 
 
 def main() -> None:
