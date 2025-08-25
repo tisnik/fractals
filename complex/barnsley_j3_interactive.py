@@ -10,6 +10,7 @@
 #      Pavel Tisnovsky
 #
 
+"""Interactive renderer of the classic Barnsley J3 fractal based on Pygame."""
 
 import sys
 
