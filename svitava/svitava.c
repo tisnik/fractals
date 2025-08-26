@@ -226,21 +226,20 @@ void render_julia(const image_t *image, const unsigned char *palette,
  * Mandelbrot iteration is performed up to `maxiter` times. The number of
  * iterations before escape determines the color index from the palette.
  */
-void render_mandelbrot_3(unsigned int width, unsigned int height,
-                         const unsigned char *palette, unsigned char *pixels,
+void render_mandelbrot_3(const image_t *image, const unsigned char *palette,
                          int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -1.5, ymin = -1.5, xmax = 1.5, ymax = 1.5;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     NULL_CHECK(palette)
-    NULL_CHECK(pixels)
+    NULL_CHECK(image->pixels)
 
     cy = ymin;
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         cx = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = 0.0;
             double zy = 0.0;
             unsigned int i = 0;
@@ -260,9 +259,9 @@ void render_mandelbrot_3(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            cx += (xmax - xmin) / width;
+            cx += (xmax - xmin) / image->width;
         }
-        cy += (ymax - ymin) / height;
+        cy += (ymax - ymin) / image->height;
     }
 }
 
@@ -1810,6 +1809,9 @@ int render_test_images(void) {
 
     render_julia(&image, palette, 0.0, 1.0, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "julia.bmp");
+
+    render_mandelbrot_3(&image, palette, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot_3.bmp");
 
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
