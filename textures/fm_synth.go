@@ -10,14 +10,17 @@ import (
 	"os"
 )
 
+// Palette represents color palette - mapping between index and RGB color
+// components.
 type Palette [][]byte
 
 // LoadTextRGBPalette loads an RGB palette from a text file where each line
-// contains three integers "R G B".
+// contains three integers representing R, G, and B color components (red,
+// gree, blue).
 //
 // It opens filename, reads it line-by-line and for each line parses three
 // integers (red, green, blue), converts them to bytes and appends the 3-byte
-// color to the returned Palette. Lines that do not contain exactly three
+// color to the returned Palette slice. Lines that do not contain exactly three
 // items are logged and skipped (the parsed values still produce a color).
 //
 // Note: this function uses log.Fatal on file open, parse, or scanner errors,
@@ -28,13 +31,16 @@ func LoadTextRGBPalette(filename string) (Palette, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// make sure the file is closed after the function finishes
 	defer file.Close()
 
 	var palette Palette
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
+		// read one text line from the file
 		line := scanner.Text()
+		// parse three color components
 		var red, green, blue int
 		items, err := fmt.Sscanf(line, "%d %d %d", &red, &green, &blue)
 		if err != nil {
@@ -43,6 +49,7 @@ func LoadTextRGBPalette(filename string) (Palette, error) {
 		if items != 3 {
 			log.Println("not expected line:", line)
 		}
+		// append new color into the color palette
 		color := []byte{byte(red), byte(green), byte(blue)}
 		palette = append(palette, color)
 	}
@@ -56,22 +63,28 @@ func LoadTextRGBPalette(filename string) (Palette, error) {
 // PNGImageWriter implements image.Writer interface, it writes PNG format
 type PNGImageWriter struct{}
 
-// WritePNGImage writes an image represented by standard image.Image structure into file with PNG format.
+// WritePNGImage writes an image represented by standard image.Image data
+// structure into file with PNG format.
 func (writer PNGImageWriter) WriteImage(filename string, img image.Image) error {
 	outfile, err := os.Create(filename)
 	if err != nil {
 		panic(err)
 	}
+	// make sure the file is closed after the function finishes
 	defer outfile.Close()
 	return png.Encode(outfile, img)
 }
 
-// NewPNGImageWriter returns a PNGImageWriter ready to encode and write PNG images.
+// NewPNGImageWriter returns a PNGImageWriter ready to encode and write PNG
+// images.
+//
+// The returned value is an empty struct value used to call WriteImage for PNG encoding.
 func NewPNGImageWriter() PNGImageWriter {
 	return PNGImageWriter{}
 }
 
-// ZPixel is a representation of pixel in complex plane with additional metadata
+// ZPixel is a representation of pixel in complex plane with additional
+// metadata - number of iterations.
 type ZPixel struct {
 	Iter uint
 	Z    complex128
@@ -80,9 +93,11 @@ type ZPixel struct {
 // ZImage is representation of raster image consisting of ZPixels
 type ZImage [][]ZPixel
 
-// NewZImage creates a new ZImage with the given width (columns) and height (rows).
-// The returned ZImage is a height-by-width 2D slice (indexed as zimage[y][x]) with all
-// ZPixel elements zero-initialized.
+// NewZImage creates a new ZImage with the given width (columns) and height
+// (rows).
+//
+// The returned ZImage is a height-by-width 2D slice (indexed as zimage[y][x])
+// with all ZPixel elements zero-initialized.
 func NewZImage(width uint, height uint) ZImage {
 	zimage := make([][]ZPixel, height)
 	for i := uint(0); i < height; i++ {
@@ -91,14 +106,16 @@ func NewZImage(width uint, height uint) ZImage {
 	return zimage
 }
 
-// complexImageToImage converts a ZImage into an image.NRGBA of the given width and height,
-// mapping each pixel's Iter value to an RGB triple from the provided palette and setting
-// the alpha channel to 0xff.
+// complexImageToImage function converts a ZImage raster image representation
+// into an image.NRGBA of the given width and height, mapping each pixel's Iter
+// value to an RGB triple from the provided palette and setting the alpha
+// channel to 0xff.
 //
-// The function treats each pixel at (x,y) in zimage as an index: it uses the low 8 bits
-// of zimage[y][x].Iter (cast to byte) to select palette[i] which is expected to be a
-// 3-byte RGB slice. The returned image has bounds [0,0]–[width,height). No bounds checks
-// are performed on palette lookups; out-of-range or malformed palette entries may cause a runtime panic.
+// The function treats each pixel at (x,y) in zimage as an index: it uses the
+// low 8 bits of zimage[y][x].Iter (cast to byte) to select palette[i] which is
+// expected to be a 3-byte RGB slice. The returned image has bounds
+// [0,0]–[width,height). No bounds checks are performed on palette lookups;
+// out-of-range or malformed palette entries may cause a runtime panic.
 func complexImageToImage(zimage ZImage, width uint, height uint, palette Palette) image.Image {
 	image := image.NewNRGBA(image.Rect(0, 0, int(width), int(height)))
 
@@ -119,20 +136,24 @@ func complexImageToImage(zimage ZImage, width uint, height uint, palette Palette
 	return image
 }
 
-// renderFMPattern fills zimage with a sinusoidal (FM-style) pattern by setting each pixel's Iter.
+// renderFMPattern fills ZImage structure with a sinusoidal (FM-style) pattern
+// by setting each pixel's Iter.
 //
-// The function treats zimage as a height-by-width grid (rows = height, cols = width) and samples
-// the continuous rectangle defined by (xmin, ymin) to (xmax, ymax). For each pixel at image
-// coordinate (x,y) it computes a value using a nested sine formula, converts that value to an
-// integer, masks it to the low 8 bits, and stores it in the pixel's Iter field. Iter values are
-// therefore in the range 0–255 and are intended as indices into a palette.
+// The function treats ZImage data structure as a height-by-width grid (rows =
+// height, cols = width) and samples the continuous rectangle defined by (xmin,
+// ymin) to (xmax, ymax). For each pixel at image coordinate (x,y) it computes
+// a value using a nested sine formula, converts that value to an integer,
+// masks it to the low 8 bits, and stores it in the pixel's Iter field. Iter
+// values are therefore in the range 0–255 and are intended as indices into a
+// palette.
 //
 // Parameters:
 // - zimage: destination image buffer; must have dimensions [height][width].
 // - width, height: image dimensions used to compute sampling step sizes.
 // - xmin, ymin, xmax, ymax: bounds of the sampled coordinate region.
 //
-// The function does not return a value; it mutates zimage in place.
+// The function does not return a value; it mutates zimage parameter in place
+// instead.
 func renderFMPattern(zimage ZImage, width uint, height uint, xmin, ymin, xmax, ymax float32) {
 	stepx := (xmax - xmin) / float32(width)
 	stepy := (ymax - ymin) / float32(height)
@@ -150,7 +171,9 @@ func renderFMPattern(zimage ZImage, width uint, height uint, xmin, ymin, xmax, y
 	}
 }
 
-// using the loaded palette, and writes the result to "fm1.png".
+// main is the program entry point. It loads an RGB palette from "mandmap.map"
+// (panics on load error), creates a 512×512 ZImage, renders FM-like texture
+// pattern.
 func main() {
 	palette, err := LoadTextRGBPalette("mandmap.map")
 	if err != nil {
