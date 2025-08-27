@@ -1,26 +1,36 @@
+#!/usr/bin/env python3
+
 import os
 
-directories = "complex",
+import ast
+from pathlib import Path
 
-for directory in directories:
-    cwd = os.getcwd()
-    os.chdir(directory)
 
-    with open("00_index.py", "w") as indexfile:
-        print("# List of source files stored in this directory", file=indexfile)
-        print("# ---------------------------------------------", file=indexfile)
-        print("#", file=indexfile)
-        files = sorted(os.listdir())
+for path in Path(".").rglob("*"):
+    if path.is_dir():
+        directory = path
+        cwd = os.getcwd()
+        os.chdir(directory)
 
-        for file in files:
-            if file.endswith(".py") and file != "00_index.py":
-                print("# " + file + ":", file=indexfile)
-                with open(file, "r") as fin:
-                    for line in fin:
-                        line = line.strip()
-                        if line.startswith('"""') and line.endswith('"""'):
-                            line=line[3:][:-3]
-                            print("# " + line, file=indexfile)
-                            break
+        try:
+            with open("00_index.py", "w") as indexfile:
+                print("# List of source files stored in this directory", file=indexfile)
+                print("# ---------------------------------------------", file=indexfile)
                 print("#", file=indexfile)
-    os.chdir(cwd)
+                files = sorted(os.listdir())
+
+                for file in files:
+                    if file.endswith(".py"):
+                        print(f"# {file}:", file=indexfile)
+                        with open(file, "r", encoding="utf-8") as fin:
+                            source = fin.read()
+                        try:
+                            mod = ast.parse(source)
+                            doc = ast.get_docstring(mod)
+                        except SyntaxError:
+                            doc = None
+                        if doc:
+                            print("# " + doc.splitlines()[0], file=indexfile)
+                        print("#", file=indexfile)
+        finally:
+            os.chdir(cwd)
