@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Vykreslení spirál v Juliových množinách."""
+"""Julia fractal - some spiral variants."""
 
 from PIL import Image
 
