@@ -33,6 +33,12 @@ const (
 	height = 480
 )
 
+// putpixel sets the pixel at (x, y) on surface to the specified RGB color.
+// It checks bounds and writes directly into the surface pixel buffer for
+// 24- and 32-bit surface formats. For 24-bit surfaces bytes are written as
+// B, G, R (3 bytes per pixel); for 32-bit surfaces the same order is used
+// (alpha is not modified). If (x, y) is out of bounds or the format is
+// unsupported no write is performed.
 func putpixel(surface *sdl.Surface, x int32, y int32, r byte, g byte, b byte) {
 	if x >= 0 && x < surface.W && y >= 0 && y < surface.H {
 		switch surface.Format.BitsPerPixel {
@@ -57,6 +63,10 @@ type Point struct {
 	Y float64
 }
 
+// main is the program entry point.
+// It initializes SDL video, creates a 640×480 window, rasterizes a grayscale Voronoi-like diagram
+// by sampling distance to a fixed set of 2D sites (clamped to 0–255) and writes pixels directly
+// to the window surface, updates the surface, then exits after a short delay.
 func main() {
 	if err := sdl.Init(sdl.INIT_VIDEO); err != nil {
 		panic(err)
