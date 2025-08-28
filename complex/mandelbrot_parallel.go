@@ -94,7 +94,7 @@ func writeImage(width, height uint, image []byte) {
 	}
 }
 
-func calcMandelbrot(width, height, maxiter uint, palette [][3]byte, image []byte, cy float64, done chan bool) {
+func calcMandelbrotOneLine(width, maxiter uint, palette [][3]byte, image []byte, cy float64, done chan bool) {
 	var cx float64 = -2.0
 	for x := uint(0); x < width; x++ {
 		var zx float64
@@ -110,7 +110,7 @@ func calcMandelbrot(width, height, maxiter uint, palette [][3]byte, image []byte
 			zx = zx2 - zy2 + cx
 			i++
 		}
-		color := palette[i]
+		color := palette[i&0xff]
 		image[3*x] = color[0]
 		image[3*x+1] = color[1]
 		image[3*x+2] = color[2]
@@ -121,7 +121,7 @@ func calcMandelbrot(width, height, maxiter uint, palette [][3]byte, image []byte
 
 func main() {
 	if len(os.Args) < 4 {
-		println("usage: ./mandelbrot width height maxiter")
+		fmt.Println("usage: ./mandelbrot width height maxiter")
 		os.Exit(1)
 	}
 
@@ -143,6 +143,10 @@ func main() {
 		os.Exit(1)
 	}
 
+	if width <= 0 || height <= 0 || maxiter <= 0 {
+		fmt.Println("width, height and maxiter must be positive integers")
+		os.Exit(1)
+	}
 	done := make(chan bool, height)
 
 	image := make([]byte, width*height*3)
@@ -151,7 +155,7 @@ func main() {
 
 	var cy float64 = -1.5
 	for y := 0; y < height; y++ {
-		go calcMandelbrot(uint(width), uint(height), uint(maxiter), mandmap[:], image[offset:offset+delta], cy, done)
+		go calcMandelbrotOneLine(uint(width), uint(maxiter), mandmap[:], image[offset:offset+delta], cy, done)
 		offset += delta
 		cy += 3.0 / float64(height)
 	}
