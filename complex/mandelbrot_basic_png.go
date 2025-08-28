@@ -134,6 +134,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	if width <= 0 || height <= 0 || maxiter <= 0 {
+		fmt.Println("width, height and maxiter must be positive integers")
+		os.Exit(1)
+	}
+
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	calcMandelbrot(uint(width), uint(height), uint(maxiter), mandmap[:], img)
 
@@ -143,6 +148,9 @@ func main() {
 	}
 	defer outfile.Close()
 
-	png.Encode(outfile, img)
+	err = png.Encode(outfile, img)
+	if err != nil {
+		panic(err)
+	}
 
 }
