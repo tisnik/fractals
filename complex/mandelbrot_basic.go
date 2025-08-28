@@ -131,5 +131,11 @@ func main() {
 		fmt.Printf("Improper maxiter parameter: '%s'\n", os.Args[3])
 		os.Exit(1)
 	}
+
+	if width <= 0 || height <= 0 || maxiter <= 0 {
+		fmt.Println("width, height and maxiter must be positive integers")
+		os.Exit(1)
+	}
+
 	calcMandelbrot(uint(width), uint(height), uint(maxiter), mandmap[:])
 }
