@@ -74,6 +74,16 @@ var mandmap = [...][3]byte{
 	{244, 244, 196}, {248, 248, 208}, {248, 248, 224}, {248, 248, 236},
 	{252, 252, 252}, {248, 248, 248}, {240, 240, 240}, {232, 232, 232}}
 
+// calcMandelbrot generates a Mandelbrot fractal and writes it as an ASCII PPM
+// (P3) image to standard output.
+//
+// The image size is width×height and each pixel's color is chosen by the
+// number of iterations up to maxiter.
+//
+// The complex plane covered is approximately (cx,cy) ∈ [-2.0, 1.0] × [-1.5, 1.5].
+//
+// The provided palette must contain at least maxiter+1 entries because the
+// iteration count can equal maxiter for points that do not escape.
 func calcMandelbrot(width, height, maxiter uint, palette [][3]byte) {
 	fmt.Println("P3")
 	fmt.Printf("%d %d\n", width, height)
@@ -108,6 +118,10 @@ func calcMandelbrot(width, height, maxiter uint, palette [][3]byte) {
 	}
 }
 
+// main parses command-line arguments (width, height, maxiter), validates them,
+// and generates a Mandelbrot image by calling calcMandelbrot.
+// It expects three arguments; on invalid or missing arguments it prints a usage
+// or error message and exits with a non-zero status.
 func main() {
 	if len(os.Args) < 4 {
 		println("usage: ./mandelbrot width height maxiter")
