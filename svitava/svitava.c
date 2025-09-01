@@ -387,25 +387,24 @@ void render_mandelbrot_4(const image_t *image, const unsigned char *palette,
  * @param cy Imaginary part of the constant parameter c for the Julia set.
  * @param maxiter Maximum number of iterations for the escape condition.
  */
-void render_julia_4(unsigned int width, unsigned int height,
-                    const unsigned char *palette, unsigned char *pixels,
+void render_julia_4(const image_t *image, const unsigned char *palette,
                     double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -1.5, ymin = -1.5, xmax = 1.5, ymax = 1.5;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     NULL_CHECK(palette)
-    NULL_CHECK(pixels)
+    NULL_CHECK(image->pixels)
 
 #ifdef DEBUG
     printf("%f %f\n", cx, cy);
 #endif
 
     zy0 = ymin;
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         zx0 = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = zx0;
             double zy = zy0;
             unsigned int i = 0;
@@ -426,9 +425,9 @@ void render_julia_4(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            zx0 += (xmax - xmin) / width;
+            zx0 += (xmax - xmin) / image->width;
         }
-        zy0 += (ymax - ymin) / height;
+        zy0 += (ymax - ymin) / image->height;
     }
 }
 
@@ -1817,6 +1816,9 @@ int render_test_images(void) {
 
     render_mandelbrot_4(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot_4.bmp");
+
+    render_julia_4(&image, palette, 0.375, -0.97265625, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "julia_4.bmp");
 
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
