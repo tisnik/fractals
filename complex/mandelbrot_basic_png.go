@@ -77,6 +77,19 @@ var mandmap = [...][3]byte{
 	{244, 244, 196}, {248, 248, 208}, {248, 248, 224}, {248, 248, 236},
 	{252, 252, 252}, {248, 248, 248}, {240, 240, 240}, {232, 232, 232}}
 
+// calcMandelbrot renders the Mandelbrot set into img using the provided color
+// palette.
+//
+// It maps the complex plane rectangle with real axis from -2.0 to +1.0 and
+// imaginary axis from -1.5 to +1.5 onto the image of size width×height. For
+// each pixel the function performs up to maxiter iterations of z = z^2 + c and
+// uses the iteration count `i` to index into palette (palette[i]) to pick the
+// pixel color.
+//
+// The function writes RGBA pixels directly into img and prints the current
+// imaginary coordinate (cy) for each completed row. The caller must ensure
+// palette has at least maxiter+1 entries; otherwise indexing palette[i] may
+// panic. There is no internal error handling.
 func calcMandelbrot(width, height, maxiter uint, palette [][3]byte, img *image.RGBA) {
 
 	var cy float64 = -1.5
@@ -110,6 +123,10 @@ func calcMandelbrot(width, height, maxiter uint, palette [][3]byte, img *image.R
 	}
 }
 
+// main parses command-line arguments (width, height, maxiter), validates them,
+// and generates a Mandelbrot image by calling calcMandelbrot.
+// It expects three arguments; on invalid or missing arguments it prints a usage
+// or error message and exits with a non-zero status.
 func main() {
 	if len(os.Args) < 4 {
 		println("usage: ./mandelbrot width height maxiter")
