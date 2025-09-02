@@ -75,6 +75,17 @@ var mandmap = [...][3]byte{
 	{244, 244, 196}, {248, 248, 208}, {248, 248, 224}, {248, 248, 236},
 	{252, 252, 252}, {248, 248, 248}, {240, 240, 240}, {232, 232, 232}}
 
+// calcMandelbrot renders the Mandelbrot set and writes an ASCII PPM (P3) image
+// to standard output.
+//
+// The image is mapped to the complex plane region [-2, 1] × [-1.5, 1.5]. For
+// each pixel the function iterates z = z^2 + c up to maxiter and uses the
+// iteration count `i` (escape iteration or maxiter) to select a color from
+// `palette` (writes palette[i] as the pixel RGB triple).
+//
+// width and height are the image dimensions in pixels. palette should provide
+// at least maxiter+1 entries so that an index equal to maxiter is valid. The
+// output is written to stdout in P3 PPM format.
 func calcMandelbrot(width, height, maxiter uint, palette [][3]byte) {
 	w := bufio.NewWriter(os.Stdout)
 	defer w.Flush()
@@ -112,6 +123,12 @@ func calcMandelbrot(width, height, maxiter uint, palette [][3]byte) {
 	}
 }
 
+// main parses command-line arguments (width, height, maxiter), validates them,
+// and invokes calcMandelbrot to render the Mandelbrot set to stdout in PPM P3
+// format.
+//
+// If arguments are missing or cannot be parsed as integers it prints a usage or
+// error message and exits with status 1.
 func main() {
 	if len(os.Args) < 4 {
 		println("usage: ./mandelbrot width height maxiter")
