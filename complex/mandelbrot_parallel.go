@@ -75,6 +75,15 @@ var mandmap = [...][3]byte{
 	{244, 244, 196}, {248, 248, 208}, {248, 248, 224}, {248, 248, 236},
 	{252, 252, 252}, {248, 248, 248}, {240, 240, 240}, {232, 232, 232}}
 
+// writeImage writes the provided RGB image buffer to stdout in ASCII PPM (P3)
+// format.
+//
+// The output contains the P3 header, image dimensions, and "255" as the max
+// color value, followed by one "R G B" triplet per line for each pixel.
+//
+// The image slice is expected to contain width*height*3 bytes in row-major RGB
+// order. No errors are returned; the caller must ensure the buffer length
+// matches the dimensions.
 func writeImage(width, height uint, image []byte) {
 	w := bufio.NewWriter(os.Stdout)
 	defer w.Flush()
@@ -94,6 +103,18 @@ func writeImage(width, height uint, image []byte) {
 	}
 }
 
+// calcMandelbrot computes the Mandelbrot iteration for a single image row and
+// writes RGB triplets into the provided image slice.
+//
+// The function treats `cy` as the fixed imaginary coordinate for the row and
+// iterates `cx` across the real axis from -2.0 to 1.0.  For each pixel it
+// performs up to `maxiter` iterations; the iteration count is used to index
+// `palette` and the selected color is written into `image` at positions
+// 3*x..3*x+2. When the row is finished it sends a completion signal on `done`.
+//
+// The caller must provide an `image` slice of length at least `width*3` and a
+// `palette` large enough so that indexing by iteration count (0..maxiter)
+// cannot cause an out-of-range access. The function does not return errors.
 func calcMandelbrotOneLine(width, maxiter uint, palette [][3]byte, image []byte, cy float64, done chan bool) {
 	var cx float64 = -2.0
 	for x := uint(0); x < width; x++ {
@@ -119,6 +140,12 @@ func calcMandelbrotOneLine(width, maxiter uint, palette [][3]byte, image []byte,
 	done <- true
 }
 
+// main parses command-line arguments (width, height, maxiter), validates them,
+// allocates the image buffer, launches one goroutine per row to compute the
+// Mandelbrot set into non-overlapping slices of that buffer, waits for all
+// rows to finish, and writes the resulting PPM image to stdout. On missing or
+// invalid arguments it prints a usage or error message and exits with status
+// 1.
 func main() {
 	if len(os.Args) < 4 {
 		fmt.Println("usage: ./mandelbrot width height maxiter")
