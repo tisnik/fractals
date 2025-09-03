@@ -42,6 +42,10 @@ type Bitmap struct {
 	image *image.RGBA
 }
 
+// New creates and returns a Bitmap whose underlying image is a new image.RGBA
+// sized to the given width and height. The image bounds run from (0,0) to
+// (width, height) — i.e., valid pixel coordinates are 0 ≤ x < width and
+// 0 ≤ y < height.
 func New(width int, height int) Bitmap {
 	image := image.NewRGBA(image.Rect(0, 0, width, height))
 	return Bitmap{image: image}
@@ -62,6 +66,7 @@ func (bitmap Bitmap) Save(filename string) error {
 	return nil
 }
 
+// abs returns the absolute value of a.
 func abs(a int) int {
 	if a < 0 {
 		return -a
@@ -69,6 +74,7 @@ func abs(a int) int {
 	return a
 }
 
+// max returns the larger of a and b.
 func max(a int, b int) int {
 	if a > b {
 		return a
@@ -76,6 +82,7 @@ func max(a int, b int) int {
 	return b
 }
 
+// min returns the smaller of a and b.
 func min(a int, b int) int {
 	if a < b {
 		return a
@@ -83,6 +90,9 @@ func min(a int, b int) int {
 	return b
 }
 
+// hLine draws a horizontal black line on bitmap from x1 to x2 (inclusive) at row y.
+// The endpoints may be provided in any order; the function iterates from the lesser
+// to the greater x and sets each pixel to black.
 func hLine(bitmap *bitmap.Bitmap, x1 int, x2 int, y int) {
 	fromX := min(x1, x2)
 	toX := max(x1, x2)
@@ -91,6 +101,8 @@ func hLine(bitmap *bitmap.Bitmap, x1 int, x2 int, y int) {
 	}
 }
 
+// vLine draws a vertical black line on bitmap at column x from y1 to y2 (inclusive).
+// The function handles the order of y1 and y2 by using their min and max.
 func vLine(bitmap *bitmap.Bitmap, x int, y1 int, y2 int) {
 	fromY := min(y1, y2)
 	toY := max(y1, y2)
@@ -99,6 +111,10 @@ func vLine(bitmap *bitmap.Bitmap, x int, y1 int, y2 int) {
 	}
 }
 
+// line draws a straight anti-aliased-ish grayscale line on the provided bitmap between (x1,y1) and (x2,y2).
+// It handles pure vertical and horizontal cases via specialized routines and otherwise steps along the major axis,
+// writing two adjacent pixels per step with complementary gray values to produce a smooth-looking stroke.
+// Coordinates may be reordered internally so x1<=x2; the function modifies the bitmap in-place.
 func line(bitmap *bitmap.Bitmap, x1 int, y1 int, x2 int, y2 int) {
 	dx := x2 - x1
 	dy := y2 - y1
@@ -181,6 +197,15 @@ func line(bitmap *bitmap.Bitmap, x1 int, y1 int, x2 int, y2 int) {
 	}
 }
 
+// nprLine draws a non-photorealistic (hand-drawn) line between (x1,y1) and (x2,y2).
+// For short segments (Manhattan distance < 20) it draws a straight line; for longer
+// segments it recursively subdivides the segment at its midpoint, displacing that
+// midpoint perpendicular to the segment by a random amount up to ±maxd, and then
+// continues on the two subsegments with maxd reduced by a factor of 1.8.
+//
+// The bitmap parameter is the target to draw into. The maxd parameter controls
+// the maximum perpendicular displacement applied at each subdivision (higher
+// values produce rougher, more "sketchy" lines).
 func nprLine(bitmap *bitmap.Bitmap, x1 int, y1 int, x2 int, y2 int, maxd float64) {
 	dist := abs(x2-x1) + abs(y2-y1)
 
@@ -203,6 +228,14 @@ func nprLine(bitmap *bitmap.Bitmap, x1 int, y1 int, x2 int, y2 int, maxd float64
 	}
 }
 
+// drawDemo renders a series of horizontal non-photorealistic lines across the image.
+//
+// It draws lines from x=50 to x=width-50 at y positions 25, 50, ..., 475. For each
+// line it seeds the global RNG with 6503 (resetting randomness for every line) and
+// calls nprLine with a maximum displacement proportional to the iteration index
+// (maxd = i/2.0).
+//
+// The bitmap parameter is the target image to draw onto.
 func drawDemo(bitmap *bitmap.Bitmap) {
 	for i := 0; i < 500; i += 25 {
 		rand.Seed(6503)
@@ -210,6 +243,9 @@ func drawDemo(bitmap *bitmap.Bitmap) {
 	}
 }
 
+// drawSquare draws a square by rendering four non-photorealistic line segments.
+// The square's corners are at (20,20) and (200,200); each edge is drawn via
+// nprLine with a maximum midpoint displacement of 10, modifying the provided bitmap.
 func drawSquare(bitmap *bitmap.Bitmap) {
 	nprLine(bitmap, 20, 20, 200, 20, 10)
 	nprLine(bitmap, 200, 20, 200, 200, 10)
@@ -217,6 +253,10 @@ func drawSquare(bitmap *bitmap.Bitmap) {
 	nprLine(bitmap, 20, 200, 20, 20, 10)
 }
 
+// drawDiamond draws a diamond-shaped outline near (60,160) using non-photorealistic lines.
+//
+// It renders four NPR-subdivided edges (width 50) connected around the center point (60,160),
+// each edge drawn with a displacement strength of 10 via nprLine.
 func drawDiamond(bitmap *bitmap.Bitmap) {
 	const W = 50
 	nprLine(bitmap, 60-W, 160, 60, 160-W, 10)
@@ -225,6 +265,10 @@ func drawDiamond(bitmap *bitmap.Bitmap) {
 	nprLine(bitmap, 60, 160+W, 60-W, 160, 10)
 }
 
+// drawStar draws a five-point star composed of non-photorealistic lines.
+// It emits STEP (5) radial segments by connecting points on a circle of
+// radius 200 centered at (400,220). Each segment is drawn with nprLine
+// using a displacement magnitude of 10 to produce the stylized, hand-drawn look.
 func drawStar(bitmap *bitmap.Bitmap) {
 	const STEP = 5
 	for i := 0; i < 360; i += 360 / STEP {
@@ -235,6 +279,10 @@ func drawStar(bitmap *bitmap.Bitmap) {
 		nprLine(bitmap, 400+int(x1), 220+int(y1), 400+int(x2), 220+int(y2), 10)
 	}
 }
+
+// main creates a 512×512 white canvas, draws several non-photorealistic line-art shapes
+// (a set of rasterized demo lines, a square, a diamond, and a star), writes "Draw lines"
+// to stdout, and saves the resulting image to "test.png".
 func main() {
 	bitmap := bitmap.New(width, height)
 
