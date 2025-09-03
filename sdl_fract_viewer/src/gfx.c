@@ -36,6 +36,7 @@ obligated to do so.  If you do not wish to do so, delete this
 exception statement from your version.
 */
 
+#include <stdio.h>
 #include <math.h>
 
 #include <SDL/SDL.h>
@@ -67,11 +68,11 @@ int gfx_initialize(int fullscreen, int width, int height, int bpp)
     }
     if (fullscreen)
     {
-        screen_surface = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN | SDL_ANYFORMAT);
+        screen_surface = SDL_SetVideoMode(width, height, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN | SDL_ANYFORMAT);
     }
     else
     {
-        screen_surface = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_ANYFORMAT);
+        screen_surface = SDL_SetVideoMode(width, height, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_ANYFORMAT);
     }
     if (!screen_surface)
     {
@@ -175,7 +176,8 @@ void gfx_putpixel(SDL_Surface *surface, int x, int y, unsigned char r, unsigned 
             pixel += y*surface->pitch;
             *pixel++ = b;
             *pixel++ = g;
-            *pixel   = r;
+            *pixel++ = r;
+            *pixel   = 0xff; /* set alpha to opaque */
         }
     }
 }
@@ -386,11 +388,11 @@ void gfx_print_char_bitmap_font(SDL_Surface *surface, int x, int y, char ch)
 {
     SDL_Rect src_rect;
     SDL_Rect dst_rect;
-    ch-=32;
-    if (ch <= 0)
+    if (ch < 32)
     {
         return;
     }
+    ch-=32;
     dst_rect.x = x;
     dst_rect.y = y;
     src_rect.x = 0;
