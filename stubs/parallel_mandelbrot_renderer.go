@@ -30,6 +30,11 @@ import (
 	"net/http"
 )
 
+// indexPageHandler writes a minimal HTML page that embeds nine 256×256 image
+// endpoints (/image1–/image9).  It sets the response Content-Type to
+// "text/html" and writes the static HTML body directly to the response.
+//
+// Note: it does not perform error handling for potential write failures.
 func indexPageHandler(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "text/html")
 	response := `
@@ -40,12 +45,19 @@ func indexPageHandler(writer http.ResponseWriter, request *http.Request) {
 	writer.Write([]byte(response))
 }
 
+// calculateColor returns a random opaque color.RGBA where each RGB component
+// is in the range 0–254 (via math/rand) and alpha is fixed at 255.
 func calculateColor() color.RGBA {
 	return color.RGBA{uint8(rand.Intn(255)),
 		uint8(rand.Intn(255)),
 		uint8(rand.Intn(255)), 255}
 }
 
+// iterCount computes the Mandelbrot "escape time" for the point (cx, cy).
+//
+// It iterates z_{n+1} = z_n^2 + c starting from z0 = 0 and returns the number
+// of iterations performed before |z|^2 exceeds 4 (escape), or maxiter if the
+// point did not escape within the given limit.
 func iterCount(cx float64, cy float64, maxiter uint) uint {
 	var zx float64 = 0.0
 	var zy float64 = 0.0
@@ -63,6 +75,8 @@ func iterCount(cx float64, cy float64, maxiter uint) uint {
 	return i
 }
 
+// Calculates all pixels on line and then sends `true` on the `done` channel to
+// indicate the row is complete.
 func calcMandelbrot(width uint, height uint, maxiter uint, image []byte, cy float64, done chan bool) {
 	var cx float64 = -2.0
 	for x := uint(0); x < width; x++ {
@@ -75,6 +89,13 @@ func calcMandelbrot(width uint, height uint, maxiter uint, image []byte, cy floa
 	done <- true
 }
 
+// writeImage converts a packed RGB byte buffer into an *image.NRGBA of the
+// given dimensions.
+//
+// The pixels slice must contain exactly width*height*3 bytes in row-major
+// order with three bytes per pixel (R, G, B). The resulting image will have
+// its alpha channel set to 0xFF for every pixel. If pixels is shorter than
+// required, the function will panic due to out-of-range indexing.
 func writeImage(width uint, height uint, pixels []byte) *image.NRGBA {
 	img := image.NewNRGBA(image.Rect(0, 0, int(width), int(height)))
 	pixel := 0
@@ -93,6 +114,7 @@ func writeImage(width uint, height uint, pixels []byte) *image.NRGBA {
 	return img
 }
 
+// - maxiter: maximum Mandelbrot iterations passed to calcMandelbrot.
 func calculateFractal(width int, height int, maxiter int) []byte {
 	done := make(chan bool, height)
 
@@ -115,15 +137,31 @@ func calculateFractal(width int, height int, maxiter int) []byte {
 	return pixels
 }
 
+// imageHandler generates a 256x256 Mandelbrot PNG and writes it to the
+// provided HTTP response.
+//
+// It computes pixel data by calling calculateFractal(width, height, 255),
+// converts that buffer into an *image.NRGBA via writeImage, and encodes the
+// result as PNG to the response writer.
+//
+// Note: the function does not set response headers or handle encoding errors.
 func imageHandler(w http.ResponseWriter, r *http.Request) {
 	const ImageWidth = 256
 	const ImageHeight = 256
 
+	w.Header().Set("Content-Type", "image/png")
 	pixels := calculateFractal(ImageWidth, ImageHeight, 255)
 	outputimage := writeImage(ImageWidth, ImageHeight, pixels)
 	png.Encode(w, outputimage)
 }
 
+// main starts an HTTP server listening on :8080 and registers handlers for the
+// root index page and nine image endpoints.
+//
+// The root path ("/") is served by indexPageHandler and each "/image1" through
+// "/image9" path is served by imageHandler, which generates 256×256 Mandelbrot
+// PNG images on demand. The call to ListenAndServe blocks until the process
+// exits.
 func main() {
 	http.HandleFunc("/", indexPageHandler)
 	http.HandleFunc("/image1", imageHandler)
