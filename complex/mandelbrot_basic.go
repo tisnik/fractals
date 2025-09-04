@@ -107,7 +107,12 @@ func calcMandelbrot(width, height, maxiter uint, palette [][3]byte) {
 				zx = zx2 - zy2 + cx
 				i++
 			}
-			color := palette[i]
+			// guard palette indexing
+			idx := i
+			if idx >= uint(len(palette)) {
+				idx = uint(len(palette) - 1)
+			}
+			color := palette[idx]
 			r := color[0]
 			g := color[1]
 			b := color[2]
