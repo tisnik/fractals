@@ -110,7 +110,12 @@ func calcMandelbrot(width, height, maxiter uint, palette [][3]byte, img *image.R
 				zx = zx2 - zy2 + cx
 				i++
 			}
-			rgb := palette[i]
+			// guard palette indexing
+			idx := i
+			if idx >= uint(len(palette)) {
+				idx = uint(len(palette) - 1)
+			}
+			rgb := palette[idx]
 			r := rgb[0]
 			g := rgb[1]
 			b := rgb[2]
