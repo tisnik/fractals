@@ -94,10 +94,13 @@ func calcMandelbrot(width, height, maxiter uint, palette [][3]byte) {
 	fmt.Fprintf(w, "%d %d\n", width, height)
 	fmt.Fprintln(w, "255")
 
-	var cy float64 = -1.5
+	dx := 3.0 / float64(width)
+	dy := 3.0 / float64(height)
+
+	cy := -1.5
 
 	for y := uint(0); y < height; y++ {
-		var cx float64 = -2.0
+		cx := -2.0
 		for x := uint(0); x < width; x++ {
 			var zx float64
 			var zy float64
@@ -112,14 +115,19 @@ func calcMandelbrot(width, height, maxiter uint, palette [][3]byte) {
 				zx = zx2 - zy2 + cx
 				i++
 			}
-			color := palette[i]
+			// guard palette indexing
+			idx := i
+			if idx >= uint(len(palette)) {
+				idx = uint(len(palette) - 1)
+			}
+			color := palette[idx]
 			r := color[0]
 			g := color[1]
 			b := color[2]
 			fmt.Fprintf(w, "%d %d %d\n", r, g, b)
-			cx += 3.0 / float64(width)
+			cx += dx
 		}
-		cy += 3.0 / float64(height)
+		cy += dy
 	}
 }
 
