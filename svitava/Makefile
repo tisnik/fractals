@@ -4,6 +4,8 @@ CC=gcc
 CFLAGS=-Wall -pedantic -ansi
 LFLAGS=-lm
 
+SDL_LFLAGS=-lSDL2
+
 all: svitava.so
 
 clean:
@@ -14,3 +16,12 @@ clean:
 
 svitava.so:	svitava.c
 	$(CC) $(CFLAGS) $(LFLAGS) -shared -Wl,-soname,svitava -o $@ -fPIC $<
+
+svitava:	ui.o svitava.o
+	gcc -o $@ $^ $(SDL_LFLAGS) $(LFLAGS)
+
+ui.o:	ui.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+svitava.o:	svitava_.c
+	$(CC) $(CFLAGS) -c -o $@ $< -DNO_MAIN
