@@ -604,12 +604,18 @@ int main(int argc, char **argv)
 
     screen = gfx_get_screen_surface();
     pixmap = gfx_create_surface(screen->w, screen->h);
+    if (pixmap == NULL) {
+        fprintf(stderr, "Failed to create pixmap surface\n");
+        finalize();
+        return 1;
+    }
 
     draw_grid(pixmap);
     /*draw_multifractal(pixmap);*/
     draw_mandeljulia(pixmap);
     show_fractal(pixmap);
     main_event_loop();
+    SDL_FreeSurface(pixmap);
     finalize();
     return 0;
 }
