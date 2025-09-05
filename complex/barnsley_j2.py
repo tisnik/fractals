@@ -79,7 +79,7 @@ def main():
 
     print("Calculation started")
     t1 = time()
-    recalc_fractal(image, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, -1.0, 0.2, 500)
+    recalc_fractal(image, palette_blues.palette, -2.0, -2.0, 2.0, 2.0, -0.71875, 1.21875, 500)
     image.save("barnsley_j2_2.png")
     t2 = time()
     difftime = t2 - t1
