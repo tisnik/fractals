@@ -125,8 +125,8 @@ func calculateFractal(width int, height int, maxiter int) []byte {
 	var cy float64 = -1.5 + rand.Float64() - 0.5
 	var dist float64 = 2.0 + 2.0*rand.Float64() - 1.0
 	for y := 0; y < height; y++ {
-		calcMandelbrot(uint(width), uint(height), uint(maxiter), pixels[offset:offset+delta], cy, done)
-		//go calcMandelbrot(uint(width), uint(height), uint(maxiter), pixels[offset:offset+delta], cy, done)
+		//calcMandelbrot(uint(width), uint(height), uint(maxiter), pixels[offset:offset+delta], cy, done)
+		go calcMandelbrot(uint(width), uint(height), uint(maxiter), pixels[offset:offset+delta], cy, done)
 		offset += delta
 		cy += dist / float64(height)
 	}
@@ -173,5 +173,8 @@ func main() {
 	http.HandleFunc("/image7", imageHandler)
 	http.HandleFunc("/image8", imageHandler)
 	http.HandleFunc("/image9", imageHandler)
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		panic(err)
+	}
 }
