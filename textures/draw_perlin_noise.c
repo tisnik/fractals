@@ -11,59 +11,95 @@
 /* link */
 #include "perlin.c"
 
+/**
+ * Writes a pixel buffer to a BMP file with 24 bits per pixel.
+ *
+ * The pixel data is written in bottom-up order, with each pixel's RGB channels
+ * reordered as BGR. The function assumes the input buffer uses 4 bytes per
+ * pixel, with the fourth byte ignored. Returns 0 on success, or 1 if the file
+ * cannot be opened.
+ *
+ * @param width Width of the image in pixels.
+ * @param height Height of the image in pixels.
+ * @param pixels Pointer to the pixel buffer (4 bytes per pixel, only RGB used).
+ * @param file_name Name of the output BMP file.
+ * @return 0 on success, 1 on failure to open the file.
+ */
 int bmp_write(unsigned int width, unsigned int height, unsigned char *pixels,
               const char *file_name) {
-  unsigned char bmp_header[] = {
-      /* BMP header structure: */
-      0x42, 0x4d,             /* magic number */
-      0x46, 0x00, 0x00, 0x00, /* size of header=70 bytes */
-      0x00, 0x00,             /* unused */
-      0x00, 0x00,             /* unused */
-      0x36, 0x00, 0x00, 0x00, /* 54 bytes - offset to data */
-      0x28, 0x00, 0x00, 0x00, /* 40 bytes - bytes in DIB header */
-      0x00, 0x00, 0x00, 0x00, /* width of bitmap */
-      0x00, 0x00, 0x00, 0x00, /* height of bitmap */
-      0x01, 0x0,              /* 1 pixel plane */
-      0x18, 0x00,             /* 24 bpp */
-      0x00, 0x00, 0x00, 0x00, /* no compression */
-      0x00, 0x00, 0x00, 0x00, /* size of pixel array */
-      0x13, 0x0b, 0x00, 0x00, /* 2835 pixels/meter */
-      0x13, 0x0b, 0x00, 0x00, /* 2835 pixels/meter */
-      0x00, 0x00, 0x00, 0x00, /* color palette */
-      0x00, 0x00, 0x00, 0x00, /* important colors */
-  };
-  FILE *fout;
-  int x, y;
+    unsigned char bmp_header[] = {
+        /* BMP header structure: */
+        0x42, 0x4d,             /* magic number */
+        0x46, 0x00, 0x00, 0x00, /* file size (to be filled later) */
+        0x00, 0x00,             /* unused */
+        0x00, 0x00,             /* unused */
+        0x36, 0x00, 0x00, 0x00, /* 54 bytes - offset to data */
+        0x28, 0x00, 0x00, 0x00, /* 40 bytes - bytes in DIB header */
+        0x00, 0x00, 0x00, 0x00, /* width of bitmap (to be filled later) */
+        0x00, 0x00, 0x00, 0x00, /* height of bitmap (to be filled later) */
+        0x01, 0x0,              /* 1 pixel plane */
+        0x18, 0x00,             /* 24 bpp */
+        0x00, 0x00, 0x00, 0x00, /* no compression */
+        0x00, 0x00, 0x00, 0x00, /* size of pixel array */
+        0x13, 0x0b, 0x00, 0x00, /* 2835 pixels/meter */
+        0x13, 0x0b, 0x00, 0x00, /* 2835 pixels/meter */
+        0x00, 0x00, 0x00, 0x00, /* color palette */
+        0x00, 0x00, 0x00, 0x00, /* important colors */
+    };
+    FILE *fout;
+    int x, y;
 
-  bmp_header[18] = width & 0xff;
-  bmp_header[19] = (width >> 8) & 0xff;
-  bmp_header[20] = (width >> 16) & 0xff;
-  bmp_header[21] = (width >> 24) & 0xff;
-  bmp_header[22] = height & 0xff;
-  bmp_header[23] = (height >> 8) & 0xff;
-  bmp_header[24] = (height >> 16) & 0xff;
-  bmp_header[25] = (height >> 24) & 0xff;
+    /* initialize BMP header */
+    unsigned int pixels_size = width * height * 3;
+    unsigned int file_size = sizeof(bmp_header) + pixels_size;
 
-  fout = fopen(file_name, "wb");
-  if (!fout) {
-    return 1;
-  }
-  fwrite(bmp_header, sizeof(bmp_header), 1, fout);
+    /* file size */
+    bmp_header[2] = file_size & 0xff;
+    bmp_header[3] = (file_size >> 8) & 0xff;
+    bmp_header[4] = (file_size >> 16) & 0xff;
+    bmp_header[5] = (file_size >> 24) & 0xff;
 
-  /* pixel array */
-  for (y = height - 1; y >= 0; y--) {
-    unsigned char *p = pixels + y * width * 4;
-    for (x = 0; x < width; x++) {
-      /* swap RGB */
-      fwrite(p + 2, 1, 1, fout);
-      fwrite(p + 1, 1, 1, fout);
-      fwrite(p, 1, 1, fout);
-      /* next pixel */
-      p += 4;
+    /* resolution */
+    bmp_header[18] = width & 0xff;
+    bmp_header[19] = (width >> 8) & 0xff;
+    bmp_header[20] = (width >> 16) & 0xff;
+    bmp_header[21] = (width >> 24) & 0xff;
+    bmp_header[22] = height & 0xff;
+    bmp_header[23] = (height >> 8) & 0xff;
+    bmp_header[24] = (height >> 16) & 0xff;
+    bmp_header[25] = (height >> 24) & 0xff;
+
+    fout = fopen(file_name, "wb");
+    if (!fout) {
+        return 1;
     }
-  }
-  fclose(fout);
-  return 0;
+
+    /* write BMP header */
+    if (fwrite(bmp_header, sizeof(bmp_header), 1, fout) != 1) {
+        fclose(fout);
+        return 1;
+    }
+
+    /* write the whole pixel array into BMP file */
+    for (y = height - 1; y >= 0; y--) {
+        /* pointer to the 1st pixel on scan line */
+        unsigned char *p = pixels + y * width * 4;
+        for (x = 0; x < width; x++) {
+            /* swap RGB color components as required by file format */
+            if (fwrite(p + 2, 1, 1, fout) != 1 ||
+                fwrite(p + 1, 1, 1, fout) != 1 ||
+                fwrite(p, 1, 1, fout) != 1) {
+                fclose(fout);
+                return 1;
+            }
+            /* move to next pixel on scan line */
+            p += 4;
+        }
+    }
+    if (fclose(fout) == EOF) {
+        return 1;
+    }
+    return 0;
 }
 
 void recalc_perlin_noise_2d(unsigned int width, unsigned int height,
