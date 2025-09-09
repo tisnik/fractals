@@ -643,18 +643,17 @@ void render_barnsley_j2(const image_t *image, const unsigned char *palette,
  * z. Colors are assigned based on the number of iterations before escape, up to
  * `maxiter`.
  */
-void render_barnsley_m3(unsigned int width, unsigned int height,
-                        const unsigned char *palette, unsigned char *pixels,
+void render_barnsley_m3(const image_t *image, const unsigned char *palette,
                         int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     cy = ymin;
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         cx = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = 0.0;
             double zy = 0.0;
             unsigned int i = 0;
@@ -677,9 +676,9 @@ void render_barnsley_m3(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            cx += (xmax - xmin) / width;
+            cx += (xmax - xmin) / image->width;
         }
-        cy += (ymax - ymin) / height;
+        cy += (ymax - ymin) / image->height;
     }
 }
 
@@ -1831,6 +1830,9 @@ int render_test_images(void) {
     render_barnsley_j2(&image, palette, 1.109375, 0.421875, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "barnsley_j2.bmp");
     
+    render_barnsley_m3(&image, palette, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "barnsley_m3.bmp");
+
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb_1.ppm");
