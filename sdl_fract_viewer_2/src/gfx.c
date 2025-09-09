@@ -139,7 +139,12 @@ SDL_Surface* gfx_create_surface(int width, int height)
  */
 void gfx_bitblt(SDL_Surface *surface, const int x, const int y)
 {
-    SDL_BlitSurface(surface, NULL, screen_surface, NULL);
+    SDL_Rect dst;
+    dst.x=x;
+    dst.y=y;
+    dst.w=0;
+    dst.h=0;
+    SDL_BlitSurface(surface, NULL, screen_surface, &dst);
 }
 
 /*
@@ -248,8 +253,8 @@ void gfx_vline(SDL_Surface *surface, int x,  int y1, int y2, unsigned char r, un
  */
 void gfx_line(SDL_Surface *surface, int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)
 {
-    int dx = abs(x2-x1), sx = x1<x2 ? 1 : -1;
-    int dy = abs(y2-y1), sy = y1<y2 ? 1 : -1; 
+    int dx = ABS(x2-x1), sx = x1<x2 ? 1 : -1;
+    int dy = ABS(y2-y1), sy = y1<y2 ? 1 : -1;
     int err = (dx>dy ? dx : -dy)/2, e2;
     
     while (1){
