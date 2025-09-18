@@ -1,0 +1,80 @@
+#!/usr/bin/env python
+
+"""Renderer of Julia fractal variant fn||fn."""
+
+#
+#  (C) Copyright 2024  Pavel Tisnovsky
+#
+#  All rights reserved. This program and the accompanying materials
+#  are made available under the terms of the Eclipse Public License v1.0
+#  which accompanies this distribution, and is available at
+#  http://www.eclipse.org/legal/epl-v10.html
+#
+#  Contributors:
+#      Pavel Tisnovsky
+#
+
+
+import cmath
+
+from PIL import Image
+
+# image size specified in pixels
+# the size of the image should be square, and its height and width
+# should be an integer power of 2
+IMAGE_WIDTH = 512
+IMAGE_HEIGHT = 512
+
+# bailout value
+BAILOUT = 64
+
+def julia_fn_fn(zx0, zy0, cx, cy, maxiter):
+    """Calculate number of iterations for given complex number to escape from set."""
+    c = complex(cx, cy)
+    z = complex(zx0, zy0)
+    for i in range(maxiter):
+        if abs(z) > BAILOUT:
+            return i
+        if abs(z) < 0.5:
+            z = cmath.sin(z) + c
+        else:
+            z = z*z + c
+    return 0
+
+
+def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, cx, cy, maxiter=1000):
+    """Recalculate the whole fractal and render the set into given image."""
+    width, height = image.size  # rozmery obrazku
+    stepx = (xmax - xmin) / width
+    stepy = (ymax - ymin) / height
+
+    y1 = ymin
+    for y in range(height):
+        x1 = xmin
+        for x in range(width):
+            i = julia_fn_fn(x1, y1, cx, cy, maxiter)
+            i = 3 * i % 256
+            color = (palette[i][0], palette[i][1], palette[i][2])
+            image.putpixel((x, y), color)
+            x1 += stepx
+        y1 += stepy
+        print(".", end="")
+
+
+def main():
+    """Function called after the script initialization."""
+    import palette_mandmap
+
+    # construct new image
+    image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
+
+    recalc_fractal(image, palette_mandmap.palette, -1.5, -1.5, 1.5, 1.5, 0.0, 1.0, 1000)
+    image.save("julia_fn_fn_1.png")
+
+    recalc_fractal(image, palette_mandmap.palette, -1.5, -1.5, 1.5, 1.5, -1.0, 0.1, 1000)
+    image.save("julia_fn_fn_2.png")
+
+
+if __name__ == "__main__":
+    # call the main function
+    main()
