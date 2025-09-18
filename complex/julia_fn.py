@@ -72,6 +72,9 @@ def main():
     recalc_fractal(image, palette_mandmap.palette, -0.25, -0.7, 0.75, 0.3, 0.85, 0.6, 1000)
     image.save("julia_fn_2.png")
 
+    recalc_fractal(image, palette_mandmap.palette, -0.35, -0.6, 0.75, 0.4, -1.023, -0.2205, 1000)
+    image.save("julia_fn_3.png")
+
 
 if __name__ == "__main__":
     # call the main function
