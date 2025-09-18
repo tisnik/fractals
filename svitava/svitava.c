@@ -702,18 +702,17 @@ void render_barnsley_m3(const image_t *image, const unsigned char *palette,
  * @param cy Imaginary part of the Julia parameter c.
  * @param maxiter Maximum number of iterations per pixel.
  */
-void render_barnsley_j3(unsigned int width, unsigned int height,
-                        const unsigned char *palette, unsigned char *pixels,
+void render_barnsley_j3(const image_t *image, const unsigned char *palette,
                         double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     zy0 = ymin;
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         zx0 = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = zx0;
             double zy = zy0;
             unsigned int i = 0;
@@ -736,9 +735,9 @@ void render_barnsley_j3(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            zx0 += (xmax - xmin) / width;
+            zx0 += (xmax - xmin) / image->width;
         }
-        zy0 += (ymax - ymin) / height;
+        zy0 += (ymax - ymin) / image->height;
     }
 }
 
@@ -1832,6 +1831,9 @@ int render_test_images(void) {
     
     render_barnsley_m3(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "barnsley_m3.bmp");
+
+    render_barnsley_j3(&image, palette, -0.09375, 0.453125, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "barnsley_j3.bmp");
 
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
