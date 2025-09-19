@@ -14,12 +14,19 @@
 #      Pavel Tisnovsky
 #
 
+
+from time import time
+
 from PIL import Image
 
-# textura by mela byt ctvercova a jeji sirka i vyska by mela byt
-# mocninou cisla 2
+# image size specified in pixels
+# the size of the image should be square, and its height and width
+# should be an integer power of 2
 IMAGE_WIDTH = 512
 IMAGE_HEIGHT = 512
+
+# bailout value
+BAILOUT = 4
 
 
 def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
@@ -45,7 +52,7 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
                 yny = zy
                 zx = zxn
                 zy = zyn
-                if zx2 + zy2 > 4:
+                if zx2 + zy2 > BAILOUT:
                     break
             i = 3 * i % 256
             color = (palette[i][0], palette[i][1], palette[i][2])
@@ -55,13 +62,23 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
 
 
 def main():
+    """Function called after the script initialization."""
     import palette_blues
 
+    # construct new image
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
+    print("Calculation started")
+    t1 = time()
     recalc_fractal(image, palette_blues.palette, -2.0, -1.5, 1.0, 1.5, 1000)
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
+
+    # save image with fractal
     image.save("phoenix_m.png")
 
 
 if __name__ == "__main__":
+    # call the main function
     main()
