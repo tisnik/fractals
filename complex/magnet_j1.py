@@ -14,7 +14,6 @@
 #      Pavel Tisnovsky
 #
 
-
 from time import time
 
 from PIL import Image
