@@ -749,18 +749,17 @@ void render_barnsley_j3(const image_t *image, const unsigned char *palette,
  * is rendered over the region [-2, 2] x [-2, 2] with up to `maxiter` iterations
  * per pixel.
  */
-void render_magnet_m1(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels,
-                      int maxiter) {
+void render_magnet_m1(const image_t *image, const unsigned char *palette,
+                        int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     cy = ymin;
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         cx = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = 0.0;
             double zy = 0.0;
             unsigned int i = 0;
@@ -787,9 +786,9 @@ void render_magnet_m1(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            cx += (xmax - xmin) / width;
+            cx += (xmax - xmin) / image->width;
         }
-        cy += (ymax - ymin) / height;
+        cy += (ymax - ymin) / image->height;
     }
 }
 
@@ -1834,6 +1833,9 @@ int render_test_images(void) {
 
     render_barnsley_j3(&image, palette, -0.09375, 0.453125, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "barnsley_j3.bmp");
+
+    render_magnet_m1(&image, palette, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "magnet_m1.bmp");
 
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
