@@ -17,6 +17,8 @@
 
 import cmath
 
+from time import time
+
 from PIL import Image
 
 # image size specified in pixels
@@ -66,14 +68,29 @@ def main():
     # construct new image
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
+    print("Calculation started")
+    t1 = time()
     recalc_fractal(image, palette_blues.palette, -3.0, -3.0, 3.0, 3.0, 0.0, 1.0, 255)
     image.save("julia_fn.png")
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
 
+    print("Calculation started")
+    t1 = time()
     recalc_fractal(image, palette_mandmap.palette, -0.25, -0.7, 0.75, 0.3, 0.85, 0.6, 1000)
     image.save("julia_fn_2.png")
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
 
+    print("Calculation started")
+    t1 = time()
     recalc_fractal(image, palette_mandmap.palette, -0.35, -0.6, 0.75, 0.4, -1.023, -0.2205, 1000)
     image.save("julia_fn_3.png")
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
 
 
 if __name__ == "__main__":
