@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Renderer of Julia fractal variant fn||fn."""
+"""Renderer of Julia fractal variant fn||fn||iter."""
 
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
@@ -16,6 +16,8 @@
 
 
 import cmath
+
+from time import time
 
 from PIL import Image
 
@@ -68,11 +70,21 @@ def main():
     # construct new image
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
+    print("Calculation started")
+    t1 = time()
     recalc_fractal(image, palette_mandmap.palette, -1.5, -1.5, 1.5, 1.5, 0.0, 1.0, 1000)
     image.save("julia_fn_fn_1.png")
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
 
+    print("Calculation started")
+    t1 = time()
     recalc_fractal(image, palette_mandmap.palette, -1.5, -1.5, 1.5, 1.5, -1.0, 0.1, 1000)
     image.save("julia_fn_fn_2.png")
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
 
 
 if __name__ == "__main__":
