@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+
+"""Renderer of the classic Lambda fractal."""
+
 #
 #  (C) Copyright 2025  Pavel Tisnovsky
 #
@@ -10,22 +14,25 @@
 #      Pavel Tisnovsky
 #
 
-"""Renderer of the classic Lambda fractal."""
+from time import time
 
 from PIL import Image
 
-# textura by mela byt ctvercova a jeji sirka i vyska by mela byt
-# mocninou cisla 2
+# image size specified in pixels
+# the size of the image should be square, and its height and width
+# should be an integer power of 2
 IMAGE_WIDTH = 512
 IMAGE_HEIGHT = 512
 
+# bailout value
+BAILOUT = 2
 
 def julia(zx0, zy0, cx, cy, maxiter):
     """Calculate number of iterations for given complex numbers Z and C to escape from set."""
     c = complex(cx, cy)
     z = complex(zx0, zy0)
     for i in range(maxiter):
-        if abs(z) > 2:
+        if abs(z) > BAILOUT:
             return i
         z = c * z * (1 - z)
     return 0
@@ -50,18 +57,31 @@ def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, cx, cy, maxiter=1000)
 
 
 def main():
+    """Function called after the script initialization."""
     import palette_blues
     import palette_gold
     import palette_mandmap
 
+    # construct new image
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
+    print("Calculation started")
+    t1 = time()
     recalc_fractal(image, palette_mandmap.palette, -1.0, -1.5, 2.0, 1.5, 0.85, 0.6, 1000)
     image.save("lambda_1.png")
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
 
+    print("Calculation started")
+    t1 = time()
     recalc_fractal(image, palette_mandmap.palette, -0.25, -0.7, 0.75, 0.3, 0.85, 0.6, 1000)
     image.save("lambda_2.png")
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
 
 
 if __name__ == "__main__":
+    # call the main function
     main()
