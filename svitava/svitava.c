@@ -860,18 +860,17 @@ void render_magnet_j1(const image_t *image, const unsigned char *palette,
  * plane, coloring pixels based on the number of iterations before escape or
  * convergence, up to `maxiter`.
  */
-void render_magnet_m2(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels,
-                      int maxiter) {
+void render_magnet_m2(const image_t *image, const unsigned char *palette,
+                        int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -1.5, ymin = -2.0, xmax = 2.5, ymax = 2.0;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     cy = ymin;
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         cx = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = 0.0;
             double zy = 0.0;
             double cm1x = cx - 1.0;
@@ -914,9 +913,9 @@ void render_magnet_m2(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            cx += (xmax - xmin) / width;
+            cx += (xmax - xmin) / image->width;
         }
-        cy += (ymax - ymin) / height;
+        cy += (ymax - ymin) / image->height;
     }
 }
 
@@ -1838,6 +1837,9 @@ int render_test_images(void) {
 
     render_magnet_j1(&image, palette, 0.484375, -1.5625, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "magnet_j1.bmp");
+
+    render_magnet_m2(&image, palette, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "magnet_m2.bmp");
 
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
