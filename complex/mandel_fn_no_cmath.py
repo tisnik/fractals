@@ -17,20 +17,25 @@
 
 import math
 
+from time import time
+
 from PIL import Image
 
-# textura by mela byt ctvercova a jeji sirka i vyska by mela byt
-# mocninou cisla 2
+# image size specified in pixels
+# the size of the image should be square, and its height and width
+# should be an integer power of 2
 IMAGE_WIDTH = 512
 IMAGE_HEIGHT = 512
 
+# bailout value
+BAILOUT = 64
 
 def mandel_fn(zx0, zy0, maxiter):
     """Calculate number of iterations for given complex numbers Z and C to escape from set."""
     c = complex(zx0, zy0)
     z = c
     for i in range(maxiter):
-        if abs(z) > 64:
+        if abs(z) > BAILOUT:
             return i
         # https://graphicmaths.com/pure/complex-numbers/complex-trig-functions/
         # sin(cx+icy) = sin(cx)cosh(y) + i*cos(cx)sinh(cy)
@@ -44,7 +49,7 @@ def mandel_fn(zx0, zy0, maxiter):
 
 def recalc_fractal(image, palette, xmin, ymin, xmax, ymax, maxiter=1000):
     """Recalculate the whole fractal and render the set into given image."""
-    width, height = image.size  # rozmery obrazku
+    width, height = image.size  # image size in pixels
     stepx = (xmax - xmin) / width
     stepy = (ymax - ymin) / height
 
@@ -65,10 +70,16 @@ def main():
     import palette_gold
     import palette_mandmap
 
+    # construct new image
     image = Image.new("RGB", (IMAGE_WIDTH, IMAGE_HEIGHT))
 
+    print("Calculation started")
+    t1 = time()
     recalc_fractal(image, palette_blues.palette, -3.0, -3.0, 3.0, 3.0, 255)
     image.save("mandel_fn_.png")
+    t2 = time()
+    difftime = t2 - t1
+    print(f"Calculation finished in {difftime:4.1f} seconds")
 
     #recalc_fractal(image, palette_mandmap.palette, -0.25, -0.7, 0.75, 0.3, 0.85, 0.6, 1000)
     #image.save("lambda_2.png")
