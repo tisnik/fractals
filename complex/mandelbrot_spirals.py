@@ -21,6 +21,8 @@ import palette_mandmap
 from PIL import Image
 
 # image size specified in pixels
+# the size of the image should be square, and its height and width
+# should be an integer power of 2
 IMAGE_WIDTH = 512
 IMAGE_HEIGHT = 384
 
