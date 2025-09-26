@@ -1002,18 +1002,17 @@ void render_magnet_j2(const image_t *image, const unsigned char *palette,
  * escape to select a color from the palette. The resulting image is written to
  * the provided pixel buffer.
  */
-void render_phoenix_m(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels,
+void render_phoenix_m(const image_t *image, const unsigned char *palette,
                       int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     cy = ymin;
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         cx = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = cx;
             double zy = cy;
             double ynx = 0.0;
@@ -1036,9 +1035,9 @@ void render_phoenix_m(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            cx += (xmax - xmin) / width;
+            cx += (xmax - xmin) / image->width;
         }
-        cy += (ymax - ymin) / height;
+        cy += (ymax - ymin) / image->height;
     }
 }
 
@@ -1842,6 +1841,9 @@ int render_test_images(void) {
 
     render_magnet_j2(&image, palette, 1.0, -1.375, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "magnet_j2.bmp");
+
+    render_phoenix_m(&image, palette, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "phoenix_m.bmp");
 
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
