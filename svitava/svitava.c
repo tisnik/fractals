@@ -1058,18 +1058,17 @@ void render_phoenix_m(const image_t *image, const unsigned char *palette,
  * parameter.
  * @param maxiter Maximum number of iterations for the fractal calculation.
  */
-void render_phoenix_j(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels,
+void render_phoenix_j(const image_t *image, const unsigned char *palette,
                       double cx, double cy, int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     double zy0 = ymin;
 
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         double zx0 = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = zx0;
             double zy = zy0;
             double ynx = 0.0;
@@ -1092,9 +1091,9 @@ void render_phoenix_j(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            zx0 += (xmax - xmin) / width;
+            zx0 += (xmax - xmin) / image->width;
         }
-        zy0 += (ymax - ymin) / height;
+        zy0 += (ymax - ymin) / image->height;
     }
 }
 
@@ -1844,6 +1843,9 @@ int render_test_images(void) {
 
     render_phoenix_m(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "phoenix_m.bmp");
+
+    render_phoenix_j(&image, palette, 0.125, 0.65625, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "phoenix_j.bmp");
 
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
