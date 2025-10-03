@@ -1151,21 +1151,20 @@ void render_mandelbrot_lambda(const image_t *image, const unsigned char *palette
  * computes the escape time for the Mandelbrot set. The iteration count
  * determines the color index used from the palette.
  */
-void render_lambda(unsigned int width, unsigned int height,
-                   const unsigned char *palette, unsigned char *pixels,
-                   double cx, double cy, int maxiter) {
+void render_lambda(const image_t *image, const unsigned char *palette,
+                      double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -1.0, ymin = -1.5, xmax = 2.0, ymax = 1.5;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     NULL_CHECK(palette)
-    NULL_CHECK(pixels)
+    NULL_CHECK(image->pixels)
 
     zy0 = ymin;
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         zx0 = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = zx0;
             double zy = zy0;
             unsigned int i = 0;
@@ -1184,9 +1183,9 @@ void render_lambda(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i & 0xff);
-            zx0 += (xmax - xmin) / width;
+            zx0 += (xmax - xmin) / image->width;
         }
-        zy0 += (ymax - ymin) / height;
+        zy0 += (ymax - ymin) / image->height;
     }
 }
 
@@ -1849,6 +1848,9 @@ int render_test_images(void) {
     render_mandelbrot_lambda(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot_lambda.bmp");
 
+    render_lambda(&image, palette, 1.6328125, 1.005859375, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "lambda.bmp");
+    
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb_1.ppm");
