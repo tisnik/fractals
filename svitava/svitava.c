@@ -1248,21 +1248,20 @@ void render_manowar_m(const image_t *image, const unsigned char *palette,
  * computes the escape time for the Julia set. The iteration count
  * determines the color index used from the palette.
  */
-void render_manowar_j(unsigned int width, unsigned int height,
-                      const unsigned char *palette, unsigned char *pixels,
+void render_manowar_j(const image_t *image, const unsigned char *palette,
                       double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -1.5, ymin = -1.0, xmax = 0.5, ymax = 1.0;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     NULL_CHECK(palette)
-    NULL_CHECK(pixels)
+    NULL_CHECK(image->pixels)
 
     zy0 = ymin;
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         zx0 = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = zx0;
             double zy = zy0;
             double z1x = zx;
@@ -1286,9 +1285,9 @@ void render_manowar_j(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            zx0 += (xmax - xmin) / width;
+            zx0 += (xmax - xmin) / image->width;
         }
-        zy0 += (ymax - ymin) / height;
+        zy0 += (ymax - ymin) / image->height;
     }
 }
 
@@ -1853,6 +1852,9 @@ int render_test_images(void) {
     render_manowar_m(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "manowar_m.bmp");
 
+    render_manowar_j(&image, palette, 0.0542, -0.045, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "manowar_j.bmp");
+
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb_1.ppm");
@@ -1864,8 +1866,6 @@ int render_test_images(void) {
     bmp_write(WIDTH, HEIGHT, pixels, "test_palette.bmp");
     tga_write(WIDTH, HEIGHT, pixels, "test_palette.tga");
 
-    render_manowar_j(WIDTH, HEIGHT, palette, pixels, 0.0542, -0.045, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "manowar.bmp");
     */
     return 0;
 }
