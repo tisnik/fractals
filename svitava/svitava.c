@@ -1300,12 +1300,11 @@ void render_manowar_j(const image_t *image, const unsigned char *palette,
  * by the number of iterations required to converge to one of the three roots,
  * using the provided palette.
  */
-void render_newton_m(unsigned int width, unsigned int height,
-                     const unsigned char *palette, unsigned char *pixels,
-                     int maxiter) {
+void render_newton_m(const image_t *image, const unsigned char *palette,
+                      int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
 #define PI 3.1415927
 #define EPSILON 0.1
@@ -1324,9 +1323,9 @@ void render_newton_m(unsigned int width, unsigned int height,
     rooty[1] = sin(2.0 * PI / 3.0);
     rooty[2] = sin(4.0 * PI / 3.0);
 
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         double zx0 = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = zx0;
             double zy = zy0;
 
@@ -1352,9 +1351,9 @@ void render_newton_m(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            zx0 += (xmax - xmin) / width;
+            zx0 += (xmax - xmin) / image->width;
         }
-        zy0 += (ymax - ymin) / height;
+        zy0 += (ymax - ymin) / image->height;
     }
 }
 
@@ -1854,6 +1853,9 @@ int render_test_images(void) {
 
     render_manowar_j(&image, palette, 0.0542, -0.045, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "manowar_j.bmp");
+
+    render_newton_m(&image, palette, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "newton_m.bmp");
 
     /*
     render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
