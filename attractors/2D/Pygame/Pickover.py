@@ -20,7 +20,7 @@ from ui import event_loop, initialize
 # window settings
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
-WINDOW_TITLE = "Svensson dynamical system"
+WINDOW_TITLE = "Pickover dynamical system"
 
 
 def pickover(
