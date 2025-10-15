@@ -96,13 +96,13 @@ void putpixel(unsigned char **pixel, const unsigned char *palette,
  * unused or as padding.
  * @param green Value to assign to the green channel for all pixels.
  */
-void render_test_rgb_image(unsigned int width, unsigned int height,
-                           unsigned char *pixels, unsigned char green) {
+void render_test_rgb_image(const image_t *image, const unsigned char *palette,
+                           unsigned char green) {
     unsigned int i, j;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
-    for (j = 0; j < height; j++) {
-        for (i = 0; i < width; i++) {
+    for (j = 0; j < image->height; j++) {
+        for (i = 0; i < image->width; i++) {
             *p++ = i;
             *p++ = green;
             *p++ = j;
@@ -1788,6 +1788,11 @@ int render_test_images(void) {
     *p++ = 0;
     *p++ = 0;
 
+    render_test_rgb_image(&image, palette, 0);
+    ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb.ppm");
+    bmp_write(WIDTH, HEIGHT, pixels, "test_rgb.bmp");
+    tga_write(WIDTH, HEIGHT, pixels, "test_rgb.tga");
+
     render_mandelbrot(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot.bmp");
 
@@ -1858,11 +1863,6 @@ int render_test_images(void) {
     bmp_write(WIDTH, HEIGHT, pixels, "newton_m.bmp");
 
     /*
-    render_test_rgb_image(WIDTH, HEIGHT, pixels, 0);
-    ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb_1.ppm");
-    bmp_write(WIDTH, HEIGHT, pixels, "test_rgb_1.bmp");
-    tga_write(WIDTH, HEIGHT, pixels, "test_rgb_1.tga");
-
     render_test_palette_image(WIDTH, HEIGHT, palette, pixels);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_palette.ppm");
     bmp_write(WIDTH, HEIGHT, pixels, "test_palette.bmp");
