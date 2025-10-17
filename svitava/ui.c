@@ -11,6 +11,8 @@
 #define MAX(a,b) ((a)>(b) ? (a) : (b))
 #define MIN(a,b) ((a)<(b) ? (a) : (b))
 
+#include "font.h"
+
 typedef struct GraphicsState {
     SDL_Window *window;
     SDL_Surface *screen_surface;
@@ -125,7 +127,7 @@ void gfx_hline(SDL_Surface *surface, int x1, int x2, int y, unsigned char r, uns
     }
 }
 
-void gfx_vline(SDL_Surface *surface, int x,  int y1, int y2, unsigned char r, unsigned char g, unsigned char b)
+void gfx_vline(SDL_Surface *surface, int x, int y1, int y2, unsigned char r, unsigned char g, unsigned char b)
 {
     int y;
     int fromY = MIN(y1, y2);
@@ -135,6 +137,22 @@ void gfx_vline(SDL_Surface *surface, int x,  int y1, int y2, unsigned char r, un
         gfx_putpixel(surface, x, y, r, g, b);
     }
 }
+
+void gfx_draw_char(SDL_Surface *surface, int x, int y, unsigned char r, unsigned char g, unsigned char b, char c)
+{
+    unsigned char *ptr = font + (c-' ')*16;
+    int xx, yy;
+    for (yy=0; yy<16; yy++) {
+        unsigned char code = *ptr++;
+        for (xx=0; xx<8; xx++) {
+            if (code & 0x81) {
+                gfx_putpixel(surface, x+xx, y+yy, r, g, b);
+            }
+            code <<= 1;
+        }
+    }
+}
+
 void draw_grid(GraphicsState *graphicsState) {
     SDL_Surface *surface = graphicsState->screen_surface;
     int width = surface->w;
