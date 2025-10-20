@@ -13,7 +13,7 @@ IMAGE_HEIGHT = 256
 
 def fm(
     image: Image.Image,
-    palette: Tuple[Tuple[int, int, int], ...],
+    palette: tuple[tuple[int, int, int], ...],
     xmin: float,
     ymin: float,
     xmax: float,
