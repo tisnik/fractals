@@ -14,7 +14,7 @@ IMAGE_HEIGHT = 256
 
 def recalc_any_pattern(
     image: Image.Image,
-    palette: Tuple[Tuple[int, int, int], ...],
+    palette: tuple[tuple[int, int, int], ...],
     xmin: float,
     ymin: float,
     xmax: float,
