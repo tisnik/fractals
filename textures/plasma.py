@@ -38,11 +38,11 @@ IMAGE_WIDTH = 256
 IMAGE_HEIGHT = 256
 
 
-def create_bitmap(width: int, height: int) -> List[List[float]]:
+def create_bitmap(width: int, height: int) -> list[list[float]]:
     return [[0 for x in range(width)] for y in range(height)]
 
 
-def create_matrix(width: int, height: int) -> List[List[float]]:
+def create_matrix(width: int, height: int) -> list[list[float]]:
     return create_bitmap(width, height)
 
 
@@ -60,8 +60,8 @@ def random_gauss() -> float:
 
 
 def compute_min_max(
-    bitmap: List[List[float]], width: int, height: int
-) -> Tuple[float, float]:
+    bitmap: list[list[float]], width: int, height: int
+) -> tuple[float, float]:
     """Minimum and maximum pixel value computation."""
     # pro prepocet intenzit pixelu
     min = float("inf")
@@ -79,11 +79,11 @@ def compute_min_max(
 
 
 def convert_to_image(
-    bitmap: List[List[float]],
+    bitmap: list[list[float]],
     image: Image.Image,
     width: int,
     height: int,
-    palette: Tuple[Tuple[int, int, int], ...],
+    palette: tuple[tuple[int, int, int], ...],
 ) -> None:
     """Convert the 2D array into a proper bitmap with high contrast."""
     print("contrast adjustment")
@@ -105,7 +105,7 @@ def convert_to_image(
 # h ... Hurstuv exponent
 # n ... pocet koeficientu spektralni syntezy
 def spectral_synthesis(
-    image: Image.Image, palette: Tuple[Tuple[int, int, int], ...], n: int, h: float
+    image: Image.Image, palette: tuple[tuple[int, int, int], ...], n: int, h: float
 ) -> None:
     """Plasma texture computation using spectral synthesis."""
     width, height = image.size  # rozmery obrazku
