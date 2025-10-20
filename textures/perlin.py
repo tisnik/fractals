@@ -38,8 +38,8 @@ IMAGE_HEIGHT = 256
 
 
 def compute_min_max(
-    bitmap: List[List[float]], width: int, height: int
-) -> Tuple[float, float]:
+    bitmap: list[list[float]], width: int, height: int
+) -> tuple[float, float]:
     # pro prepocet intenzit pixelu
     min = float("inf")
     max = float("-inf")
@@ -55,16 +55,16 @@ def compute_min_max(
     return min, max
 
 
-def create_bitmap(width: int, height: int) -> List[List[float]]:
+def create_bitmap(width: int, height: int) -> list[list[float]]:
     return [[0 for x in range(width)] for y in range(height)]
 
 
 def convert_to_image(
-    bitmap: List[List[float]],
+    bitmap: list[list[float]],
     image: Image.Image,
     width: int,
     height: int,
-    palette: Tuple[Tuple[int, int, int], ...],
+    palette: tuple[tuple[int, int, int], ...],
 ) -> None:
     print("contrast adjustment")
 
@@ -82,13 +82,13 @@ def convert_to_image(
             image.putpixel((x, y), color)
 
 
-def random_array(width: int, height: int, amplitude: float) -> List[List[float]]:
+def random_array(width: int, height: int, amplitude: float) -> list[list[float]]:
     return [[random() * amplitude for i in range(width)] for j in range(height)]
 
 
 def perlin_noise(
     image: Image.Image,
-    palette: Tuple[Tuple[int, int, int], ...],
+    palette: tuple[tuple[int, int, int], ...],
     noise: float,
     octaves: int,
 ) -> None:
