@@ -2,7 +2,7 @@
 
 # Vytvoreni textury s "kruznicovym moare" i dalsimi typy moare
 
-from typing import Callable, Tuple
+from typing import Callable
 
 from PIL import Image
 
