@@ -3,7 +3,6 @@
 """Texture rendering based on FM synthesis."""
 
 from math import sin
-from typing import Tuple
 
 from PIL import Image
 
