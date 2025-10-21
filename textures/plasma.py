@@ -28,7 +28,6 @@
 
 import math
 from random import random
-from typing import List, Tuple
 
 from PIL import Image
 
