@@ -30,7 +30,7 @@ from PIL import Image
 size = (500, 374)
 
 
-def main():
+def main() -> None:
     """Read all PNG images in current directory and resize them."""
     files = list(Path().rglob("*.png"))
 
