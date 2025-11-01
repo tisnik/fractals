@@ -1,4 +1,3 @@
-
 import sys
 from enum import Enum
 from math import sqrt
@@ -27,7 +26,7 @@ MAX_BLUE = 50
 MAX_YELLOW = 10
 
 # Total number of particles in the whole system
-MAX_PARTICLES = MAX_RED+MAX_GREEN+MAX_BLUE+MAX_YELLOW
+MAX_PARTICLES = MAX_RED + MAX_GREEN + MAX_BLUE + MAX_YELLOW
 
 # Other model options
 MAX_DISTANCE = 2000
@@ -50,7 +49,7 @@ class Colors(Enum):
 
 
 class Particle:
-    def __init__(self, x : float, y : float, vx : float, vy : float, type : int):
+    def __init__(self, x: float, y: float, vx: float, vy: float, type: int):
         self.x = x
         self.y = y
         self.vx = vx
@@ -59,56 +58,61 @@ class Particle:
 
 
 class Atoms:
-    def __init__(self, max_particles : int):
-        self.colors = (0xffff0000, 0xff00ff00, 0xff2020ff, 0xffffff00)
+    def __init__(self, max_particles: int):
+        self.colors = (0xFFFF0000, 0xFF00FF00, 0xFF2020FF, 0xFFFFFF00)
         self.particles = []
-        self.particles += (create_particles(MAX_RED, RED_GROUP))
-        self.particles += (create_particles(MAX_GREEN, GREEN_GROUP))
-        self.particles += (create_particles(MAX_BLUE, BLUE_GROUP))
-        self.particles += (create_particles(MAX_YELLOW, YELLOW_GROUP))
+        self.particles += create_particles(MAX_RED, RED_GROUP)
+        self.particles += create_particles(MAX_GREEN, GREEN_GROUP)
+        self.particles += create_particles(MAX_BLUE, BLUE_GROUP)
+        self.particles += create_particles(MAX_YELLOW, YELLOW_GROUP)
         print("Particles in atoms:", len(self.particles))
 
 
 class Model:
-    def __init__(self, max_particles : int):
-        self.rules = [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]]
+    def __init__(self, max_particles: int) -> None:
+        self.rules: list[list[float]] = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+        ]
         self.init_rules()
         self.atoms = Atoms(max_particles)
 
-    def init_rules(self):
+    def init_rules(self) -> None:
         for j in range(4):
             for i in range(4):
-                self.rules[i][j] = 2.0*random() - 1.0
+                self.rules[i][j] = 2.0 * random() - 1.0
 
 
 def random_x() -> float:
-    return (WINDOW_WIDTH - BORDER*2) * random() + BORDER
+    return (WINDOW_WIDTH - BORDER * 2) * random() + BORDER
 
 
 def random_y() -> float:
-    return (WINDOW_HEIGHT - BORDER*2) * random() + BORDER
+    return (WINDOW_HEIGHT - BORDER * 2) * random() + BORDER
 
 
-def create_particles(max : int, type : int):
+def create_particles(max: int, type: int) -> list[Particle]:
     return [Particle(random_x(), random_y(), 0.0, 0.0, type) for i in range(max)]
 
 
-def redraw(surface, model):
+def redraw(surface: pygame.Surface, model: Model) -> None:
     surface.fill(Colors.BLACK.value)
     atoms = model.atoms
     for particle in atoms.particles:
         color = atoms.colors[particle.type]
-        surface.set_at((int(particle.x),int(particle.y)), color)
-        surface.set_at((int(particle.x-1),int(particle.y)), color)
-        surface.set_at((int(particle.x+1),int(particle.y)), color)
-        surface.set_at((int(particle.x),int(particle.y-1)), color)
-        surface.set_at((int(particle.x),int(particle.y+1)), color)
+        surface.set_at((int(particle.x), int(particle.y)), color)
+        surface.set_at((int(particle.x - 1), int(particle.y)), color)
+        surface.set_at((int(particle.x + 1), int(particle.y)), color)
+        surface.set_at((int(particle.x), int(particle.y - 1)), color)
+        surface.set_at((int(particle.x), int(particle.y + 1)), color)
 
 
-def apply_rules(model : Model):
+def apply_rules(model: Model) -> None:
     for i in range(len(model.atoms.particles)):
-        fx : float = 0.0
-        fy : float = 0.0
+        fx: float = 0.0
+        fy: float = 0.0
 
         a = model.atoms.particles[i]
 
@@ -120,7 +124,7 @@ def apply_rules(model : Model):
                 dx = a.x - b.x
                 dy = a.y - b.y
                 if dx != 0.0 or dy != 0.0:
-                    d = dx*dx + dy*dy
+                    d = dx * dx + dy * dy
                     if d < MAX_DISTANCE:
                         f = g / sqrt(d)
                         fx += f * dx
@@ -152,7 +156,7 @@ def apply_rules(model : Model):
             a.y = WINDOW_HEIGHT - 1
 
 
-def write_particles(model, filename):
+def write_particles(model: Model, filename: str) -> None:
     atoms = model.atoms
     with open(filename, "w") as fout:
         fout.write('"x","y"\n')
@@ -167,9 +171,9 @@ display = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
 display.fill(Colors.BLACK.value)
 
 surface = pygame.Surface([WINDOW_WIDTH, WINDOW_HEIGHT])
-surface.set_at((101,100), 0xffff0000)
-surface.set_at((100,101), 0xffff0000)
-surface.set_at((101,101), 0xffff0000)
+surface.set_at((101, 100), 0xFFFF0000)
+surface.set_at((100, 101), 0xFFFF0000)
+surface.set_at((101, 101), 0xFFFF0000)
 
 clock = pygame.time.Clock()
 model = Model(MAX_PARTICLES)
