@@ -1372,12 +1372,11 @@ void render_newton_m(const image_t *image, const unsigned char *palette,
  * @param cy Imaginary part of the user-specified root.
  * @param maxiter Maximum number of Newton iterations per pixel.
  */
-void render_newton_j(unsigned int width, unsigned int height,
-                     const unsigned char *palette, unsigned char *pixels,
-                     double cx, double cy, int maxiter) {
+void render_newton_j(const image_t *image, const unsigned char *palette,
+                      double cx, double cy, int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
 #define PI 3.1415927
 #define EPSILON 0.1
@@ -1396,9 +1395,9 @@ void render_newton_j(unsigned int width, unsigned int height,
     rooty[1] = sin(2.0 * PI / 3.0);
     rooty[2] = sin(4.0 * PI / 3.0);
 
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         double zx0 = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double zx = zx0;
             double zy = zy0;
 
@@ -1424,9 +1423,9 @@ void render_newton_j(unsigned int width, unsigned int height,
                 i++;
             }
             putpixel(&p, palette, i);
-            zx0 += (xmax - xmin) / width;
+            zx0 += (xmax - xmin) / image->width;
         }
-        zy0 += (ymax - ymin) / height;
+        zy0 += (ymax - ymin) / image->height;
     }
 }
 
@@ -1861,6 +1860,9 @@ int render_test_images(void) {
 
     render_newton_m(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "newton_m.bmp");
+
+    render_newton_j(&image, palette, 0.0, 1.0, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "newton_j.bmp");
 
     /*
     render_test_palette_image(WIDTH, HEIGHT, palette, pixels);
