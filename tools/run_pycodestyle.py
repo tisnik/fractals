@@ -20,7 +20,7 @@ from sys import exit
 import pycodestyle
 
 
-def main():
+def main() -> None:
     files = list(Path().rglob("*.py"))
 
     style = pycodestyle.StyleGuide(quiet=False, config_file="setup.cfg")
