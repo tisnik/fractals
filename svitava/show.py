@@ -92,6 +92,7 @@ MANOWAR_YMAX = 1.0
 
 class Image(Structure):
     """ABI structure."""
+
     _fields_ = [("width", c_uint), ("height", c_uint), ("pixels", POINTER(c_char))]
 
 
@@ -107,7 +108,7 @@ fractal_limits = {
     "Magnet M2": (MAG2_XMIN, MAG2_XMAX, MAG2_YMIN, MAG2_YMAX),
     "Manowar": (MANOWAR_XMIN, MANOWAR_XMAX, MANOWAR_YMIN, MANOWAR_YMAX),
     "Phoenix": (PHO_XMIN, PHO_XMAX, PHO_YMIN, PHO_YMAX),
-    "Lambda":  (LAMBDA_XMIN, LAMBDA_XMAX, LAMBDA_XMIN, LAMBDA_YMAX),
+    "Lambda": (LAMBDA_XMIN, LAMBDA_XMAX, LAMBDA_XMIN, LAMBDA_YMAX),
     "Newton": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "FM-synth": (M_XMIN, M_XMAX, M_YMIN, M_YMAX),
     "Circle": (-1.5, 1.5, -1.5, 1.5),
@@ -129,14 +130,16 @@ class Colors(Enum):
     WHITE = (255, 255, 255)
 
 
-def set_window_title(fractal_types, fractal_type_index):
+def set_window_title(fractal_types: list[str], fractal_type_index: int) -> None:
     """Set the window title."""
     name = fractal_types[fractal_type_index]
     title = TITLE.format(name=name)
     pygame.display.set_caption(title)
 
 
-def initialize_ui(title, width, height):
+def initialize_ui(
+    title: str, width: int, height: int
+) -> tuple[pygame.Surface, pygame.time.Clock]:
     """Initialize Pygame display, drawing surface, and clocks."""
     # set window title
     set_window_title(fractal_types, fractal_type_index)
@@ -158,7 +161,7 @@ def render_m_set(
     palette,
     buffer,
     maxiter,
-):
+) -> None:
     fractal_type = fractal_types[fractal_type_index]
     renderer = fractal_renderers[fractal_type][0]
 
@@ -176,7 +179,7 @@ def render_j_set(
     cx,
     cy,
     maxiter,
-):
+) -> None:
     fractal_type = fractal_types[fractal_type_index]
     renderer = fractal_renderers[fractal_type][1]
     c_image = Image(image_width, image_height, buffer)
@@ -189,7 +192,9 @@ def render_j_set(
     )
 
 
-def event_loop(display, image1, image2, clock, palettes, fractal_renderers, buffer):
+def event_loop(
+    display, image1, image2, clock, palettes, fractal_renderers, buffer
+) -> None:
     global fractal_type_index
     global maxiter
     palette_index = 0
@@ -349,11 +354,11 @@ def palette_to_buffer(p):
     return s
 
 
-def image_from_buffer(buffer, width, height, fmt):
+def image_from_buffer(buffer, width: int, height: int, fmt: str) -> pygame.Surface:
     return pygame.image.frombytes(bytes(buffer), (width, height), fmt)
 
 
-def fill_in_fractal_renderers(renderer):
+def fill_in_fractal_renderers(renderer: CDLL) -> dict[str, tuple]:
     fractal_renderers = {
         "Mandelbrot": (renderer.render_mandelbrot, renderer.render_julia),
         "Mandelbrot3": (renderer.render_mandelbrot_3, renderer.render_julia_3),
@@ -376,7 +381,7 @@ def fill_in_fractal_renderers(renderer):
     return fractal_renderers
 
 
-def main():
+def main() -> None:
     palettes = [
         palette_to_buffer(mandmap),
         palette_to_buffer(blues),
@@ -401,7 +406,6 @@ def main():
 
     # create buffer for raster image
     buffer = create_string_buffer(4 * IMAGE_WIDTH * IMAGE_HEIGHT)
-
 
     image1 = pygame.Surface([IMAGE_WIDTH, IMAGE_HEIGHT])
     image2 = pygame.Surface([IMAGE_WIDTH, IMAGE_HEIGHT])
