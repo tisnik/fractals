@@ -28,7 +28,7 @@ def recalc_circle_pattern(
             y2 = y1 * y1
             i = (int)(x2 + y2) & 255
             color = (i, i, i)
-            image.putpixel((x, y), color)
+            image.putpixel((x, y), color)  # type: ignore
         y1 += stepy
 
 
