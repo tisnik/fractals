@@ -34,7 +34,7 @@ def recalc_any_pattern(
             val = function(x1, y1)
             i = int(val) & 255
             color = (palette[i][0], palette[i][1], palette[i][2])
-            image.putpixel((x, y), color)
+            image.putpixel((x, y), color)  # type: ignore
         y1 += stepy
 
 
