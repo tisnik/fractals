@@ -1437,22 +1437,21 @@ void render_newton_j(const image_t *image, const unsigned char *palette,
  * pixel's mapped coordinates, producing a non-fractal but visually complex
  * pattern. Colors are selected from the palette using the computed value.
  */
-void render_fm_synth_mandelbrot(unsigned int width, unsigned int height,
-                                const unsigned char *palette,
-                                unsigned char *pixels, int maxiter) {
+void render_fm_synth_mandelbrot(const image_t *image, const unsigned char *palette,
+                      int maxiter) {
 #define LIMIT 100
     double xmin = -LIMIT, ymin = -LIMIT, xmax = LIMIT, ymax = LIMIT;
-    double stepx = (xmax - xmin) / (double)width;
-    double stepy = (ymax - ymin) / (double)height;
+    double stepx = (xmax - xmin) / (double)image->width;
+    double stepy = (ymax - ymin) / (double)image->height;
 
     double y1 = ymin;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     int x, y;
 
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         double x1 = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double val = 100.0 + 100.0 * sin(x1 / 4.0 +
                                              2.0 * sin(x1 / 15.0 + y1 / 40.0));
             int i = (int)val & 255;
@@ -1863,6 +1862,9 @@ int render_test_images(void) {
 
     render_newton_j(&image, palette, 0.0, 1.0, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "newton_j.bmp");
+
+    render_fm_synth_mandelbrot(&image, palette, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "fm_synth_m.bmp");
 
     /*
     render_test_palette_image(WIDTH, HEIGHT, palette, pixels);
