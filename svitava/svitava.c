@@ -1470,22 +1470,21 @@ void render_fm_synth_mandelbrot(const image_t *image, const unsigned char *palet
  * coordinates and the parameters `cx` and `cy`, producing smooth, wave-like
  * color variations. The palette is used to map computed values to RGB colors.
  */
-void render_fm_synth_julia(unsigned int width, unsigned int height,
-                           const unsigned char *palette, unsigned char *pixels,
+void render_fm_synth_julia(const image_t *image, const unsigned char *palette,
                            double cx, double cy, int maxiter) {
 #define LIMIT 100
     double xmin = -LIMIT, ymin = -LIMIT, xmax = LIMIT, ymax = LIMIT;
-    double stepx = (xmax - xmin) / (double)width;
-    double stepy = (ymax - ymin) / (double)height;
+    double stepx = (xmax - xmin) / (double)image->width;
+    double stepy = (ymax - ymin) / (double)image->height;
 
     double y1 = ymin;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     int x, y;
 
-    for (y = 0; y < height; y++) {
+    for (y = 0; y < image->height; y++) {
         double x1 = xmin;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < image->width; x++) {
             double val =
                 100.0 + 100.0 * sin(x1 / 4.0 +
                                     2.0 * sin(cx * x1 / 15.0 + cy * y1 / 40.0));
@@ -1865,6 +1864,9 @@ int render_test_images(void) {
 
     render_fm_synth_mandelbrot(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "fm_synth_m.bmp");
+
+    render_fm_synth_julia(&image, palette, 0.5, 0.5, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "fm_synth_j.bmp");
 
     /*
     render_test_palette_image(WIDTH, HEIGHT, palette, pixels);
