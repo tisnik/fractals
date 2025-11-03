@@ -31,7 +31,7 @@ def fm(
             val = 100 + 100.0 * sin(x1 / 4 + 2 * sin(x1 / 15 + y1 / 40))
             i = int(val) & 255
             color = (palette[i][0], palette[i][1], palette[i][2])
-            image.putpixel((x, y), color)
+            image.putpixel((x, y), color)  # type: ignore
         y1 += stepy
 
 
