@@ -1503,10 +1503,9 @@ void render_fm_synth_julia(const image_t *image, const unsigned char *palette,
  * The color index for each pixel is determined by (x^2 + y^2) % 256, producing
  * repeating circular bands using the provided palette.
  */
-void render_circle_pattern(unsigned int width, unsigned int height,
-                           const unsigned char *palette, unsigned char *pixels,
+void render_circle_pattern(const image_t *image, const unsigned char *palette,
                            int maxiter) {
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
     double xmin = -150;
     double ymin = -150;
@@ -1517,16 +1516,16 @@ void render_circle_pattern(unsigned int width, unsigned int height,
     double x1, y1;
 
     y1 = ymin;
-    for (j = 0; j < height; j++) {
+    for (j = 0; j < image->height; j++) {
         x1 = xmin;
-        for (i = 0; i < width; i++) {
+        for (i = 0; i < image->width; i++) {
             double x2 = x1 * x1;
             double y2 = y1 * y1;
             int i = (int)(x2 + y2) % 256;
             putpixel(&p, palette, i);
-            x1 += (xmax - xmin) / width;
+            x1 += (xmax - xmin) / image->width;
         }
-        y1 += (ymax - ymin) / height;
+        y1 += (ymax - ymin) / image->height;
     }
 }
 
@@ -1785,6 +1784,7 @@ int render_test_images(void) {
     *p++ = 0;
     *p++ = 0;
 
+    /*
     render_test_rgb_image(&image, palette, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb.ppm");
     bmp_write(WIDTH, HEIGHT, pixels, "test_rgb.bmp");
@@ -1867,6 +1867,10 @@ int render_test_images(void) {
 
     render_fm_synth_julia(&image, palette, 0.5, 0.5, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "fm_synth_j.bmp");
+    */
+
+    render_circle_pattern(&image, palette, 1000);
+    bmp_write(WIDTH, HEIGHT, pixels, "circle_pattern_m.bmp");
 
     /*
     render_test_palette_image(WIDTH, HEIGHT, palette, pixels);
