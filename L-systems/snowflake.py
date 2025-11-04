@@ -35,7 +35,7 @@ MAGENTA = (255, 0, 255)
 WHITE = (255, 255, 255)
 
 
-def apply_rule(rules, c):
+def apply_rule(rules: dict[str, str], c: str) -> str:
     """Aplikace přepisovacího pravidla."""
     output = ""
     for rule, result in rules.items():
@@ -46,7 +46,7 @@ def apply_rule(rules, c):
     return output
 
 
-def produce_control_string(axiom, rewrite_rules, n):
+def produce_control_string(axiom: str, rewrite_rules: dict[str, str], n: int) -> str:
     """Výpočet řídicího řetězce."""
     s = axiom
     for i in range(n):
@@ -57,11 +57,19 @@ def produce_control_string(axiom, rewrite_rules, n):
     return s
 
 
-def draw_l_system(surface, color, control_string, step, angle_delta, start_x, start_y):
+def draw_l_system(
+    surface: pygame.Surface,
+    color: tuple[int, int, int],
+    control_string: str,
+    step: int,
+    angle_delta: float,
+    start_x: float,
+    start_y: float,
+) -> None:
     """Vykreslení L-systému na obrazovku s využitím želví grafiky."""
     x = start_x
     y = start_y
-    angle = 0
+    angle = 0.0
 
     # projít všemi příkazy z řídicího řetězce
     for command in control_string:
@@ -83,7 +91,7 @@ def draw_l_system(surface, color, control_string, step, angle_delta, start_x, st
             angle += angle_delta * math.pi / 180.0
 
 
-def draw_snowflake(surface, color):
+def draw_snowflake(surface: pygame.Surface, color: tuple[int, int, int]) -> None:
     # krok želvy pro příkazy "F" a "B"
     step = 30
 
@@ -119,7 +127,7 @@ display.fill(BLACK)
 draw_snowflake(display, WHITE)
 
 
-def main():
+def main() -> None:
     # Hlavní smyčka
     while True:
         # Načtení a zpracování všech událostí z fronty
