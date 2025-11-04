@@ -84,8 +84,13 @@ IFS_SYSTEMS = {
 
 
 def generate_ifs(
-    image: Image.Image, width: int, height: int, maxiter: int, startiter: int, ifs
-):
+    image: Image.Image,
+    width: int,
+    height: int,
+    maxiter: int,
+    startiter: int,
+    ifs: tuple[tuple[float, float, float, float, float, float, float], ...],
+) -> None:
     delitel = 12.0
 
     # obdélník opsaný IFS
@@ -93,14 +98,14 @@ def generate_ifs(
     ymin = -1.0
 
     # libovolné počáteční souřadnice v rovině
-    x1 = y1 = 0
+    x1 = y1 = 0.0
 
     for i in range(maxiter):
         # pp leží v rozsahu 0.0 - 1.0
         pp = random()
 
         # na základě náhodného čísla najít transformaci
-        suma = 0
+        suma = 0.0
         j = 0
         while suma <= pp:
             suma += ifs[j][6]
@@ -122,7 +127,7 @@ def generate_ifs(
             x = int(x2)
             y = int(y2)
             if x >= 0 and y >= 0 and x < IMAGE_WIDTH and y < IMAGE_HEIGHT:
-                image.putpixel((x, y), 0xFFFFFF)
+                image.putpixel((x, y), 0xFFFFFF)  # type: ignore
 
 
 def main() -> None:
