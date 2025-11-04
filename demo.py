@@ -1,4 +1,3 @@
-
 #
 #  (C) Copyright 2023, 2024  Pavel Tisnovsky
 #
@@ -61,7 +60,9 @@ red_ghost = Ghost(display, resources, "ghost_red")
 splash_screen = SplashScreen(display, resources, "splash_screen", 8, red_ghost)
 
 
-def in_texture_screen(display, resources, red_ghost) -> None:
+def in_texture_screen(
+    display: pygame.Surface, resources: Resources, red_ghost: Ghost
+) -> None:
     textures_screen = TexturesScreen(display, resources, red_ghost)
     textures_screen.draw()
     while True:
@@ -86,7 +87,9 @@ def in_texture_screen(display, resources, red_ghost) -> None:
             plasma_screen.eventLoop()
 
 
-def in_cplx_screen(display, resources, red_ghost) -> None:
+def in_cplx_screen(
+    display: pygame.Surface, resources: Resources, red_ghost: Ghost
+) -> None:
     cplx_screen = CplxScreen(display, resources, red_ghost)
     cplx_screen.draw()
     while True:
@@ -100,9 +103,7 @@ def in_cplx_screen(display, resources, red_ghost) -> None:
             mandelbrot_screen.draw()
             mandelbrot_screen.eventLoop()
         elif choice == CplxMenu.JULIA.value:
-            julia_screen = JuliaScreen(
-                display, resources, "Julia fractal"
-            )
+            julia_screen = JuliaScreen(display, resources, "Julia fractal")
             julia_screen.draw()
             julia_screen.eventLoop()
 
