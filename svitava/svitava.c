@@ -750,7 +750,7 @@ void render_barnsley_j3(const image_t *image, const unsigned char *palette,
  * per pixel.
  */
 void render_magnet_m1(const image_t *image, const unsigned char *palette,
-                        int maxiter) {
+                      int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -810,7 +810,7 @@ void render_magnet_m1(const image_t *image, const unsigned char *palette,
  * @param maxiter Maximum number of iterations per pixel.
  */
 void render_magnet_j1(const image_t *image, const unsigned char *palette,
-                        double cx, double cy, int maxiter) {
+                      double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -861,7 +861,7 @@ void render_magnet_j1(const image_t *image, const unsigned char *palette,
  * convergence, up to `maxiter`.
  */
 void render_magnet_m2(const image_t *image, const unsigned char *palette,
-                        int maxiter) {
+                      int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -1.5, ymin = -2.0, xmax = 2.5, ymax = 2.0;
@@ -1105,8 +1105,8 @@ void render_phoenix_j(const image_t *image, const unsigned char *palette,
  * computes the escape time for the Mandelbrot set. The iteration count
  * determines the color index used from the palette.
  */
-void render_mandelbrot_lambda(const image_t *image, const unsigned char *palette,
-                              int maxiter) {
+void render_mandelbrot_lambda(const image_t *image,
+                              const unsigned char *palette, int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.5, xmax = 4.0, ymax = 2.5;
@@ -1152,7 +1152,7 @@ void render_mandelbrot_lambda(const image_t *image, const unsigned char *palette
  * determines the color index used from the palette.
  */
 void render_lambda(const image_t *image, const unsigned char *palette,
-                      double cx, double cy, int maxiter) {
+                   double cx, double cy, int maxiter) {
     int x, y;
     double zx0, zy0;
     double xmin = -1.0, ymin = -1.5, xmax = 2.0, ymax = 1.5;
@@ -1301,7 +1301,7 @@ void render_manowar_j(const image_t *image, const unsigned char *palette,
  * using the provided palette.
  */
 void render_newton_m(const image_t *image, const unsigned char *palette,
-                      int maxiter) {
+                     int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = image->pixels;
@@ -1373,7 +1373,7 @@ void render_newton_m(const image_t *image, const unsigned char *palette,
  * @param maxiter Maximum number of Newton iterations per pixel.
  */
 void render_newton_j(const image_t *image, const unsigned char *palette,
-                      double cx, double cy, int maxiter) {
+                     double cx, double cy, int maxiter) {
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = image->pixels;
@@ -1437,8 +1437,8 @@ void render_newton_j(const image_t *image, const unsigned char *palette,
  * pixel's mapped coordinates, producing a non-fractal but visually complex
  * pattern. Colors are selected from the palette using the computed value.
  */
-void render_fm_synth_mandelbrot(const image_t *image, const unsigned char *palette,
-                      int maxiter) {
+void render_fm_synth_mandelbrot(const image_t *image,
+                                const unsigned char *palette, int maxiter) {
 #define LIMIT 100
     double xmin = -LIMIT, ymin = -LIMIT, xmax = LIMIT, ymax = LIMIT;
     double stepx = (xmax - xmin) / (double)image->width;
@@ -1817,7 +1817,7 @@ int render_test_images(void) {
 
     render_barnsley_j2(&image, palette, 1.109375, 0.421875, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "barnsley_j2.bmp");
-    
+
     render_barnsley_m3(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "barnsley_m3.bmp");
 
@@ -1847,7 +1847,7 @@ int render_test_images(void) {
 
     render_lambda(&image, palette, 1.6328125, 1.005859375, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "lambda.bmp");
-    
+
     render_manowar_m(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "manowar_m.bmp");
 
