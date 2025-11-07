@@ -118,14 +118,12 @@ void render_test_rgb_image(const image_t *image, const unsigned char *palette,
  * Each pixel in the image is assigned a color from the palette based on its
  * horizontal position, creating vertical color bands.
  */
-void render_test_palette_image(unsigned int width, unsigned int height,
-                               const unsigned char *palette,
-                               unsigned char *pixels) {
+void render_test_palette_image(const image_t *image, const unsigned char *palette) {
     unsigned int i, j;
-    unsigned char *p = pixels;
+    unsigned char *p = image->pixels;
 
-    for (j = 0; j < height; j++) {
-        for (i = 0; i < width; i++) {
+    for (j = 0; j < image->height; j++) {
+        for (i = 0; i < image->width; i++) {
             int color = i;
             putpixel(&p, palette, color);
         }
@@ -1782,12 +1780,15 @@ int render_test_images(void) {
     *p++ = 0;
     *p++ = 0;
 
-    /*
     render_test_rgb_image(&image, palette, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb.ppm");
     bmp_write(WIDTH, HEIGHT, pixels, "test_rgb.bmp");
     tga_write(WIDTH, HEIGHT, pixels, "test_rgb.tga");
 
+    render_test_palette_image(&image, palette);
+    bmp_write(WIDTH, HEIGHT, pixels, "test_palette.bmp");
+
+    /*
     render_mandelbrot(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot.bmp");
 
@@ -1865,17 +1866,15 @@ int render_test_images(void) {
 
     render_fm_synth_julia(&image, palette, 0.5, 0.5, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "fm_synth_j.bmp");
-    */
 
     render_circle_pattern(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "circle_pattern_m.bmp");
 
     render_circle_pattern_j(&image, palette, 0.5, 0.5, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "circle_pattern_j.bmp");
+    */
 
     /*
-    render_test_palette_image(WIDTH, HEIGHT, palette, pixels);
-    ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_palette.ppm");
     bmp_write(WIDTH, HEIGHT, pixels, "test_palette.bmp");
     tga_write(WIDTH, HEIGHT, pixels, "test_palette.tga");
 
