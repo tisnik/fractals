@@ -25,6 +25,8 @@ from demo.cplx_fractal_screen import CplxFractalScreen
 class JuliaScreen(CplxFractalScreen):
 
     def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
-        super(JuliaScreen, self).__init__(display, resources, title_text, -1.5, -1.5, 1.5, 1.5, 0.0, 1.0)
+        super(JuliaScreen, self).__init__(
+            display, resources, title_text, -1.5, -1.5, 1.5, 1.5, 0.0, 1.0
+        )
         self._renderer = recalc_fractal
         self._image = self.calcImage()
