@@ -25,6 +25,8 @@ from demo.cplx_fractal_screen import CplxFractalScreen
 class MandelbrotScreen(CplxFractalScreen):
 
     def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
-        super(MandelbrotScreen, self).__init__(display, resources, title_text, -2.0, -1.5, 1.0, 1.5)
+        super(MandelbrotScreen, self).__init__(
+            display, resources, title_text, -2.0, -1.5, 1.0, 1.5
+        )
         self._renderer = recalc_fractal
         self._image = self.calcImage()
