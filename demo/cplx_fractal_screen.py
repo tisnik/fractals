@@ -67,22 +67,23 @@ class CplxFractalScreen(Screen):
             "RGB", (CplxFractalScreen.IMAGE_WIDTH, CplxFractalScreen.IMAGE_HEIGHT)
         )
         palette = self._resources.palettes[self._palette_index]
-        if self._cx is None or self._cy is None:
-            self._renderer(
-                image, palette, self._xmin, self._ymin, self._xmax, self._ymax, 500
-            )
-        else:
-            self._renderer(
-                image,
-                palette,
-                self._xmin,
-                self._ymin,
-                self._xmax,
-                self._ymax,
-                self._cx,
-                self._cy,
-                500,
-            )
+        if self._renderer is not None:
+            if self._cx is None or self._cy is None:
+                self._renderer(
+                    image, palette, self._xmin, self._ymin, self._xmax, self._ymax, 500
+                )
+            else:
+                self._renderer(
+                    image,
+                    palette,
+                    self._xmin,
+                    self._ymin,
+                    self._xmax,
+                    self._ymax,
+                    self._cx,
+                    self._cy,
+                    500,
+                )
         return pygame.image.fromstring(image.tobytes(), image.size, "RGB").convert()
 
     def eventLoop(self) -> int:
