@@ -1,4 +1,3 @@
-
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
@@ -69,9 +68,7 @@ class OtherMoireScreen(Screen):
             threshold,
             OtherMoireScreen.FUNCTIONS[self._function],
         )
-        return pygame.image.fromstring(
-            image.tobytes(), image.size, "RGB"
-        ).convert()
+        return pygame.image.fromstring(image.tobytes(), image.size, "RGB").convert()
 
     def draw(self) -> None:
         """Draw screen."""
