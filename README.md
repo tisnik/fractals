@@ -26,6 +26,8 @@ Various snippets of fractal rendering code
 
 ### L-systems
 
+[![L-systems](docs/L-systems/lsystem.png)](docs/L-systems/index.md)
+
 ### Interactive fractal viewers
 
 ### Other code snippets
