@@ -1,4 +1,3 @@
-
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
@@ -41,9 +40,7 @@ class PlasmaScreen(Screen):
         image = Image.new("RGB", (PlasmaScreen.IMAGE_WIDTH, PlasmaScreen.IMAGE_HEIGHT))
         palette = self._resources.palettes[self._palette_index]
         spectral_synthesis(image, palette, 4, 0.5)
-        return pygame.image.fromstring(
-            image.tobytes(), image.size, "RGB"
-        ).convert()
+        return pygame.image.fromstring(image.tobytes(), image.size, "RGB").convert()
 
     def draw(self) -> None:
         """Draw screen."""
