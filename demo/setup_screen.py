@@ -1,4 +1,3 @@
-
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
@@ -27,9 +26,7 @@ class SetupScreen(AbstractMenuScreen):
         self, display: pygame.Surface, resources: Resources, ghost: Ghost
     ) -> None:
         """Initialize the screen."""
-        super(SetupScreen, self).__init__(
-            display, resources, ghost, "Setup"
-        )
+        super(SetupScreen, self).__init__(display, resources, ghost, "Setup")
 
         # pre-render all menu items onto surfaces
         self._menu = (
