@@ -1,10 +1,11 @@
 #include <SDL2/SDL.h>
 
 /* graphics options */
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define BORDER 64
 #define IMAGE_WIDTH 256
 #define IMAGE_HEIGHT 256
+#define SCREEN_WIDTH IMAGE_WIDTH*2 + BORDER*3
+#define SCREEN_HEIGHT IMAGE_HEIGHT + BORDER*2
 #define TITLE "Svitava"
 
 #define ABS(a) ((a)<0 ? -(a) : (a) )
@@ -88,6 +89,17 @@ static void create_pixmaps(GraphicsState *graphicsState, const int width, const 
 }
 
 void redraw(GraphicsState *graphicsState) {
+    SDL_Rect dst;
+    dst.x=BORDER;
+    dst.y=BORDER;
+    dst.w=0;
+    dst.h=0;
+
+    SDL_BlitSurface(graphicsState->mandelbrot_pixmap, NULL, graphicsState->screen_surface, &dst);
+
+    dst.x=IMAGE_WIDTH+BORDER*2;
+    SDL_BlitSurface(graphicsState->julia_pixmap, NULL, graphicsState->screen_surface, &dst);
+
     SDL_UpdateWindowSurface(graphicsState->window);
 }
 
