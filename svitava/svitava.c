@@ -139,7 +139,7 @@ void render_test_palette_image(const image_t *image, const unsigned char *palett
  * determines the color index used from the palette.
  */
 void render_mandelbrot(const image_t *image, const unsigned char *palette,
-                       int maxiter) {
+                       double zx0, double zy0, int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -1.5, xmax = 1.0, ymax = 1.5;
@@ -152,8 +152,8 @@ void render_mandelbrot(const image_t *image, const unsigned char *palette,
     for (y = 0; y < image->height; y++) {
         cx = xmin;
         for (x = 0; x < image->width; x++) {
-            double zx = 0.0;
-            double zy = 0.0;
+            double zx = zx0;
+            double zy = zy0;
             unsigned int i = 0;
             while (i < maxiter) {
                 double zx2 = zx * zx;
@@ -1758,8 +1758,8 @@ int tga_write(unsigned int width, unsigned int height,
  * PPM and BMP files.
  */
 int render_test_images(void) {
-#define WIDTH 256
-#define HEIGHT 256
+#define WIDTH 512
+#define HEIGHT 512
     unsigned char *pixels = (unsigned char *)malloc(WIDTH * HEIGHT * 4);
     unsigned char *palette = (unsigned char *)malloc(256 * 3);
     unsigned char *p = palette;
@@ -1780,6 +1780,7 @@ int render_test_images(void) {
     *p++ = 0;
     *p++ = 0;
 
+    /*
     render_test_rgb_image(&image, palette, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb.ppm");
     bmp_write(WIDTH, HEIGHT, pixels, "test_rgb.bmp");
@@ -1787,14 +1788,15 @@ int render_test_images(void) {
 
     render_test_palette_image(&image, palette);
     bmp_write(WIDTH, HEIGHT, pixels, "test_palette.bmp");
+    */
 
-    /*
-    render_mandelbrot(&image, palette, 1000);
+    render_mandelbrot(&image, palette, 0.0, 0.0, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot.bmp");
 
     render_julia(&image, palette, 0.0, 1.0, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "julia.bmp");
 
+    /*
     render_mandelbrot_3(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot_3.bmp");
 
@@ -1886,8 +1888,10 @@ int render_test_images(void) {
  * Entry point for the program.
  * @returns 0 on successful execution.
  */
+#ifndef NO_MAIN
 int main(void) {
     int result = render_test_images();
 
     return result;
 }
+#endif
