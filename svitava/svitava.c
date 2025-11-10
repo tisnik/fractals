@@ -66,6 +66,15 @@ typedef struct {
     unsigned char *pixels;
 } image_t;
 
+
+/* All functions that implement fractal renderer must be of this type. */
+typedef void t_renderer(const image_t *image,
+                        const unsigned char *palette,
+                        double px,
+                        double py,
+                        int maxiter);
+
+
 #define NULL_CHECK(value)                                                      \
     if (value == NULL) {                                                       \
         puts("NULL parameter");                                                \
@@ -1754,21 +1763,42 @@ int tga_write(unsigned int width, unsigned int height,
 }
 
 /*
+ * Calculates the selected fractal and save it info disk.
+ */
+void render_and_save_fractal(const char *name, const char *filename,
+                             t_renderer *renderer,
+                             const unsigned char *palette,
+                             const int width, const int height,
+                             const double px, const double py, const int maxiter) {
+
+    image_t image;
+
+    printf("Rendering %s started\n", name);
+    image.width = width;
+    image.height = height;
+    image.pixels = (unsigned char *)malloc(width * height * 4);
+    if (image.pixels == NULL) {
+        puts("Memory allocation error!");
+        return;
+    }
+
+    renderer(&image, palette, px, py, maxiter);
+    bmp_write(width, height, image.pixels, filename);
+
+    free(image.pixels);
+    printf("Rendering %s finished\n", name);
+}
+
+/*
  * Renders bunch of test images and writes it to both
  * PPM and BMP files.
  */
 int render_test_images(void) {
 #define WIDTH 512
 #define HEIGHT 512
-    unsigned char *pixels = (unsigned char *)malloc(WIDTH * HEIGHT * 4);
     unsigned char *palette = (unsigned char *)malloc(256 * 3);
     unsigned char *p = palette;
     int i;
-    image_t image = {WIDTH, HEIGHT, pixels};
-
-    if (!pixels) {
-        return -1;
-    }
 
     for (i = 0; i <= 254; i++) {
         *p++ = i * 3;
@@ -1790,11 +1820,9 @@ int render_test_images(void) {
     bmp_write(WIDTH, HEIGHT, pixels, "test_palette.bmp");
     */
 
-    render_mandelbrot(&image, palette, 0.0, 0.0, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot.bmp");
+    render_and_save_fractal("Classic Mandelbrot", "mandelbrot.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000);
+    render_and_save_fractal("Classic Julia", "julia.bmp", render_julia, palette, WIDTH, HEIGHT, 0.0, 1.0, 1000);
 
-    render_julia(&image, palette, 0.0, 1.0, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "julia.bmp");
 
     /*
     render_mandelbrot_3(&image, palette, 1000);
