@@ -165,8 +165,17 @@ def render_m_set(
     fractal_type = fractal_types[fractal_type_index]
     renderer = fractal_renderers[fractal_type][0]
 
+    # allow ctypes to check arguments
+    renderer.argtypes = [POINTER(Image), POINTER(c_char), c_double, c_double, c_int]
+
     c_image = Image(image_width, image_height, buffer)
-    renderer(pointer(c_image), palette, c_int(maxiter))
+    renderer(
+        pointer(c_image),
+        palette,
+        c_double(0.0),
+        c_double(0.0),
+        c_int(maxiter),
+    )
 
 
 def render_j_set(
@@ -182,6 +191,10 @@ def render_j_set(
 ) -> None:
     fractal_type = fractal_types[fractal_type_index]
     renderer = fractal_renderers[fractal_type][1]
+
+    # allow ctypes to check arguments
+    renderer.argtypes = [POINTER(Image), POINTER(c_char), c_double, c_double, c_int]
+
     c_image = Image(image_width, image_height, buffer)
     renderer(
         pointer(c_image),
