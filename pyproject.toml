@@ -1,7 +1,36 @@
+[project]
+name = "Fractals"
+description = "Fractals"
+version = "1.0.0"
+authors = [
+    {email = "tisnik@centrum.cz", name = "Pavel Tišnovský"},
+]
+maintainers = [
+    {email = "tisnik@centrum.cz", name = "Pavel Tišnovský"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Topic :: Fractals",
+    "Topic :: Graphics",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+keywords = [
+    "Fractal",
+    "IFS",
+    "L-system",
+    "Strange attractor"
+]
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "pillow>=12.0.0",
+    "pygame>=2.6.1",
+]
+
 [tool.ruff]
 # select = ["E", "F", "W", "C", "D"]
 #select = ["E", "F", "W", "C", "I", "COM"]
-select = ["ALL"]
+select = ["UP"]
 ignore = ["C901", "F401", "COM812"]
 
 # we need to check 'mood' of all docstrings, this needs to be enabled explicitly
@@ -10,3 +39,10 @@ lint.pydocstyle.convention = "google"
 
 line-length = 100
 
+[tool.mypy]
+explicit_package_bases = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+ignore_missing_imports = true
+disable_error_code = "attr-defined"
