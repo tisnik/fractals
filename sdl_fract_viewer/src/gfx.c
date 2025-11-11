@@ -153,6 +153,27 @@ void gfx_clear_screen(Uint32 color)
     SDL_FillRect(screen_surface, NULL, color);
 }
 
+void gfx_getpixel(SDL_Surface *surface, int x, int y, unsigned char *r, unsigned char *g, unsigned char *b) {
+    if (x>=0 && x< surface->w && y>=0 && y < surface->h) {
+        if (surface->format->BitsPerPixel == 24) {
+            Uint8 *pixel = (Uint8 *)surface->pixels;
+            pixel += x*3;
+            pixel += y*surface->pitch;
+            *b = *pixel++;
+            *g = *pixel++;
+            *r = *pixel;
+        }
+        if (surface->format->BitsPerPixel == 32) {
+            Uint8 *pixel = (Uint8 *)surface->pixels;
+            pixel += x*4;
+            pixel += y*surface->pitch;
+            *b = *pixel++;
+            *g = *pixel++;
+            *r = *pixel;
+        }
+    }
+}
+
 /*
  *
  */
@@ -388,11 +409,11 @@ void gfx_print_char_bitmap_font(SDL_Surface *surface, int x, int y, char ch)
 {
     SDL_Rect src_rect;
     SDL_Rect dst_rect;
-    if (ch < 32)
+    ch-=32;
+    if (ch <= 0)
     {
         return;
     }
-    ch-=32;
     dst_rect.x = x;
     dst_rect.y = y;
     src_rect.x = 0;
