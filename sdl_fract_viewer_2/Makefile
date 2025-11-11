@@ -13,7 +13,7 @@ EXENAME=fv
 all:	$(EXENAME)
 
 clean:
-	rm -f $(OBJDIR)/*
+	rm -f $(OBJDIR)/*.o
 	rm -f $(TESTDIR)/*
 	rm -f $(EXENAME)
 
