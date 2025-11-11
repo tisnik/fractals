@@ -57,6 +57,7 @@ render_circle_pattern_j
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 
 /* ABI type definitions */
 
@@ -74,6 +75,19 @@ typedef void t_renderer(const image_t *image,
                         double py,
                         int maxiter);
 
+/* All parameters passed to renderer as one structure. It allow us to simply run
+ * the renderer in a separate thread. */
+typedef struct {
+    char *name;
+    char *filename;
+    t_renderer *renderer;
+    unsigned char *palette;
+    int width;
+    int height;
+    double px;
+    double py;
+    int maxiter;
+} renderer_parameters_t;
 
 #define NULL_CHECK(value)                                                      \
     if (value == NULL) {                                                       \
@@ -1765,28 +1779,33 @@ int tga_write(unsigned int width, unsigned int height,
 /*
  * Calculates the selected fractal and save it info disk.
  */
-void render_and_save_fractal(const char *name, const char *filename,
-                             t_renderer *renderer,
-                             const unsigned char *palette,
-                             const int width, const int height,
-                             const double px, const double py, const int maxiter) {
-
+void* render_and_save_fractal(void *void_parameters) {
+    renderer_parameters_t *renderer_parameters = void_parameters;
     image_t image;
 
-    printf("Rendering %s started\n", name);
-    image.width = width;
-    image.height = height;
-    image.pixels = (unsigned char *)malloc(width * height * 4);
+    printf("Rendering %s started\n", renderer_parameters->name);
+    image.width = renderer_parameters->width;
+    image.height = renderer_parameters->height;
+    image.pixels = (unsigned char *)malloc(renderer_parameters->width * renderer_parameters->height * 4);
     if (image.pixels == NULL) {
         puts("Memory allocation error!");
-        return;
+        return NULL;
     }
 
-    renderer(&image, palette, px, py, maxiter);
-    bmp_write(width, height, image.pixels, filename);
+    renderer_parameters->renderer(
+            &image,
+            renderer_parameters->palette,
+            renderer_parameters->px,
+            renderer_parameters->py,
+            renderer_parameters->maxiter);
+    bmp_write(renderer_parameters->width,
+              renderer_parameters->height,
+              image.pixels,
+              renderer_parameters->filename);
 
     free(image.pixels);
-    printf("Rendering %s finished\n", name);
+    printf("Rendering %s finished\n", renderer_parameters->name);
+    return NULL;
 }
 
 /*
@@ -1796,9 +1815,12 @@ void render_and_save_fractal(const char *name, const char *filename,
 int render_test_images(void) {
 #define WIDTH 512
 #define HEIGHT 512
+#define NUM_THREADS 4
+
     unsigned char *palette = (unsigned char *)malloc(256 * 3);
     unsigned char *p = palette;
     int i;
+    pthread_t threads[NUM_THREADS];
 
     for (i = 0; i <= 254; i++) {
         *p++ = i * 3;
@@ -1810,6 +1832,34 @@ int render_test_images(void) {
     *p++ = 0;
     *p++ = 0;
 
+    {
+        renderer_parameters_t p = {"Classic Mandelbrot", "mandelbrot1.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000};
+        pthread_create(&threads[0], NULL, render_and_save_fractal, &p);
+    }
+    {
+        renderer_parameters_t p = {"Classic Mandelbrot", "mandelbrot2.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000};
+        pthread_create(&threads[1], NULL, render_and_save_fractal, &p);
+    }
+    {
+        renderer_parameters_t p = {"Classic Mandelbrot", "mandelbrot3.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000};
+        pthread_create(&threads[2], NULL, render_and_save_fractal, &p);
+    }
+    {
+        renderer_parameters_t p = {"Classic Mandelbrot", "mandelbrot4.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000};
+        pthread_create(&threads[3], NULL, render_and_save_fractal, &p);
+    }
+
+    printf("All threads are created.\n");
+
+    /* wait for each thread to complete */
+    for (i = 0; i < NUM_THREADS; i++) {
+        int result_code;
+        result_code = pthread_join(threads[i], NULL);
+        printf("Thread %d has ended with result code %d\n", i, result_code);
+    }
+
+    printf("Main program has ended.\n");
+
     /*
     render_test_rgb_image(&image, palette, 0);
     ppm_write_ascii(WIDTH, HEIGHT, pixels, "test_rgb.ppm");
@@ -1819,10 +1869,6 @@ int render_test_images(void) {
     render_test_palette_image(&image, palette);
     bmp_write(WIDTH, HEIGHT, pixels, "test_palette.bmp");
     */
-
-    render_and_save_fractal("Classic Mandelbrot", "mandelbrot.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000);
-    render_and_save_fractal("Classic Julia", "julia.bmp", render_julia, palette, WIDTH, HEIGHT, 0.0, 1.0, 1000);
-
 
     /*
     render_mandelbrot_3(&image, palette, 1000);
