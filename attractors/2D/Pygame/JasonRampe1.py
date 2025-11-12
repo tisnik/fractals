@@ -1,3 +1,5 @@
+"""Výpočet a vykreslení podivného atraktoru vytvořeného Jasonem Rampem 1."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
