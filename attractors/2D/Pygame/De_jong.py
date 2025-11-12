@@ -1,3 +1,5 @@
+"""Výpočet a vykreslení De Jongova podivného atraktoru."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
