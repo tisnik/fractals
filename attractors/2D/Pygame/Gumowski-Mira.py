@@ -1,3 +1,5 @@
+"""Výpočet a vykreslení podivného atraktoru vytvořeného I.Gumowskim a L.Mirou."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
