@@ -1815,12 +1815,22 @@ void* render_and_save_fractal(void *void_parameters) {
 int render_test_images(void) {
 #define WIDTH 512
 #define HEIGHT 512
-#define NUM_THREADS 4
 
     unsigned char *palette = (unsigned char *)malloc(256 * 3);
     unsigned char *p = palette;
     int i;
-    pthread_t threads[NUM_THREADS];
+    int max_threads;
+    pthread_t *threads;
+
+    renderer_parameters_t parameters[] = {
+        {"Classic Mandelbrot", "mandelbrot1.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Classic Mandelbrot", "mandelbrot2.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Classic Mandelbrot", "mandelbrot3.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Classic Mandelbrot", "mandelbrot4.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+    };
+
+    max_threads = sizeof(parameters) / sizeof(renderer_parameters_t);
+    threads = (pthread_t*)malloc(max_threads*sizeof(pthread_t));
 
     for (i = 0; i <= 254; i++) {
         *p++ = i * 3;
@@ -1832,27 +1842,14 @@ int render_test_images(void) {
     *p++ = 0;
     *p++ = 0;
 
-    {
-        renderer_parameters_t p = {"Classic Mandelbrot", "mandelbrot1.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000};
-        pthread_create(&threads[0], NULL, render_and_save_fractal, &p);
-    }
-    {
-        renderer_parameters_t p = {"Classic Mandelbrot", "mandelbrot2.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000};
-        pthread_create(&threads[1], NULL, render_and_save_fractal, &p);
-    }
-    {
-        renderer_parameters_t p = {"Classic Mandelbrot", "mandelbrot3.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000};
-        pthread_create(&threads[2], NULL, render_and_save_fractal, &p);
-    }
-    {
-        renderer_parameters_t p = {"Classic Mandelbrot", "mandelbrot4.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000};
-        pthread_create(&threads[3], NULL, render_and_save_fractal, &p);
+    for (i=0; i<max_threads; i++) {
+        pthread_create(&threads[i], NULL, render_and_save_fractal, &parameters[i]);
     }
 
     printf("All threads are created.\n");
 
     /* wait for each thread to complete */
-    for (i = 0; i < NUM_THREADS; i++) {
+    for (i = 0; i < max_threads; i++) {
         int result_code;
         result_code = pthread_join(threads[i], NULL);
         printf("Thread %d has ended with result code %d\n", i, result_code);
