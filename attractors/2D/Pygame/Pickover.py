@@ -1,3 +1,5 @@
+"""Výpočet a vykreslení podivného atraktoru nazvaného 2D Pickover."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
