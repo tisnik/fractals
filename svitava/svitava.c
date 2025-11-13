@@ -1808,6 +1808,21 @@ void* render_and_save_fractal(void *void_parameters) {
     return NULL;
 }
 
+void fill_in_palette(unsigned char *palette) {
+    unsigned char *p = palette;
+    int i;
+
+    for (i = 0; i <= 254; i++) {
+        *p++ = i * 3;
+        *p++ = i * 3;
+        *p++ = i * 3;
+    }
+    /* last color is black */
+    *p++ = 0;
+    *p++ = 0;
+    *p++ = 0;
+}
+
 /*
  * Renders bunch of test images and writes it to both
  * PPM and BMP files.
@@ -1817,7 +1832,6 @@ int render_test_images(void) {
 #define HEIGHT 512
 
     unsigned char *palette = (unsigned char *)malloc(256 * 3);
-    unsigned char *p = palette;
     int i;
     int max_threads;
     pthread_t *threads;
@@ -1832,15 +1846,7 @@ int render_test_images(void) {
     max_threads = sizeof(parameters) / sizeof(renderer_parameters_t);
     threads = (pthread_t*)malloc(max_threads*sizeof(pthread_t));
 
-    for (i = 0; i <= 254; i++) {
-        *p++ = i * 3;
-        *p++ = i * 3;
-        *p++ = i * 3;
-    }
-    /* last color is black */
-    *p++ = 0;
-    *p++ = 0;
-    *p++ = 0;
+    fill_in_palette(palette);
 
     for (i=0; i<max_threads; i++) {
         pthread_create(&threads[i], NULL, render_and_save_fractal, &parameters[i]);
@@ -1952,6 +1958,7 @@ int render_test_images(void) {
     tga_write(WIDTH, HEIGHT, pixels, "test_palette.tga");
 
     */
+    free(palette);
     return 0;
 }
 
