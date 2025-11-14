@@ -1,3 +1,5 @@
+"""Phoenix interactive fractal renderer."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
