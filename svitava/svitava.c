@@ -1837,10 +1837,8 @@ int render_test_images(void) {
     pthread_t *threads;
 
     renderer_parameters_t parameters[] = {
-        {"Classic Mandelbrot", "mandelbrot1.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Classic Mandelbrot", "mandelbrot2.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Classic Mandelbrot", "mandelbrot3.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Classic Mandelbrot", "mandelbrot4.bmp", render_mandelbrot, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Classic Mandelbrot", "mandelbrot.bmp",   render_mandelbrot,   palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Classic Julia",      "julia.bmp",        render_julia,        palette, WIDTH, HEIGHT, -0.207190825000000012496, 0.676656624999999999983, 1000},
     };
 
     max_threads = sizeof(parameters) / sizeof(renderer_parameters_t);
