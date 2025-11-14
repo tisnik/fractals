@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Blending based on averaging two images without using alpha channel."""
+"""Blending based on averaging two images without using alpha channel."""
 
 import palette_blues
 import palette_greens
