@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Blending of two fractal images."""
+
 import palette_blues
 import palette_greens
 import palette_mandmap
