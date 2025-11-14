@@ -1,3 +1,5 @@
+"""Interactive renderer of the Julia fractal z^z-z based on Pygame."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
