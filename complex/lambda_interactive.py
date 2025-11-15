@@ -1,3 +1,5 @@
+"""Interactive Lambda fractal renderer."""
+
 #
 #  (C) Copyright 2025  Pavel Tisnovsky
 #
