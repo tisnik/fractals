@@ -1,4 +1,4 @@
-# Vykreslení Lorenzova atraktoru s různými počátečními souřadnicemi x0 a y0
+"""Vykreslení Lorenzova atraktoru s různými počátečními souřadnicemi x0 a y0."""
 
 # MIT License
 #
