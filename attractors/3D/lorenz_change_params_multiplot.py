@@ -1,4 +1,4 @@
-# Vykreslení Lorenzova atraktoru s různými parametry s a r
+"""Vykreslení Lorenzova atraktoru s různými parametry s a r."""
 
 # MIT License
 #
