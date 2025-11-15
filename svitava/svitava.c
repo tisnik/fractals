@@ -248,7 +248,7 @@ void render_julia(const image_t *image, const unsigned char *palette,
  * iterations before escape determines the color index from the palette.
  */
 void render_mandelbrot_3(const image_t *image, const unsigned char *palette,
-                         int maxiter) {
+                         double zx0, double zy0, int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -1.5, ymin = -1.5, xmax = 1.5, ymax = 1.5;
@@ -261,8 +261,8 @@ void render_mandelbrot_3(const image_t *image, const unsigned char *palette,
     for (y = 0; y < image->height; y++) {
         cx = xmin;
         for (x = 0; x < image->width; x++) {
-            double zx = 0.0;
-            double zy = 0.0;
+            double zx = zx0;
+            double zy = zy0;
             unsigned int i = 0;
             while (i < maxiter) {
                 double zx2 = zx * zx;
@@ -1839,6 +1839,8 @@ int render_test_images(void) {
     renderer_parameters_t parameters[] = {
         {"Classic Mandelbrot", "mandelbrot.bmp",   render_mandelbrot,   palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
         {"Classic Julia",      "julia.bmp",        render_julia,        palette, WIDTH, HEIGHT, -0.207190825000000012496, 0.676656624999999999983, 1000},
+        {"Mandelbrot z=z^3+c", "mandelbrot_3.bmp", render_mandelbrot_3, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Julia z=z^3+c",      "julia_3.bmp",      render_julia_3,      palette, WIDTH, HEIGHT, 0.12890625, -0.796875, 1000},
     };
 
     max_threads = sizeof(parameters) / sizeof(renderer_parameters_t);
@@ -1872,11 +1874,6 @@ int render_test_images(void) {
     */
 
     /*
-    render_mandelbrot_3(&image, palette, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot_3.bmp");
-
-    render_julia_3(&image, palette, 0.12890625, -0.796875, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "julia_3.bmp");
 
     render_mandelbrot_4(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot_4.bmp");
