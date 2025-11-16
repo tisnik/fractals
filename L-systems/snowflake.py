@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+"""Snowflake L-system."""
+
 import math
 import sys
 
