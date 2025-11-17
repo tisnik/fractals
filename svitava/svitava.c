@@ -461,7 +461,7 @@ void render_julia_4(const image_t *image, const unsigned char *palette,
  * on the sign of the real part of z.
  */
 void render_barnsley_m1(const image_t *image, const unsigned char *palette,
-                        int maxiter) {
+                        double zx0, double zy0, int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -474,8 +474,8 @@ void render_barnsley_m1(const image_t *image, const unsigned char *palette,
     for (y = 0; y < image->height; y++) {
         cx = xmin;
         for (x = 0; x < image->width; x++) {
-            double zx = 0.0;
-            double zy = 0.0;
+            double zx = zx0;
+            double zy = zy0;
             unsigned int i = 0;
             while (i < maxiter) {
                 double zx2 = zx * zx;
@@ -1843,6 +1843,8 @@ int render_test_images(void) {
         {"Julia z=z^3+c",      "julia_3.bmp",      render_julia_3,      palette, WIDTH, HEIGHT, 0.12890625, -0.796875, 1000},
         {"Mandelbrot z=z^4+c", "mandelbrot_4.bmp", render_mandelbrot_4, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
         {"Julia z=z^4+c",      "julia_4.bmp",      render_julia_4,      palette, WIDTH, HEIGHT, 0.375, -0.97265625, 1000},
+        {"Barnsley M1",        "barnsley_m1.bmp",  render_barnsley_m1,  palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Barnsley J1",        "barnsley_j1.bmp",  render_barnsley_j1,  palette, WIDTH, HEIGHT, 0.4, 1.5, 1000},
     };
 
     max_threads = sizeof(parameters) / sizeof(renderer_parameters_t);
@@ -1876,14 +1878,6 @@ int render_test_images(void) {
     */
 
     /*
-
-
-    render_barnsley_m1(&image, palette, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "barnsley_m1.bmp");
-
-    render_barnsley_j1(&image, palette, 0.484375, -1.21875, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "barnsley_j1.bmp");
-
     render_barnsley_m2(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "barnsley_m2.bmp");
 
