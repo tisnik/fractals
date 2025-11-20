@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<meta charset="utf-8"/>
+<title>Global Namespace</title>
+<link rel="stylesheet" href="../clang-doc-default-stylesheet.css"/>
+<script src="../index.js"></script>
+<script src="../index_json.js"></script>
+<header id="project-title"></header>
+<main>
+  <div id="sidebar-left" path="GlobalNamespace" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left"></div>
+  <div id="main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+    <h1>Global Namespace</h1>
+    <h2 id="Functions">Functions</h2>
+    <div>
+      <h3 id="306B0DB72D0BD060D24BF69CA635948BD11CCBEF">gfx_initialize</h3>
+      <p>int gfx_initialize(int fullscreen, int width, int height, int bpp)</p>
+      <p>Defined at line 62 of file gfx.c</p>
+      <div>
+        <div></div>
+        <div>
+          <p>extern TTF_Font *font24pt;extern TTF_Font *font36pt;extern TTF_Font *font48pt;</p>
+        </div>
+      </div>
+      <h3 id="DE7FD7695092B6082DC993A7597CFD4C5ECD2DF8">gfx_finalize</h3>
+      <p>void gfx_finalize()</p>
+      <p>Defined at line 107 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="8BB73AF0CCE38E5CD8354D3DB9124DF45949CE86">gfx_set_screen_surface</h3>
+      <p>void gfx_set_screen_surface(SDL_Surface * screen)</p>
+      <p>Defined at line 116 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="0556E562370C5549751993208F9C7BA19172008B">gfx_get_screen_surface</h3>
+      <p>SDL_Surface * gfx_get_screen_surface()</p>
+      <p>Defined at line 124 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="142CC23D12EA4C4AC1B41062B938D0F622ADEBD8">gfx_create_surface</h3>
+      <p>SDL_Surface * gfx_create_surface(int width, int height)</p>
+      <p>Defined at line 132 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="C21A5485298506587D95F7E1907667F01DDD118E">gfx_bitblt</h3>
+      <p>void gfx_bitblt(SDL_Surface * surface, const int x, const int y)</p>
+      <p>Defined at line 140 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="0AC043471D5180EFA8C42B37F0FBC036F02B9A10">gfx_flip</h3>
+      <p>void gfx_flip()</p>
+      <p>Defined at line 153 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="6C130EA0B5011678766293C379533ADA593E79D9">gfx_clear_screen</h3>
+      <p>void gfx_clear_screen(Uint32 color)</p>
+      <p>Defined at line 161 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="3E2584763CF68EA0857EB1BB7B1999263302E8B8">gfx_putpixel</h3>
+      <p>void gfx_putpixel(SDL_Surface * surface, int x, int y, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 190 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="E4C51FBBC281354F692402194B0FC70DDA541AF5">gfx_putpixel_screen</h3>
+      <p>void gfx_putpixel_screen(int x, int y, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 218 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="E3109388D2AD368316E8F7B042243E54A6AD2A28">gfx_getpixel</h3>
+      <p>void gfx_getpixel(SDL_Surface * surface, int x, int y, unsigned char * r, unsigned char * g, unsigned char * b)</p>
+      <p>Defined at line 166 of file gfx.c</p>
+      <h3 id="5B33EB59A7A03EEA16CAEA4AC2D863573D743577">gfx_hline</h3>
+      <p>void gfx_hline(SDL_Surface * surface, int x1, int x2, int y, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 226 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="2376D619D0FCDAF69E3B3911240374FA951B7F1F">gfx_vline</h3>
+      <p>void gfx_vline(SDL_Surface * surface, int x, int y1, int y2, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 240 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="8A9996A91766ABB8FB4F33421BFA6816337025D1">gfx_line</h3>
+      <p>void gfx_line(SDL_Surface * surface, int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 254 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="6E8229A471663652F63A411FEC2F0D1CFC6A345A">gfx_aa_line</h3>
+      <p>void gfx_aa_line(SDL_Surface * surface, int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 283 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="A77D560DDEEC380BE887B0E78F63525FEDCF64DF">gfx_hline_screen</h3>
+      <p>void gfx_hline_screen(int x1, int x2, int y, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 377 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="5091F8DA67562A9C860C42C3BC10CD8494979571">gfx_vline_screen</h3>
+      <p>void gfx_vline_screen(int x, int y1, int y2, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 385 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="30890BB16F16E3238BBFD6EC0014994030283844">gfx_line_screen</h3>
+      <p>void gfx_line_screen(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 393 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="E37B200C3E00B62F91688EB79377BA6AD05898B8">gfx_aa_line_screen</h3>
+      <p>void gfx_aa_line_screen(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)</p>
+      <p>Defined at line 401 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="1AD726DC3CC826F1B07AE5DF4A647F60FA3BD8A6">gfx_set_bitmap_font_surface</h3>
+      <p>void gfx_set_bitmap_font_surface(SDL_Surface * surface)</p>
+      <p>Defined at line 409 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="9889281329BC47BCF91B0AF61038CC60C7FF1642">gfx_print_char_bitmap_font</h3>
+      <p>void gfx_print_char_bitmap_font(SDL_Surface * surface, int x, int y, char ch)</p>
+      <p>Defined at line 417 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="773F68366E79D4124E2ED013DA09E7221B6E1390">gfx_print_string_bitmap_font</h3>
+      <p>void gfx_print_string_bitmap_font(SDL_Surface * surface, int x, int y, char * str)</p>
+      <p>Defined at line 438 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="DBF9CFC3831D7C40F3199A1FB2AB81B6186D358F">gfx_print_string_bitmap_font_screen</h3>
+      <p>void gfx_print_string_bitmap_font_screen(int x, int y, char * str)</p>
+      <p>Defined at line 451 of file gfx.c</p>
+      <div>
+        <div></div>
+      </div>
+      <h3 id="F9C18FAA192A1B1E2781833C00F6DE734B054394">init_sdl</h3>
+      <p>void init_sdl()</p>
+      <p>Defined at line 13 of file main.c</p>
+      <h3 id="DF1AE914FDECB1044CE24A24B323289FB8B0EF6C">finalize</h3>
+      <p>void finalize()</p>
+      <p>Defined at line 22 of file main.c</p>
+      <h3 id="27B3DD7039150B164FE26C6C5C8BDD0DBE294934">show_scene</h3>
+      <p>void show_scene(SDL_Surface * surface)</p>
+      <p>Defined at line 28 of file main.c</p>
+      <h3 id="9F9B39F609B5E9E979BF430AF7C03218E3B46FA0">smooth_scene</h3>
+      <p>void smooth_scene(SDL_Surface * pixmap)</p>
+      <p>Defined at line 34 of file main.c</p>
+      <h3 id="CFECFA2CEF012592747700419E2A371DB83D968C">redraw</h3>
+      <p>void redraw(SDL_Surface * pixmap)</p>
+      <p>Defined at line 78 of file main.c</p>
+      <h3 id="6FE4E723AE90E2189F6EEAB3745D6E825D63BA87">main_event_loop</h3>
+      <p>void main_event_loop(SDL_Surface * pixmap)</p>
+      <p>Defined at line 99 of file main.c</p>
+      <h3 id="19D0EEBB40D34802CF7BC02C427298BC9E466C52">run</h3>
+      <p>void run()</p>
+      <p>Defined at line 136 of file main.c</p>
+      <h3 id="FD57EA7BE1A50F86E7E4A9DEB96389DDF85EEADE">main</h3>
+      <p>int main(int argc, char ** argv)</p>
+      <p>Defined at line 146 of file main.c</p>
+    </div>
+  </div>
+  <div id="sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+    <ol>
+      <li>
+        <span>
+          <a href="#Functions">Functions</a>
+        </span>
+        <ul>
+          <li>
+            <span>
+              <a href="#306B0DB72D0BD060D24BF69CA635948BD11CCBEF">gfx_initialize</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#DE7FD7695092B6082DC993A7597CFD4C5ECD2DF8">gfx_finalize</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#8BB73AF0CCE38E5CD8354D3DB9124DF45949CE86">gfx_set_screen_surface</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#0556E562370C5549751993208F9C7BA19172008B">gfx_get_screen_surface</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#142CC23D12EA4C4AC1B41062B938D0F622ADEBD8">gfx_create_surface</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#C21A5485298506587D95F7E1907667F01DDD118E">gfx_bitblt</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#0AC043471D5180EFA8C42B37F0FBC036F02B9A10">gfx_flip</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#6C130EA0B5011678766293C379533ADA593E79D9">gfx_clear_screen</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#3E2584763CF68EA0857EB1BB7B1999263302E8B8">gfx_putpixel</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#E4C51FBBC281354F692402194B0FC70DDA541AF5">gfx_putpixel_screen</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#E3109388D2AD368316E8F7B042243E54A6AD2A28">gfx_getpixel</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#5B33EB59A7A03EEA16CAEA4AC2D863573D743577">gfx_hline</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#2376D619D0FCDAF69E3B3911240374FA951B7F1F">gfx_vline</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#8A9996A91766ABB8FB4F33421BFA6816337025D1">gfx_line</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#6E8229A471663652F63A411FEC2F0D1CFC6A345A">gfx_aa_line</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#A77D560DDEEC380BE887B0E78F63525FEDCF64DF">gfx_hline_screen</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#5091F8DA67562A9C860C42C3BC10CD8494979571">gfx_vline_screen</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#30890BB16F16E3238BBFD6EC0014994030283844">gfx_line_screen</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#E37B200C3E00B62F91688EB79377BA6AD05898B8">gfx_aa_line_screen</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#1AD726DC3CC826F1B07AE5DF4A647F60FA3BD8A6">gfx_set_bitmap_font_surface</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#9889281329BC47BCF91B0AF61038CC60C7FF1642">gfx_print_char_bitmap_font</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#773F68366E79D4124E2ED013DA09E7221B6E1390">gfx_print_string_bitmap_font</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#DBF9CFC3831D7C40F3199A1FB2AB81B6186D358F">gfx_print_string_bitmap_font_screen</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#F9C18FAA192A1B1E2781833C00F6DE734B054394">init_sdl</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#DF1AE914FDECB1044CE24A24B323289FB8B0EF6C">finalize</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#27B3DD7039150B164FE26C6C5C8BDD0DBE294934">show_scene</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#9F9B39F609B5E9E979BF430AF7C03218E3B46FA0">smooth_scene</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#CFECFA2CEF012592747700419E2A371DB83D968C">redraw</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#6FE4E723AE90E2189F6EEAB3745D6E825D63BA87">main_event_loop</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#19D0EEBB40D34802CF7BC02C427298BC9E466C52">run</a>
+            </span>
+          </li>
+          <li>
+            <span>
+              <a href="#FD57EA7BE1A50F86E7E4A9DEB96389DDF85EEADE">main</a>
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+</main>
+<footer>
+  <span class="no-break">clang-doc version 18.1.8 (Fedora 18.1.8-2.fc40)</span>
+</footer>
