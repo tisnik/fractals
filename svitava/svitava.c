@@ -59,6 +59,12 @@ render_circle_pattern_j
 #include <string.h>
 #include <pthread.h>
 
+#define PI 3.1415927
+#define EPSILON 0.1
+#define DIST2(x1, y1, x2, y2)                                                  \
+    (((x1) - (x2)) * ((x1) - (x2)) + ((y1) - (y2)) * ((y1) - (y2)))
+#define MIN_FP_VALUE 1.0 - 100
+
 /* ABI type definitions */
 
 typedef struct {
@@ -797,8 +803,7 @@ void render_magnet_m1(const image_t *image, const unsigned char *palette,
                 bzx = 2.0 * zx + cx - 2;
                 bzy = 2.0 * zy + cy;
                 div = bzx * bzx + bzy * bzy;
-#define MIN_VALUE 1.0 - 100
-                if (div < MIN_VALUE)
+                if (div < MIN_FP_VALUE)
                     break;
                 zxn = (tzx * bzx + tzy * bzy) / div;
                 zyn = (tzy * bzx - tzx * bzy) / div;
@@ -857,8 +862,7 @@ void render_magnet_j1(const image_t *image, const unsigned char *palette,
                 bzx = 2.0 * zx + cx - 2;
                 bzy = 2.0 * zy + cy;
                 div = bzx * bzx + bzy * bzy;
-#define MIN_VALUE 1.0 - 100
-                if (div < MIN_VALUE)
+                if (div < MIN_FP_VALUE)
                     break;
                 zxn = (tzx * bzx + tzy * bzy) / div;
                 zyn = (tzy * bzx - tzx * bzy) / div;
@@ -918,8 +922,7 @@ void render_magnet_m2(const image_t *image, const unsigned char *palette,
                 bzy = 2.0 * zx * zy;
                 bzy = 3.0 * bzy + zx * cm2y + zy * cm2x + cm1cm2y;
                 div = bzx * bzx + bzy * bzy;
-#define MIN_VALUE 1.0 - 100
-                if (div < MIN_VALUE)
+                if (div < MIN_FP_VALUE)
                     break;
                 zxn = (tzx * bzx + tzy * bzy) / div;
                 zyn = (tzy * bzx - tzx * bzy) / div;
@@ -993,8 +996,7 @@ void render_magnet_j2(const image_t *image, const unsigned char *palette,
                 bzy = 2.0 * zx * zy;
                 bzy = 3.0 * bzy + zx * cm2y + zy * cm2x + cm1cm2y;
                 div = bzx * bzx + bzy * bzy;
-#define MIN_VALUE 1.0 - 100
-                if (div < MIN_VALUE)
+                if (div < MIN_FP_VALUE)
                     break;
                 zxn = (tzx * bzx + tzy * bzy) / div;
                 zyn = (tzy * bzx - tzx * bzy) / div;
@@ -1327,11 +1329,6 @@ void render_newton_m(const image_t *image, const unsigned char *palette,
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = image->pixels;
 
-#define PI 3.1415927
-#define EPSILON 0.1
-#define DIST2(x1, y1, x2, y2)                                                  \
-    (((x1) - (x2)) * ((x1) - (x2)) + ((y1) - (y2)) * ((y1) - (y2)))
-
     double rootx[3];
     double rooty[3];
 
@@ -1398,11 +1395,6 @@ void render_newton_j(const image_t *image, const unsigned char *palette,
     int x, y;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
     unsigned char *p = image->pixels;
-
-#define PI 3.1415927
-#define EPSILON 0.1
-#define DIST2(x1, y1, x2, y2)                                                  \
-    (((x1) - (x2)) * ((x1) - (x2)) + ((y1) - (y2)) * ((y1) - (y2)))
 
     double rootx[3];
     double rooty[3];
