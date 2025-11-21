@@ -33,7 +33,7 @@ static void init_sdl(GraphicsState *graphicsState, const char *title,
         puts("SDL_Init ok");
     }
 
-    graphicsState->window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED,
+    graphicsState->window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED,
                                              SDL_WINDOWPOS_UNDEFINED, width,
                                              height, SDL_WINDOW_SHOWN);
 
@@ -58,11 +58,11 @@ static void init_sdl(GraphicsState *graphicsState, const char *title,
 static void finalize(GraphicsState *graphicsState) {
     if (graphicsState->mandelbrot_pixmap != NULL) {
         printf("Freeing pixmap (%p)\n", (void*)graphicsState->mandelbrot_pixmap);
-        free(graphicsState->mandelbrot_pixmap);
+        SDL_FreeSurface(graphicsState->mandelbrot_pixmap);
     }
     if (graphicsState->julia_pixmap != NULL) {
         printf("Freeing pixmap (%p)\n", (void*)graphicsState->julia_pixmap);
-        free(graphicsState->julia_pixmap);
+        SDL_FreeSurface(graphicsState->julia_pixmap);
     }
 
     SDL_FreeSurface(graphicsState->screen_surface);
@@ -152,6 +152,9 @@ void gfx_vline(SDL_Surface *surface, int x, int y1, int y2, unsigned char r, uns
 
 void gfx_draw_char(SDL_Surface *surface, int x, int y, unsigned char r, unsigned char g, unsigned char b, char c)
 {
+    if (c < ' ') {
+        return;
+    }
     unsigned char *ptr = font + (c-' ')*16;
     int xx, yy;
     for (yy=0; yy<16; yy++) {
