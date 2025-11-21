@@ -1534,8 +1534,8 @@ void render_circle_pattern(const image_t *image, const unsigned char *palette,
         for (i = 0; i < image->width; i++) {
             double x2 = x1 * x1;
             double y2 = y1 * y1;
-            int i = (int)(x2 + y2) % 256;
-            putpixel(&p, palette, i);
+            int color = (int)(x2 + y2) % 256;
+            putpixel(&p, palette, color);
             x1 += (xmax - xmin) / image->width;
         }
         y1 += (ymax - ymin) / image->height;
