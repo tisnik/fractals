@@ -1772,6 +1772,7 @@ int tga_write(unsigned int width, unsigned int height,
  * Calculates the selected fractal and save it info disk.
  */
 void* render_and_save_fractal(void *void_parameters) {
+    int write_result;
     renderer_parameters_t *renderer_parameters = void_parameters;
     image_t image;
 
@@ -1790,10 +1791,13 @@ void* render_and_save_fractal(void *void_parameters) {
             renderer_parameters->px,
             renderer_parameters->py,
             renderer_parameters->maxiter);
-    bmp_write(renderer_parameters->width,
-              renderer_parameters->height,
-              image.pixels,
-              renderer_parameters->filename);
+    write_result = bmp_write(renderer_parameters->width,
+                             renderer_parameters->height,
+                             image.pixels,
+                             renderer_parameters->filename);
+    if (write_result != 0) {
+        fprintf(stderr, "Failed to write %s\n", renderer_parameters->filename);
+    }
 
     free(image.pixels);
     printf("Rendering %s finished\n", renderer_parameters->name);
