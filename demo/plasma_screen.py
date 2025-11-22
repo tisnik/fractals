@@ -30,7 +30,7 @@ class PlasmaScreen(Screen):
     IMAGE_HEIGHT = 512
 
     def __init__(self, display: Surface, resources: Resources, title_text: str) -> None:
-        status = "← zoom out   → zoom in   [P]alette   Esc back"
+        status = "[P]alette   Esc back"
         super(PlasmaScreen, self).__init__(display, resources, title_text, status)
         self._clock = pygame.time.Clock()
         self._palette_index = 0
