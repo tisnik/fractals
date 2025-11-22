@@ -7,6 +7,8 @@ from pathlib import Path
 
 
 for path in Path(".").rglob("*"):
+    if str(path) != "attractors/3D":
+        continue
     if path.is_dir():
         directory = path
         cwd = os.getcwd()
@@ -21,6 +23,8 @@ for path in Path(".").rglob("*"):
 
                 for file in files:
                     if file.endswith(".py"):
+                        if file == "00_index.py":
+                            continue
                         print(f"# {file}:", file=indexfile)
                         with open(file, "r", encoding="utf-8") as fin:
                             source = fin.read()
