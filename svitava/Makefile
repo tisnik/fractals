@@ -25,5 +25,5 @@ svitava:	ui.o svitava.o
 ui.o:	ui.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-svitava.o:	svitava_.c
+svitava.o:	svitava.c
 	$(CC) $(CFLAGS) -c -o $@ $< -DNO_MAIN
