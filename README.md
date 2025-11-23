@@ -22,11 +22,11 @@ Various snippets of fractal rendering code
 
 ### Iterated Functions Systems (IFS)
 
-[![IFS fractal](docs/IFS/spiral.png)](IFS/index.md)
+[![IFS fractal](docs/IFS/spiral_small.png)](IFS/index.md)
 
 ### L-systems
 
-[![L-systems](docs/L-systems/lsystem.png)](docs/L-systems/index.md)
+[![L-systems](docs/L-systems/snowflake_small.png)](docs/L-systems/index.md)
 
 ### Interactive fractal viewers
 
