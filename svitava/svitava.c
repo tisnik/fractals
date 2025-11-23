@@ -1832,6 +1832,11 @@ int render_test_images(void) {
     int max_threads;
     pthread_t *threads;
 
+    if (palette == NULL) {
+        fprintf(stderr, "Failed to allocate palette memory\n");
+        return -1;
+    }
+
     renderer_parameters_t parameters[] = {
         {"Classic Mandelbrot", "mandelbrot.bmp",   render_mandelbrot,   palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
         {"Classic Julia",      "julia.bmp",        render_julia,        palette, WIDTH, HEIGHT, -0.207190825000000012496, 0.676656624999999999983, 1000},
@@ -1847,10 +1852,11 @@ int render_test_images(void) {
         {"Barnsley J3",        "barnsley_j3.bmp",  render_barnsley_j3,  palette, WIDTH, HEIGHT, -0.09375, 0.453125, 1000},
     };
 
+    fill_in_palette(palette);
+
     max_threads = sizeof(parameters) / sizeof(renderer_parameters_t);
     threads = (pthread_t*)malloc(max_threads*sizeof(pthread_t));
 
-    fill_in_palette(palette);
 
     for (i=0; i<max_threads; i++) {
         pthread_create(&threads[i], NULL, render_and_save_fractal, &parameters[i]);
