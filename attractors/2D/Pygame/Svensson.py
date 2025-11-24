@@ -1,3 +1,5 @@
+"""Výpočet a vykreslení podivného atraktoru navrženého Johny Svenssonem."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
