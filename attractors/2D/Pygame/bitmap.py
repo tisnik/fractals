@@ -1,3 +1,5 @@
+"""Bitmap operations."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
