@@ -1,3 +1,5 @@
+"""Basic UI for Pygame-based renderer."""
+
 #
 #  (C) Copyright 2024  Pavel Tisnovsky
 #
