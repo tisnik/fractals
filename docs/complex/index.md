@@ -8,7 +8,7 @@
 
 ## [Classic Julia fractal](julia.md)
 
-[![Julia](julia_small.png)](julia.md)
+[![Julia](julia_small.png)](julia.html)
 
 
 
