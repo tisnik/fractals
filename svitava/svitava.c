@@ -886,7 +886,7 @@ void render_magnet_j1(const image_t *image, const unsigned char *palette,
  * convergence, up to `maxiter`.
  */
 void render_magnet_m2(const image_t *image, const unsigned char *palette,
-                      int maxiter) {
+                      double zx0, double zy0, int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -1.5, ymin = -2.0, xmax = 2.5, ymax = 2.0;
@@ -896,8 +896,8 @@ void render_magnet_m2(const image_t *image, const unsigned char *palette,
     for (y = 0; y < image->height; y++) {
         cx = xmin;
         for (x = 0; x < image->width; x++) {
-            double zx = 0.0;
-            double zy = 0.0;
+            double zx = zx0;
+            double zy = zy0;
             double cm1x = cx - 1.0;
             double cm1y = cy;
             double cm2x = cx - 2.0;
@@ -1854,6 +1854,8 @@ int render_test_images(void) {
         {"Barnsley J3",        "barnsley_j3.bmp",  render_barnsley_j3,  palette, WIDTH, HEIGHT, -0.09375, 0.453125, 1000},
         {"Magnet M1",          "magnet_m1.bmp",    render_magnet_m1,  palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
         {"Magnet J1",          "magnet_j1.bmp",    render_magnet_j1,  palette, WIDTH, HEIGHT, 0.484375, -1.5625, 1000},
+        {"Magnet M2",          "magnet_m2.bmp",    render_magnet_m2,  palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Magnet J2",          "magnet_j2.bmp",    render_magnet_j2,  palette, WIDTH, HEIGHT, 1.0, -1.375, 1000},
     };
 
     fill_in_palette(palette);
@@ -1892,12 +1894,6 @@ int render_test_images(void) {
     */
 
     /*
-    render_magnet_m2(&image, palette, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "magnet_m2.bmp");
-
-    render_magnet_j2(&image, palette, 1.0, -1.375, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "magnet_j2.bmp");
-
     render_phoenix_m(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "phoenix_m.bmp");
 
