@@ -1808,15 +1808,54 @@ void fill_in_palette(unsigned char *palette) {
     unsigned char *p = palette;
     int i;
 
-    for (i = 0; i <= 254; i++) {
-        *p++ = i * 3;
-        *p++ = i * 3;
-        *p++ = i * 3;
+    if (palette == NULL) {
+        return;
     }
-    /* last color is black */
-    *p++ = 0;
-    *p++ = 0;
-    *p++ = 0;
+
+    /* fill in by black color */
+    memset(palette, 0, 256 * 3);
+
+    /* green gradient */
+    for (i = 0; i < 32; i++) {
+        *p++ = 0;
+        *p++ = 4 + i*6;
+        *p++ = 0;
+    }
+
+    /* gradient from green to yellow */
+    for (i = 0; i < 32; i++) {
+        *p++ = 4 + i * 6;
+        *p++ = i * 2 < 52 ? 200 + i * 2 : 252;
+        *p++ = 0;
+    }
+
+    /* gradient from yellow to white */
+    for (i = 0; i < 32; i++) {
+        *p++ = i * 2 < 52 ? 200 + i * 2 : 252;
+        *p++ = 252;
+        *p++ = i * 6;
+    }
+
+    /* gradient from white to yellow */
+    for (i = 0; i < 48; i++) {
+        *p++ = 252;
+        *p++ = 252;
+        *p++ = 252 - i * 6;
+    }
+    
+    /* gradient from yellow to green */
+    for (i = 0; i < 48; i++) {
+        *p++ = 252 - i * 6;
+        *p++ = 252;
+        *p++ = 0;
+    }
+    
+    /* gradient green to black */
+    for (i = 0; i < 48; i++) {
+        *p++ = 0;
+        *p++ = 252 - i * 6;
+        *p++ = 0;
+    }
 }
 
 /*
