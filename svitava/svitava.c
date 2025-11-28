@@ -1026,7 +1026,7 @@ void render_magnet_j2(const image_t *image, const unsigned char *palette,
  * the provided pixel buffer.
  */
 void render_phoenix_m(const image_t *image, const unsigned char *palette,
-                      int maxiter) {
+                      double zx0, double zy0, int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.0, xmax = 2.0, ymax = 2.0;
@@ -1038,8 +1038,8 @@ void render_phoenix_m(const image_t *image, const unsigned char *palette,
         for (x = 0; x < image->width; x++) {
             double zx = cx;
             double zy = cy;
-            double ynx = 0.0;
-            double yny = 0.0;
+            double ynx = zx0;
+            double yny = zy0;
 
             unsigned int i = 0;
 
@@ -1891,10 +1891,12 @@ int render_test_images(void) {
         {"Barnsley J2",        "barnsley_j2.bmp",  render_barnsley_j2,  palette, WIDTH, HEIGHT, 1.109375, 0.421875, 1000},
         {"Barnsley M3",        "barnsley_m3.bmp",  render_barnsley_m3,  palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
         {"Barnsley J3",        "barnsley_j3.bmp",  render_barnsley_j3,  palette, WIDTH, HEIGHT, -0.09375, 0.453125, 1000},
-        {"Magnet M1",          "magnet_m1.bmp",    render_magnet_m1,  palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Magnet J1",          "magnet_j1.bmp",    render_magnet_j1,  palette, WIDTH, HEIGHT, 0.484375, -1.5625, 1000},
-        {"Magnet M2",          "magnet_m2.bmp",    render_magnet_m2,  palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Magnet J2",          "magnet_j2.bmp",    render_magnet_j2,  palette, WIDTH, HEIGHT, 1.0, -1.375, 1000},
+        {"Magnet M1",          "magnet_m1.bmp",    render_magnet_m1,    palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Magnet J1",          "magnet_j1.bmp",    render_magnet_j1,    palette, WIDTH, HEIGHT, 0.484375, -1.5625, 1000},
+        {"Magnet M2",          "magnet_m2.bmp",    render_magnet_m2,    palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Magnet J2",          "magnet_j2.bmp",    render_magnet_j2,    palette, WIDTH, HEIGHT, 1.0, -1.375, 1000},
+        {"Phoenix M",          "phoenix_m.bmp",    render_phoenix_m,    palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Phoenix J",          "phoenix_j.bmp",    render_phoenix_j,    palette, WIDTH, HEIGHT, 0.125, 0.65625, 1000},
     };
 
     fill_in_palette(palette);
@@ -1933,12 +1935,6 @@ int render_test_images(void) {
     */
 
     /*
-    render_phoenix_m(&image, palette, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "phoenix_m.bmp");
-
-    render_phoenix_j(&image, palette, 0.125, 0.65625, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "phoenix_j.bmp");
-
     render_mandelbrot_lambda(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot_lambda.bmp");
 
