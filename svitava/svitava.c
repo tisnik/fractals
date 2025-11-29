@@ -1221,7 +1221,7 @@ void render_lambda(const image_t *image, const unsigned char *palette,
  * determines the color index used from the palette.
  */
 void render_manowar_m(const image_t *image, const unsigned char *palette,
-                      int maxiter) {
+                      double zx0, double zy0, int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -1.5, ymin = -1.0, xmax = 0.5, ymax = 1.0;
@@ -1236,8 +1236,8 @@ void render_manowar_m(const image_t *image, const unsigned char *palette,
         for (x = 0; x < image->width; x++) {
             double zx = cx;
             double zy = cy;
-            double z1x = zx;
-            double z1y = zy;
+            double z1x = zx + zx0;
+            double z1y = zy + zy0;
             unsigned int i = 0;
             while (i < maxiter) {
                 double zx2 = zx * zx;
@@ -1897,6 +1897,8 @@ int render_test_images(void) {
         {"Magnet J2",          "magnet_j2.bmp",    render_magnet_j2,    palette, WIDTH, HEIGHT, 1.0, -1.375, 1000},
         {"Phoenix M",          "phoenix_m.bmp",    render_phoenix_m,    palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
         {"Phoenix J",          "phoenix_j.bmp",    render_phoenix_j,    palette, WIDTH, HEIGHT, 0.125, 0.65625, 1000},
+        {"Manowar M",          "manowar_m.bmp",    render_manowar_m,    palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Manowar J",          "manowar_j.bmp",    render_manowar_j,    palette, WIDTH, HEIGHT, 0.0542, -0.045, 1000},
     };
 
     fill_in_palette(palette);
@@ -1940,12 +1942,6 @@ int render_test_images(void) {
 
     render_lambda(&image, palette, 1.6328125, 1.005859375, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "lambda.bmp");
-
-    render_manowar_m(&image, palette, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "manowar_m.bmp");
-
-    render_manowar_j(&image, palette, 0.0542, -0.045, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "manowar_j.bmp");
 
     render_newton_m(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "newton_m.bmp");
