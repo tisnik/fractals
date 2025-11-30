@@ -1128,8 +1128,8 @@ void render_phoenix_j(const image_t *image, const unsigned char *palette,
  * computes the escape time for the Mandelbrot set. The iteration count
  * determines the color index used from the palette.
  */
-void render_mandelbrot_lambda(const image_t *image,
-                              const unsigned char *palette, int maxiter) {
+void render_mandelbrot_lambda(const image_t *image, const unsigned char *palette,
+                              double zx0, double zy0, int maxiter) {
     int x, y;
     double cx, cy;
     double xmin = -2.0, ymin = -2.5, xmax = 4.0, ymax = 2.5;
@@ -1142,8 +1142,8 @@ void render_mandelbrot_lambda(const image_t *image,
     for (y = 0; y < image->height; y++) {
         cx = xmin;
         for (x = 0; x < image->width; x++) {
-            double zx = 0.5;
-            double zy = 0.0;
+            double zx = zx0;
+            double zy = zy0;
             unsigned int i = 0;
             while (i < maxiter) {
                 double zx2 = zx * zx;
@@ -1879,26 +1879,28 @@ int render_test_images(void) {
     /* NOTE: parameters array must remain valid until all threads complete.
        Do not return from this function until pthread_join completes for all threads. */
     renderer_parameters_t parameters[] = {
-        {"Classic Mandelbrot", "mandelbrot.bmp",   render_mandelbrot,   palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Classic Julia",      "julia.bmp",        render_julia,        palette, WIDTH, HEIGHT, -0.207190825000000012496, 0.676656624999999999983, 1000},
-        {"Mandelbrot z=z^3+c", "mandelbrot_3.bmp", render_mandelbrot_3, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Julia z=z^3+c",      "julia_3.bmp",      render_julia_3,      palette, WIDTH, HEIGHT, 0.12890625, -0.796875, 1000},
-        {"Mandelbrot z=z^4+c", "mandelbrot_4.bmp", render_mandelbrot_4, palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Julia z=z^4+c",      "julia_4.bmp",      render_julia_4,      palette, WIDTH, HEIGHT, 0.375, -0.97265625, 1000},
-        {"Barnsley M1",        "barnsley_m1.bmp",  render_barnsley_m1,  palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Barnsley J1",        "barnsley_j1.bmp",  render_barnsley_j1,  palette, WIDTH, HEIGHT, 0.4, 1.5, 1000},
-        {"Barnsley M2",        "barnsley_m2.bmp",  render_barnsley_m2,  palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Barnsley J2",        "barnsley_j2.bmp",  render_barnsley_j2,  palette, WIDTH, HEIGHT, 1.109375, 0.421875, 1000},
-        {"Barnsley M3",        "barnsley_m3.bmp",  render_barnsley_m3,  palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Barnsley J3",        "barnsley_j3.bmp",  render_barnsley_j3,  palette, WIDTH, HEIGHT, -0.09375, 0.453125, 1000},
-        {"Magnet M1",          "magnet_m1.bmp",    render_magnet_m1,    palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Magnet J1",          "magnet_j1.bmp",    render_magnet_j1,    palette, WIDTH, HEIGHT, 0.484375, -1.5625, 1000},
-        {"Magnet M2",          "magnet_m2.bmp",    render_magnet_m2,    palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Magnet J2",          "magnet_j2.bmp",    render_magnet_j2,    palette, WIDTH, HEIGHT, 1.0, -1.375, 1000},
-        {"Phoenix M",          "phoenix_m.bmp",    render_phoenix_m,    palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Phoenix J",          "phoenix_j.bmp",    render_phoenix_j,    palette, WIDTH, HEIGHT, 0.125, 0.65625, 1000},
-        {"Manowar M",          "manowar_m.bmp",    render_manowar_m,    palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
-        {"Manowar J",          "manowar_j.bmp",    render_manowar_j,    palette, WIDTH, HEIGHT, 0.0542, -0.045, 1000},
+        {"Classic Mandelbrot", "mandelbrot.bmp",        render_mandelbrot,        palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Classic Julia",      "julia.bmp",             render_julia,             palette, WIDTH, HEIGHT, -0.207190825000000012496, 0.676656624999999999983, 1000},
+        {"Mandelbrot z=z^3+c", "mandelbrot_3.bmp",      render_mandelbrot_3,      palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Julia z=z^3+c",      "julia_3.bmp",           render_julia_3,           palette, WIDTH, HEIGHT, 0.12890625, -0.796875, 1000},
+        {"Mandelbrot z=z^4+c", "mandelbrot_4.bmp",      render_mandelbrot_4,      palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Julia z=z^4+c",      "julia_4.bmp",           render_julia_4,           palette, WIDTH, HEIGHT, 0.375, -0.97265625, 1000},
+        {"Barnsley M1",        "barnsley_m1.bmp",       render_barnsley_m1,       palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Barnsley J1",        "barnsley_j1.bmp",       render_barnsley_j1,       palette, WIDTH, HEIGHT, 0.4, 1.5, 1000},
+        {"Barnsley M2",        "barnsley_m2.bmp",       render_barnsley_m2,       palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Barnsley J2",        "barnsley_j2.bmp",       render_barnsley_j2,       palette, WIDTH, HEIGHT, 1.109375, 0.421875, 1000},
+        {"Barnsley M3",        "barnsley_m3.bmp",       render_barnsley_m3,       palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Barnsley J3",        "barnsley_j3.bmp",       render_barnsley_j3,       palette, WIDTH, HEIGHT, -0.09375, 0.453125, 1000},
+        {"Magnet M1",          "magnet_m1.bmp",         render_magnet_m1,         palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Magnet J1",          "magnet_j1.bmp",         render_magnet_j1,         palette, WIDTH, HEIGHT, 0.484375, -1.5625, 1000},
+        {"Magnet M2",          "magnet_m2.bmp",         render_magnet_m2,         palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Magnet J2",          "magnet_j2.bmp",         render_magnet_j2,         palette, WIDTH, HEIGHT, 1.0, -1.375, 1000},
+        {"Phoenix M",          "phoenix_m.bmp",         render_phoenix_m,         palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Phoenix J",          "phoenix_j.bmp",         render_phoenix_j,         palette, WIDTH, HEIGHT, 0.125, 0.65625, 1000},
+        {"Manowar M",          "manowar_m.bmp",         render_manowar_m,         palette, WIDTH, HEIGHT, 0.0, 0.0, 1000},
+        {"Manowar J",          "manowar_j.bmp",         render_manowar_j,         palette, WIDTH, HEIGHT, 0.0542, -0.045, 1000},
+        {"Lambda M",           "mandelbrot_lambda.bmp", render_mandelbrot_lambda, palette, WIDTH, HEIGHT, 0.5, 0.0, 1000},
+        {"Lambda J",           "lambda.bmp",            render_lambda,            palette, WIDTH, HEIGHT, 1.6328125, 1.005859375, 1000},
     };
 
     fill_in_palette(palette);
@@ -1937,12 +1939,6 @@ int render_test_images(void) {
     */
 
     /*
-    render_mandelbrot_lambda(&image, palette, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "mandelbrot_lambda.bmp");
-
-    render_lambda(&image, palette, 1.6328125, 1.005859375, 1000);
-    bmp_write(WIDTH, HEIGHT, pixels, "lambda.bmp");
-
     render_newton_m(&image, palette, 1000);
     bmp_write(WIDTH, HEIGHT, pixels, "newton_m.bmp");
 
